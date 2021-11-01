@@ -1,0 +1,19 @@
+version: '3'
+services:
+   db:
+      image: mariadb
+      container_name: minuman-tile.itsgitz.com-db
+      restart: always
+      volumes:
+         - ./.docker/mariadb:/var/lib/mysql
+      env_file:
+         - .env
+      ports:
+         - 3336:3306
+      networks:
+         - minuman-tile.itsgitz.com-network
+
+networks:
+   minuman-tile.itsgitz.com-network:
+      name: minuman-tile.itsgitz.com-network
+      driver: bridge
