@@ -17,15 +17,25 @@ class MenuStockSeeder extends Seeder
     {
         $menuStocks = [
             [
-                'menu_id'   => 1,
-                'stock_id'  => 1,
-                'quantity'  => 1,
+                'menu_id'   => 1,   //Thai Tea
+                'stock_id'  => 1,   //Air
+                'quantity'  => 1,   //1 Liter
             ],
             [
-                'menu_id'   => 1,
-                'stock_id'  => 2,
-                'quantity'  => 1,
+                'menu_id'   => 1,   //Thai Tea
+                'stock_id'  => 2,   //Gula
+                'quantity'  => 1,   //1 Kilogram
             ],
+            [
+                'menu_id'   => 2,   //Kopi Sobek
+                'stock_id'  => 1,   //Air
+                'quantity'  => 3,   //3 Liter
+            ],
+            [
+                'menu_id'   => 2,   //Kopi Sobek
+                'stock_id'  => 2,   //Gula
+                'quantity'  => 5,   //5 Kilogram
+            ]
         ];
 
         foreach ($menuStocks as $ms) {

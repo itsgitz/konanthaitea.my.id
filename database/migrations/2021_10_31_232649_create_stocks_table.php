@@ -18,6 +18,7 @@ class CreateStocksTable extends Migration
             $table->string('name');
             $table->integer('quantity');
             $table->string('unit', 100);
+            $table->enum('status', ['Available', 'Not Available']);
             $table->timestamps();
         });
     }

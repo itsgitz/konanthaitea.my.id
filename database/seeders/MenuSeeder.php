@@ -15,12 +15,23 @@ class MenuSeeder extends Seeder
      */
     public function run()
     {
-        //
-        $menu           = new Menu;
-        $menu->name     = 'Thai Tea';
-        $menu->price    = 5000;
-        $menu->status   = 'Available';
-        $menu->quantity = 10;
-        $menu->save();
+        $menus = [
+            [
+                'name'      => 'Thai Tea',
+                'price'     => 5000,
+                'status'    => 'Available',
+                'quantity'  => 10,
+            ],
+            [
+                'name'      => 'Kopi Sobek',
+                'price'     => 100000,
+                'status'    => 'Available',
+                'quantity'  => 50,
+            ],
+        ];
+
+        foreach ($menus as $m) {
+            Menu::create($m);
+        }
     }
 }

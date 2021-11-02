@@ -13,14 +13,16 @@ class CreateInvoicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('client_id');
-            $table->unsignedBigInteger('menu_id');
-            $table->enum('payment_status', ['Paid', 'Unpaid']);
-            $table->integer('total_amount');
-            $table->timestamps();
-        });
+        /* Schema::create('invoices', function (Blueprint $table) { */
+        /*     $table->id(); */
+        /*     $table->unsignedBigInteger('client_id'); */
+        /*     $table->unsignedBigInteger('menu_id'); */
+        /*     $table->integer('quantity'); */
+        /*     $table->integer('total_amount'); */
+        /*     $table->enum('payment_status', ['Paid', 'Unpaid']); */
+        /*     $table->enum('order_status', ['On Progress', 'Finish']); */
+        /*     $table->timestamps(); */
+        /* }); */
     }
 
     /**

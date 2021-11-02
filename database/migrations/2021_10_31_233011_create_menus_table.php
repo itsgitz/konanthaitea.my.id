@@ -17,8 +17,8 @@ class CreateMenusTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('price');
-            $table->enum('status', ['Available', 'Sold Out']);
             $table->integer('quantity');
+            $table->enum('status', ['Available', 'Sold Out']);
             $table->timestamps();
         });
     }

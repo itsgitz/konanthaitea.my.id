@@ -17,8 +17,11 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('menu_id');
-            $table->unsignedBigInteger('invoice_id');
+            $table->integer('quantity');
+            $table->integer('total_amount');
+            $table->enum('order_type', ['Pickup', 'Delivery']);
             $table->enum('order_status', ['On Progress', 'Finish']);
+            $table->enum('payment_status', ['Paid', 'Unpaid']);
             $table->timestamps();
         });
     }

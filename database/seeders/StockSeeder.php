@@ -18,13 +18,15 @@ class StockSeeder extends Seeder
         $stocks = [
             [
                 'name'      => 'Air',
-                'quantity'  => 10,
+                'quantity'  => 100,
                 'unit'      => 'Liter',
+                'status'    => 'Available',
             ],
             [
                 'name'      => 'Gula',
-                'quantity'  => 10,
+                'quantity'  => 100,
                 'unit'      => 'Kilogram',
+                'status'    => 'Available',
             ]
 
         ];
