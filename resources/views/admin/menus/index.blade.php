@@ -41,7 +41,7 @@
                     <td>{{ $m->quantity }}</td>
                     <td>{{ $m->created_at }}</td>
                     <td>
-                        <a class="btn btn-sm btn-primary" href="{{ route('admin_menu_show', [ 'id' => $m->id ]) }}">View</a>
+                        <a class="btn btn-sm btn-primary" href="{{ route('admin_menu_show', [ 'id' => $m->id ]) }}">View Details</a>
                     </td>
                 </tr>
                 @endforeach
