@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link href="/css/app.css" rel="stylesheet">
-    <script src="/js/app.js"></script>
-</head>
-<body>
-    <div class="container">
-        <div class="py-3">
+@extends ('layouts.client')
+@section ('title', 'Order minuman favoritmu sekarang!')
+
+@section ('content')
+    <div class="py-3">
             <h1 class="text-secondary">MinumanTile</h1>
         </div>
         <div class="py-3">
@@ -56,6 +49,4 @@
             </div>
             @endforeach
         </div>
-    </div> 
-</body>
-</html>
+@endsection

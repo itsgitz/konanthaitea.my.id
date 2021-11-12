@@ -1,45 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="/css/app.css">
-    <script src="/js/app.js"></script>
-</head>
-<body>
-    <div class="container">
-        <div class="py-3">
-            <h1 class="text-secondary">Login to MinumanTile</h1>
-        </div>
+@extends ('layouts.client')
+@section ('title', 'Masuk ke aplikasi untuk melanjutkan pesananmu')
 
-        @if ($errors->any())
-        <div class="py-2 bg-danger">
-            <ul>
-                @foreach ($errors->all() as $e)
-                <li class="text-white">{{ $e }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
+@section ('content')
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="py-4"></div>
+            <div class="py-3">
+                <h1 class="text-secondary">Login</h1>
+                <span class="text-secondary">Masuk dulu ke aplikasi untuk melanjutkan pesananmu</span>
+            </div>
+            <div class="py-3"></div>
 
-        <div class="login-box py-3">
             <form action="{{ route('client_login_post') }}" method="post">
-                @csrf
+                 @csrf
                 <div class="mb-3">
                     <label class="form-label" for="client-email">Email</label>
-                    <input name="email" id="client-email" class="form-control" type="text" placeholder="client@minuman.com">
+                    <input name="email" id="client-email" class="form-control" type="email" placeholder="client@minuman.com" required>
+                    @error ('email')
+                    <div>
+                        <span class="text-danger">{{ $message }}</span>
+                    </div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="client-password">Password</label>
-                    <input name="password" id="client-password" class="form-control" type="password">
+                    <input name="password" id="client-password" class="form-control" type="password" placeholder="Masukan password kamu" required>
+                    @error ('password')
+                    <div>
+                        <span class="text-danger">{{ $message }}</span>
+                    </div>
+                    @enderror
                 </div>
 
                <div class="mb-3">
-                    <input id="client-login-submit" class="form-control btn btn-primary" type="submit" value="Login">
+                    <input id="client-login-submit" class="form-control btn btn-primary" type="submit" value="Lanjut">
+               </div>
+
+                <div class="py-3">
+                    Belum memiliki akun? <a href="{{ route('client_register_get') }}">Daftar sekarang!</a>
                 </div>
-            </form>
-        </div>
+          </form>
     </div>
-</body>
-</html>
+@endsection
