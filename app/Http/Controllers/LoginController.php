@@ -16,8 +16,8 @@ class LoginController extends Controller
     public function auth(Request $r)
     {
         $credentials = $r->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required']
+            'email'     => ['required', 'email'],
+            'password'  => ['required']
         ]);
 
         if (Auth::attempt($credentials)) {
@@ -27,8 +27,8 @@ class LoginController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Invalid email address',
-            'password' => 'Invalid password credentials'
+            'email'     => 'Alamat e-mail yang anda masukan salah atau tidak terdaftar',
+            'password'  => 'Password yang anda masukan salah'
         ]);
     }
 
