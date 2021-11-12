@@ -26,10 +26,24 @@ Route::post('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])
     ->middleware('auth')
     ->name('client_logout_post');
 
+
+//Register routes
+Route::get('/register', [\App\Http\Controllers\RegisterController::class, 'index'])
+    ->middleware('guest')
+    ->name('client_register_get');
+
+Route::post('/register', [\App\Http\Controllers\RegisterController::class, 'create'])
+    ->middleware('guest')
+    ->name('client_register_post');
+
+
+//Client area routes
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])
     ->middleware('auth')
     ->name('client_home');
 
+
+//Order routes
 Route::get('/minuman/orders', [\App\Http\Controllers\OrdersController::class, 'clientIndex'])
     ->middleware('auth')
     ->name('client_orders');
@@ -41,6 +55,7 @@ Route::get('/minuman/orders/{id}', [\App\Http\Controllers\OrdersController::clas
 Route::post('/minuman/orders/{menuId}', [\App\Http\Controllers\OrdersController::class, 'clientProcess'])
     ->middleware('auth')
     ->name('client_orders_post');
+
 
 //Admin routes
 Route::get('/admin', [\App\Http\Controllers\AdminsController::class, 'index'])->name('admin_home');
