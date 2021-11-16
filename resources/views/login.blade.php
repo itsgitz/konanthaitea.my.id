@@ -1,4 +1,4 @@
-@extends ('layouts.client')
+@extends ('layouts.auth')
 @section ('title', 'Masuk ke aplikasi untuk melanjutkan pesananmu')
 
 @section ('content')
@@ -15,10 +15,10 @@
                  @csrf
                 <div class="mb-3">
                     <label class="form-label" for="client-email">Email</label>
-                    <input name="email" id="client-email" class="form-control" type="email" placeholder="client@minuman.com" required>
+                    <input name="email" id="client-email" class="form-control" type="email" placeholder="client@minuman.com" value="{{ old('email') }}" required>
                     @error ('email')
                     <div>
-                        <span class="text-danger">{{ $message }}</span>
+                        <span class="text-danger fw-light"><small>{{ $message }}</small></span>
                     </div>
                     @enderror
                 </div>
@@ -27,7 +27,7 @@
                     <input name="password" id="client-password" class="form-control" type="password" placeholder="Masukan password kamu" required>
                     @error ('password')
                     <div>
-                        <span class="text-danger">{{ $message }}</span>
+                        <span class="text-danger fw-light"><small>{{ $message }}</small></span>
                     </div>
                     @enderror
                 </div>
