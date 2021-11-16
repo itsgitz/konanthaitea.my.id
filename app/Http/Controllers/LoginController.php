@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     //
-    public function index()
+    public function index(Request $r)
     {
         return view('login');
     }
@@ -21,9 +21,21 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
+            //Redirect to cart page if use redirected to login page before
+            //adding items to the cart
+            if ( $r->session()->has('redirect_before_cart') ) {
+
+                //Regenerate session for user login
+                $r->session()->regenerate();
+
+
+                return redirect()
+                    ->route('client_cart_get');
+            }
+
             $r->session()->regenerate();
 
-            return redirect()->intended('client_home');
+            return redirect()->intended('/');
         }
 
         return back()->withErrors([
@@ -38,6 +50,7 @@ class LoginController extends Controller
         $r->session()->invalidate();
         $r->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()
+            ->route('client_home');
     }
 }
