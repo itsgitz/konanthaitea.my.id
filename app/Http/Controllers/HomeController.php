@@ -14,7 +14,11 @@ class HomeController extends Controller
     {
         return view('home', [
             'menu' => Menu::all(),
-            'user' => Auth::check() ? Auth::user() : '',
         ]);
+    }
+
+    public function about(Request $r)
+    {
+        return view('about');
     }
 }

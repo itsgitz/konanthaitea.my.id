@@ -18,7 +18,7 @@
                     <form action="{{ route('client_cart_post') }}" method="post">
                         @csrf
                         <input type="hidden" name="menu_id" value="{{ $m->id }}">
-                        <input class="btn btn-outline-primary" type="submit" value="Tambah">
+                        <input class="btn btn-outline-primary rounded-pill" type="submit" value="Tambah">
                     </form>
                 </div>
             </div>

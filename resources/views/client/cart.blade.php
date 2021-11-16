@@ -17,7 +17,13 @@
                 <strong>Rp. {{ number_format( $c->menu_price, 2, ',', '.' ) }}</strong>
             </div>
             <div class="py-1">
-                <form action="{{ route('client_order_post') }}" method="post"></form>
+                <form action="{{ route('client_order_post') }}" method="post">
+                    @csrf
+                    <input class="form-control w-25" type="number" name="quantity" value="{{ $c->cart_quantity }}">
+                </form>
+                <div class="py-3">
+                    <a class="btn btn-primary" href="{{ route('client_home') }}">Lanjut Memesan</a>
+                </div>
             </div>
         </div>
         @endforeach
@@ -32,5 +38,6 @@
         </div>
     </div>
     @endif
+
 </div>
 @endsection

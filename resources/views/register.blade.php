@@ -11,67 +11,74 @@
         </div>
         <div class="py-3"></div>
 
-        <form action="{{ route('client_register_post') }}" method="post">
-            @csrf
-            <div class="mb-3">
-                <label class="form-label" for="client-name">Name</label>
-                <input
-                    class="form-control"
-                    id="client-name"
-                    type="text"
-                    name="name"
-                    placeholder="Masukan nama anda"
-                    value="{{ old('name') }}"
-                    required
-                >
-                @error ('name')
-                <div>
-                    <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+        <div class="border py-5 px-3 rounded">
+            <div class="d-flex justify-content-center">
+                <a class="btn text-primary" href="{{ route('client_home') }}">
+                    <h3>
+                        <i class="fas fa-prescription-bottle"></i> Minuman Tile
+                    </h3>
+                </a>
+            </div>
+            <div class="py-3"></div>
+
+            <form action="{{ route('client_register_post') }}" method="post">
+                @csrf
+                <div class="mb-3">
+                    <input
+                        class="form-control"
+                        id="client-name"
+                        type="text"
+                        name="name"
+                        placeholder="Nama"
+                        value="{{ old('name') }}"
+                        required
+                    >
+                    @error ('name')
+                    <div>
+                        <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                    </div>
+                    @enderror
                 </div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label for="client-email" class="form-label">Email</label>
-                <input
-                    class="form-control" 
-                    type="email" 
-                    name="email" 
-                    id="client-email" 
-                    placeholder="Alamat email anda (contoh: aku@gmail.com)" 
-                    value="{{ old('email') }}"
-                    required
-                >
-                @error ('email')
-                <div>
-                    <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                <div class="mb-3">
+                    <input
+                        class="form-control" 
+                        type="email" 
+                        name="email" 
+                        id="client-email" 
+                        placeholder="Alamat Email" 
+                        value="{{ old('email') }}"
+                        required
+                    >
+                    @error ('email')
+                    <div>
+                        <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                    </div>
+                    @enderror
                 </div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="client-password">Password</label>
-                <input id="client-password" class="form-control" type="password" name="password" placeholder="Masukan password anda" required>
-                @error ('password')
-                <div>
-                    <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                <div class="mb-3">
+                    <input id="client-password" class="form-control" type="password" name="password" placeholder="Password" required>
+                    @error ('password')
+                    <div>
+                        <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                    </div>
+                    @enderror
                 </div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="client-password-confirmation">Confirm Password</label>
-                <input id="client-password-confirmation" class="form-control" type="password" name="password_confirmation" placeholder="Konfirmasi password anda" required>
-                @error ('password_confirmation')
-                <div>
-                    <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                <div class="mb-3">
+                    <input id="client-password-confirmation" class="form-control" type="password" name="password_confirmation" placeholder="Re-type Password" required>
+                    @error ('password_confirmation')
+                    <div>
+                        <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                    </div>
+                    @enderror
                 </div>
-                @enderror
-            </div>
-            <div class="mb-3">
-                <input class="form-control btn btn-primary" type="submit" value="Daftar">
-            </div>
-            <div class="py-3">
-                Sudah memiliki akun? <a href="{{ route('client_login_get') }}">Masuk sekarang juga!</a>
-            </div>
-        </form>
+                <div class="mb-3">
+                    <input class="form-control btn btn-primary" type="submit" value="Daftar">
+                </div>
+                <div class="py-3">
+                    Sudah memiliki akun? <a href="{{ route('client_login_get') }}">Masuk sekarang juga!</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 @endsection
