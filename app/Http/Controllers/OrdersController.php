@@ -16,6 +16,9 @@ use App\Models\MenuStock;
 class OrdersController extends Controller
 {
     //
+    //Admin source code for order controller
+    //
+    //
     public function adminIndex(Request $r)
     {
         $orders = DB::table('orders')
@@ -78,57 +81,73 @@ class OrdersController extends Controller
         }
     }
 
-    //Client list orders
-    public function clientIndex(Request $r)
-    {
-        return view('client.orders.index', [
-            'user' => Auth::user(),
-        ]);
-    }
+    //
+    //Client source code for order controller
+    //
+    //
+    /* public function clientIndex(Request $r) */
+    /* { */
+    /*     return view('client.orders.index', [ */
+    /*         'user' => Auth::user(), */
+    /*     ]); */
+    /* } */
 
-    //Client per order details
-    public function clientShow($id)
-    {
+    /* //Client per order details */
+    /* public function clientShow($id) */
+    /* { */
 
-    }
+    /* } */
 
     //Client order process
-    public function clientProcess(Request $r, $menuId)
+    public function clientProcess(Request $r)
     {
-        $clientId       = Auth::user()->id;
-        $menuPrice      = $r->input('menu_price');
-        $orderQuantity  = $r->input('order_quantity');
-        $orderType      = $r->input('order_type');
-        $totalAmount    = ( $menuPrice * $orderQuantity );
+        /* if (!Auth::check()) { */
+        /*     $r->session()->put('menu_id', $menuId); */
+        /*     $r->session()->put('redirect_before_order', true); */
+        /*     $r->session()->put('redirect_to', 'client_cart_get'); */
 
-        //Process order
-        $order = new Order;
-        $order->client_id       = $clientId;
-        $order->menu_id         = $menuId;
-        $order->quantity        = $orderQuantity;
-        $order->total_amount    = $totalAmount;
-        $order->order_type      = $orderType;
-        $order->order_status    = 'On Progress';
-        $order->payment_status  = 'Unpaid';
-        $order->save();
+        /*     return redirect() */
+        /*         ->route('client_login_get'); */
+        /* } */
+        /* $clientId       = Auth::user()->id; */
+        /* $menuPrice      = $r->menu_price; */
+        /* $orderQuantity  = $r->order_quantity; */
+        /* $orderType      = $r->order_type; */
+        /* $totalAmount    = ( $menuPrice * $orderQuantity ); */
 
-        //Menu Stocks process, reduce quantity
-        $menuStocks     = MenuStock::where('menu_id', $menuId)->get();
+        /* //Process order */
+        /* $order = new Order; */
+        /* $order->client_id       = $clientId; */
+        /* $order->menu_id         = $menuId; */
+        /* $order->quantity        = $orderQuantity; */
+        /* $order->total_amount    = $totalAmount; */
+        /* $order->order_type      = $orderType; */
+        /* $order->order_status    = 'On Progress'; */
+        /* $order->payment_status  = 'Unpaid'; */
+        /* $order->save(); */
+
+        /* //Menu Stocks process, reduce quantity */
+        /* $menuStocks = MenuStock::where('menu_id', $menuId)->get(); */
          
-        //Reduce quantity = Order quantity * Applied quantity
-        //Current quantity = Reduce quantity - Current quantity
-        foreach ($menuStocks as $ms) {
-            $stock = Stock::find($ms->stock_id);
+        /* //Reduce quantity = Order quantity * Applied quantity */
+        /* //Current quantity = Reduce quantity - Current quantity */
+        /* foreach ($menuStocks as $ms) { */
+        /*     $stock = Stock::find($ms->stock_id); */
 
-            $reduceQuantity = ( $orderQuantity * $ms->quantity );
-            $currentQuantity = ( $stock->quantity - $reduceQuantity );
+        /*     $reduceQuantity = ( $orderQuantity * $ms->quantity ); */
+        /*     $currentQuantity = ( $stock->quantity - $reduceQuantity ); */
 
-            $stock->quantity = $currentQuantity;
-            $stock->save();
-        }
+        /*     $stock->quantity = $currentQuantity; */
+        /*     $stock->save(); */
+        /* } */
 
-        return redirect()
-            ->route('client_home')
-            ->with('order_message', 'Your order is being process');
+        /* return redirect() */
+        /*     ->route('client_home') */
+        /*     ->with('order_message', 'Your order is being process'); */
     }
+
+    /* public function clientCheckout(Request $r) */
+    /* { */
+
+    /* } */
 }
