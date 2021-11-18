@@ -9,7 +9,9 @@
     <div class="cart-list">
         <h3 class="fw-light">Keranjang</h3>
 
-        <form action="{{ route('client_order_post') }}" method="post">
+        @include ('shared.message')
+
+        <form action="" method="post">
             @csrf
 
             @foreach ($carts as $c)
@@ -23,7 +25,15 @@
                         <strong>Rp. {{ number_format( $c->menu_price, 2, ',', '.' ) }}</strong>
                     </div>
                     <div class="py-1">
-                    <input class="form-control w-25" type="number" name="quantity" value="{{ $c->cart_quantity }}">
+
+                    <input class="d-inline form-control w-25" type="number" name="quantity" value="{{ $c->cart_quantity }}">
+
+                    {{-- Delete function --}}
+                    <a class="d-inline btn text-danger" href="{{ route('client_cart_delete', [ 'cart_id' => $c->id ]) }}">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                    {{-- Delete function --}}
+
                     </div>
                 </div>
                 <div class="py-1"></div>
