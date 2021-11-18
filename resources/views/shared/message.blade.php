@@ -29,6 +29,21 @@
     @endif
     {{-- REGISTERED USER MESSAGE --}}
 
+    {{-- ADD CART MESSAGE --}}
+    @if (session('cart_add_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('cart_add_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- ADD CART MESSAGE --}}
+
     {{-- DELETED CART MESSAGE --}}
     @if (session('cart_delete_message'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
