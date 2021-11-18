@@ -1,4 +1,6 @@
+<div class="py-1"></div>
 <div class="message">
+    {{-- ORDER MESSAGE --}}
     @if (session('order_message'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('order_message') }}
@@ -10,7 +12,9 @@
         </button>
     </div>
     @endif
+    {{-- ORDER MESSAGE --}}
 
+    {{-- REGISTERED USER MESSAGE --}}
     @if (session('registered_message'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('registered_message') }}
@@ -23,4 +27,21 @@
         </button>
     </div>
     @endif
+    {{-- REGISTERED USER MESSAGE --}}
+
+    {{-- DELETED CART MESSAGE --}}
+    @if (session('cart_delete_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('cart_delete_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- DELETED CART MESSAGE --}}
 </div>
+<div class="py-1"></div>
