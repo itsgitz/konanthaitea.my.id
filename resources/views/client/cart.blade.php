@@ -2,7 +2,6 @@
 @section ('title', 'Keranjang')
 
 @section ('content')
-<div class="py-3"></div>
 <div class="p-3">
     @if ( !$carts->isEmpty() )
 
