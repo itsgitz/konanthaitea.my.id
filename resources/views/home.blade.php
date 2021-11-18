@@ -8,7 +8,7 @@
 <div class="py-3"></div>
 <div class="row">
     @foreach ($menu as $m) 
-    <div class="col-3">
+    <div class="col-md-3">
         <div class="card shadow mb-5 bg-body">
             <div class="card-body">
                 <h1 class="card-title">{{ $m->name }}</h1>
