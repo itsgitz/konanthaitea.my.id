@@ -23,15 +23,7 @@ class CartController extends Controller
             'carts' => $this->getOnCart(),
         ]);
     }
-
-    public function getOnCartCount()
-    {
-        
-        $carts = $this->getOnCart();
-
-        return $carts->count();
-    }
-
+ 
     public function store(Request $r)
     {
         if (!Auth::check()) {
@@ -48,9 +40,25 @@ class CartController extends Controller
             ->route('client_cart_get');
     }
 
-    public function checkout()
+    public function delete(Request $r)
     {
+        $cart = Cart::find($r->cart_id);
+        $cart->delete();
+
+        return redirect()
+            ->route('client_cart_get')
+            ->with('cart_delete_message', 'Item dalam keranjang telah dihapus');
     }
+
+
+    public function getOnCartCount()
+    {
+        $carts = $this->getOnCart();
+
+
+        return $carts->count();
+    }
+
 
     private function getOnCart()
     {
