@@ -19,11 +19,8 @@ class CartController extends Controller
     {
         $this->saveCart($r);
 
-        $carts = $this->getOnCart();
-        
-
         return view('client.cart', [
-            'carts' => $carts,
+            'carts' => $this->getOnCart(),
         ]);
     }
 
@@ -82,6 +79,7 @@ class CartController extends Controller
         if (Auth::check()) {
 
             //If user redirected to login from add cart item (home page)
+            //or directly add an item from home page
             //Run the save operation
             if ( $r->session()->has('redirect_before_cart') || isset( $r->menu_id ) ) {
 
@@ -94,12 +92,33 @@ class CartController extends Controller
                     $menuId = $r->menu_id;
                 }
 
-                $cart = new Cart;
-                $cart->client_id    = Auth::id();
-                $cart->menu_id      = $menuId;
-                $cart->status       = self::ON_CART_STATUS;
-                $cart->quantity     = 1;
-                $cart->save();
+                //If item is exist on cart, only update the quantity
+                if ( $this->isOnCartExist($r) ) {
+                    
+                    //Get current data for get the current quantity
+                    $currentData = Cart::where([
+                        'client_id' => Auth::id(),
+                        'menu_id'   => $menuId,
+                        'status'    => self::ON_CART_STATUS
+                    ])->first();
+ 
+                    //Update quantity (+1)
+                    Cart::where('client_id', Auth::id())
+                        ->where('menu_id', $menuId)
+                        ->where('status', self::ON_CART_STATUS)
+                        ->update([
+                            'quantity' => ( $currentData->quantity + 1 )
+                        ]);
+
+                } else {
+                    //If item is not exist on cart, create new item on cart
+                    $cart = new Cart;
+                    $cart->client_id    = Auth::id();
+                    $cart->menu_id      = $menuId;
+                    $cart->status       = self::ON_CART_STATUS;
+                    $cart->quantity     = 1;
+                    $cart->save();
+                }
 
                 $this->destroyCartSession($r);
 
@@ -110,6 +129,21 @@ class CartController extends Controller
         } else {
             //Don't run the save operation if user is not logged in
             $this->destroyCartSession($r);
+        }
+    }
+
+    private function isOnCartExist(Request $r)
+    {
+        $carts = Cart::where([
+            'client_id' => Auth::id(),
+            'menu_id'   => $r->menu_id,
+            'status'    => self::ON_CART_STATUS
+        ])->first();
+
+        if ( !isset( $carts ) ) {
+            return false;
+        } else {
+            return true;
         }
     }
 
