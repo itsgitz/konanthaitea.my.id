@@ -11,8 +11,10 @@ use App\Models\Cart;
 
 class CartController extends Controller
 {
-    const ON_CART_STATUS    = 'On Cart';
-    const FINISH_STATUS     = 'Finish';
+    const ON_CART_STATUS        = 'On Cart';
+    const FINISH_STATUS         = 'Finish';
+    const CART_ADD_MESSAGE      = 'Berhasil menambahkan item ke dalam keranjang';
+    const CART_DELETE_MESSAGE   = 'Berhasil menghapus item dari keranjang';
 
     //
     public function index(Request $r)
@@ -37,7 +39,8 @@ class CartController extends Controller
         $this->saveCart($r);
  
         return redirect()
-            ->route('client_cart_get');
+            ->route('client_cart_get')
+            ->with('cart_add_message', self::CART_ADD_MESSAGE);
     }
 
     public function delete(Request $r)
@@ -47,7 +50,7 @@ class CartController extends Controller
 
         return redirect()
             ->route('client_cart_get')
-            ->with('cart_delete_message', 'Item dalam keranjang telah dihapus');
+            ->with('cart_delete_message', self::CART_DELETE_MESSAGE);
     }
 
 
@@ -101,7 +104,7 @@ class CartController extends Controller
                 }
 
                 //If item is exist on cart, only update the quantity
-                if ( $this->isOnCartExist($r) ) {
+                if ( $this->isOnCartExist($menuId) ) {
                     
                     //Get current data for get the current quantity
                     $currentData = Cart::where([
@@ -130,6 +133,10 @@ class CartController extends Controller
 
                 $this->destroyCartSession($r);
 
+                return redirect()
+                    ->route('client_cart_get')
+                    ->with('cart_add_message', self::CART_ADD_MESSAGE);
+
             }  else {
                 //Don't run the save operation if not redirected from add cart item
                 $this->destroyCartSession($r);
@@ -140,11 +147,11 @@ class CartController extends Controller
         }
     }
 
-    private function isOnCartExist(Request $r)
+    private function isOnCartExist($menuId)
     {
         $carts = Cart::where([
             'client_id' => Auth::id(),
-            'menu_id'   => $r->menu_id,
+            'menu_id'   => $menuId,
             'status'    => self::ON_CART_STATUS
         ])->first();
 
