@@ -4,3 +4,6 @@ run-db:
 	./script/run-mariadb.sh
 down-db:
 	./script/down-mariadb.sh
+
+destroy-local:
+	./script/destroy.sh
