@@ -14,4 +14,5 @@ use Illuminate\Support\Facades\Route;
 /*     ->name('client_order_get'); */
 
 Route::post('/minuman/orders', [\App\Http\Controllers\OrdersController::class, 'clientProcess'])
-    ->name('client_order_post');
+    ->name('client_order_post')
+    ->middleware('auth');
