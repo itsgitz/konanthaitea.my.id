@@ -12,7 +12,7 @@
 
         @include ('shared.message')
 
-        <form action="" method="post">
+        <form action="{{ route('client_order_post') }}" method="post">
             @csrf
 
             <div class="row">
@@ -26,12 +26,16 @@
                                 <h5>{{ $c->menu_name }}</h5>
                             </div>
                             <div class="py-1 fw-light">
+                                <input type="hidden" name="carts[{{ $loop->index }}][cart_id]" value="{{ $c->id }}">
+                                <input type="hidden" name="carts[{{ $loop->index }}][menu_price]" value="{{ $c->menu_price }}">
+                                <input type="hidden" name="carts[{{ $loop->index }}][cart_quantity]" value="{{ $c->cart_quantity }}">
                                 Rp. {{ number_format( $c->menu_price, 2, ',', '.' ) }} x {{ $c->cart_quantity }}
                             </div>
 
                             {{-- Sub Total --}}
                             <span class="fw-light">
-                                <strong>Subtotal Rp. <span id="cart-subtotal">{{ $c->cart_subtotal_amount }}</span></strong>
+                                <input type="hidden" name="carts[{{ $loop->index }}][cart_subtotal_amount]" value="{{ $c->cart_subtotal_amount }}">
+                                <span class="fw-bold">Subtotal Rp. <span id="cart-subtotal">{{ number_format( $c->cart_subtotal_amount, 2, ',', '.' ) }}</span></span>
                             </span>
                             {{-- Sub Total --}}
 
@@ -63,9 +67,42 @@
                             <div class="card-text fw-light border-bottom py-3">
                                 Total Belanja ({{ $cart->getOnCartCount() }} jenis minuman) 
                             </div>
+                            <div class="py-1"></div>
+                            <div class="card-text">
+                                <div class="mb-3">
+                                    <select id="cart-delivery" class="form-select" name="cart_delivery_method">
+                                        <option value="" selected>Pilih Metode Pengiriman</option>
+                                        <option value="Pickup">Pickup</option>
+                                        <option value="Delivery">Delivery</option>
+                                    </select>
+                                    @error ('cart_delivery_method')
+                                    <div>
+                                        <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="py-1"></div>
+                            <div class="card-text">
+                                <div class="mb-3">
+                                    <select id="cart-payment-method" class="form-select" name="cart_payment_method">
+                                        <option value="" selected>Pilih Metode Pembayaran</option>
+                                        <option value="Bank Transfer">Bank Transfer</option>
+                                        <option value="E-money">E-money</option>
+                                    </select>
+                                    @error ('cart_payment_method')
+                                    <div>
+                                        <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="py-2"></div>
                             <div class="card-text">
                                 <h5 class="card-title">Total Harga</h5>
+                                <input type="hidden" name="cart_total_amount" value="{{ $totalAmount }}">
+                                <span class="card-text fw-bold">Rp. {{ number_format( $totalAmount, 2, ',', '.' ) }}</span>
                             </div>
                             <div class="py-3"></div>
                             <div class="card-text">
