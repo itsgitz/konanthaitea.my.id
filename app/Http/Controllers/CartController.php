@@ -13,7 +13,6 @@ use App\Models\Menu;
 class CartController extends Controller
 {
     const ON_CART_STATUS        = 'On Cart';
-    const FINISH_STATUS         = 'Finish';
     const CART_ADD_MESSAGE      = 'Berhasil menambahkan item ke dalam keranjang';
     const CART_DELETE_MESSAGE   = 'Berhasil menghapus item dari keranjang';
     const CART_UPDATE_MESSAGE   = 'Berhasil mengubah item di keranjang';
@@ -23,8 +22,12 @@ class CartController extends Controller
     {
         $this->saveCart($r);
 
+        $carts          = $this->getOnCart();
+        $totalAmount    = $this->getTotalAmount($carts);
+
         return view('client.carts.index', [
-            'carts' => $this->getOnCart(),
+            'carts'         => $carts,
+            'totalAmount'   => $totalAmount,
         ]);
     }
  
@@ -92,7 +95,6 @@ class CartController extends Controller
             ->with('cart_update_message', self::CART_UPDATE_MESSAGE);
     }
 
-
     public function getOnCartCount()
     {
         $carts = $this->getOnCart();
@@ -120,6 +122,18 @@ class CartController extends Controller
 
 
         return $carts;
+    }
+
+    private function getTotalAmount($carts)
+    {
+        $totalAmount = 0;
+
+        foreach ($carts as $c) {
+            $totalAmount += $c->cart_subtotal_amount;
+        }
+
+
+        return $totalAmount;
     }
 
     private function saveCart(Request $r)
