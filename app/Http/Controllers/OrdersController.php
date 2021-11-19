@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Cart;
+use App\Models\CartOrder;
 use App\Models\Order;
 use App\Models\Client;
 use App\Models\Menu;
@@ -15,6 +17,23 @@ use App\Models\MenuStock;
 
 class OrdersController extends Controller
 {
+    const PAYMENT_STATUS    = [
+        'paid'      => 'Paid',
+        'unpaid'    => 'Unpaid',
+    ];
+
+    const DELIVERY_STATUS   = [
+        'waiting'       => 'Waiting',
+        'confirmed'     => 'Confirmed',
+        'on_progress'   => 'On Progress',
+        'ready'         => 'Ready',
+        'delivery'      => 'Delivery',
+        'finish'        => 'Finish',
+        'failed'        => 'Failed',
+    ];
+
+    const FINISH_CART_STATUS = 'Finish';
+
     //
     //Admin source code for order controller
     //
@@ -101,31 +120,26 @@ class OrdersController extends Controller
     //Client order process
     public function clientProcess(Request $r)
     {
-        /* if (!Auth::check()) { */
-        /*     $r->session()->put('menu_id', $menuId); */
-        /*     $r->session()->put('redirect_before_order', true); */
-        /*     $r->session()->put('redirect_to', 'client_cart_get'); */
 
-        /*     return redirect() */
-        /*         ->route('client_login_get'); */
-        /* } */
-        /* $clientId       = Auth::user()->id; */
-        /* $menuPrice      = $r->menu_price; */
-        /* $orderQuantity  = $r->order_quantity; */
-        /* $orderType      = $r->order_type; */
-        /* $totalAmount    = ( $menuPrice * $orderQuantity ); */
+        $r->validate(
+            [
+                'cart_delivery_method'  => ['required'],
+                'cart_payment_method'   => ['required']
+            ],
+            [
+                'cart_delivery_method.required' => 'Mohon untuk memilih metode pengiriman',
+                'cart_payment_method.required'  => 'Mohon untuk memilih method pembayaran'
+            ],
+        );
+        
+        
+        //Get order(id) after created an order
+        $orderId = $this->saveOrder($r);
+        $this->saveCartOrder($r, $orderId);
 
-        /* //Process order */
-        /* $order = new Order; */
-        /* $order->client_id       = $clientId; */
-        /* $order->menu_id         = $menuId; */
-        /* $order->quantity        = $orderQuantity; */
-        /* $order->total_amount    = $totalAmount; */
-        /* $order->order_type      = $orderType; */
-        /* $order->order_status    = 'On Progress'; */
-        /* $order->payment_status  = 'Unpaid'; */
-        /* $order->save(); */
-
+        var_dump($orderId);
+                        
+        
         /* //Menu Stocks process, reduce quantity */
         /* $menuStocks = MenuStock::where('menu_id', $menuId)->get(); */
          
@@ -146,8 +160,32 @@ class OrdersController extends Controller
         /*     ->with('order_message', 'Your order is being process'); */
     }
 
-    /* public function clientCheckout(Request $r) */
-    /* { */
+    private function saveOrder(Request $r)
+    {
+        $order = new Order;
+        $order->client_id       = Auth::id();
+        $order->total_amount    = $r->cart_total_amount;
+        $order->payment_status  = self::PAYMENT_STATUS['unpaid'];
+        $order->payment_method  = $r->cart_payment_method;
+        $order->delivery_type   = $r->cart_delivery_method;
+        $order->delivery_status = self::DELIVERY_STATUS['waiting'];
+        $order->save();
 
-    /* } */
+        return $order->id;
+    }
+
+    private function saveCartOrder(Request $r, $orderId)
+    {
+        foreach ($r->carts as $c) {
+            //Change cart status to 'Finish'
+            Cart::find($c['cart_id'])
+                ->update(['status' => self::FINISH_CART_STATUS]);
+
+            //Add data to cart_orders table
+            CartOrder::create([
+                'order_id'  => $orderId,
+                'cart_id'   => $c['cart_id']
+            ]);
+        }
+    }
 }
