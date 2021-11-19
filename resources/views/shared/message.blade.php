@@ -58,5 +58,20 @@
     </div>
     @endif
     {{-- DELETED CART MESSAGE --}}
+
+    {{-- UPDATED CART MESSAGE --}}
+    @if (session('cart_update_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('cart_update_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- UPDATED CART MESSAGE --}}
 </div>
 <div class="py-1"></div>
