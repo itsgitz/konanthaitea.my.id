@@ -16,12 +16,9 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('client_id');
-            $table->unsignedBigInteger('menu_id');
-            $table->integer('quantity');
             $table->integer('total_amount');
-            $table->enum('order_type', ['Pickup', 'Delivery']);
-            $table->enum('order_status', ['On Progress', 'Finish']);
             $table->enum('payment_status', ['Paid', 'Unpaid']);
+            $table->enum('payment_method', ['Bank Transfer', 'E-money']);
             $table->timestamps();
         });
     }
