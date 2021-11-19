@@ -19,6 +19,8 @@ class CreateOrdersTable extends Migration
             $table->integer('total_amount');
             $table->enum('payment_status', ['Paid', 'Unpaid']);
             $table->enum('payment_method', ['Bank Transfer', 'E-money']);
+            $table->enum('delivery_type', ['Pickup', 'Delivery']);
+            $table->enum('delivery_status', ['Waiting', 'Confirmed', 'On Progress', 'Ready', 'Delivery', 'Finish', 'Failed']);
             $table->timestamps();
         });
     }
