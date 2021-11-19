@@ -19,6 +19,7 @@ class CreateCartsTable extends Migration
             $table->unsignedBigInteger('menu_id');
             $table->enum('status', ['On Cart', 'Finish']);
             $table->unsignedBigInteger('quantity');
+            $table->integer('subtotal_amount');
             $table->timestamps();
         });
     }
