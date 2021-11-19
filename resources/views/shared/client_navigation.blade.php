@@ -9,43 +9,67 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
       <a class="navbar-brand text-primary fs-2" href="/"><i class="fas fa-prescription-bottle"></i> Minuman Tile</a>
 
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      </ul>
-      <div class="d-flex">
-        <a class="nav-link fw-light text-secondary position-relative" href="{{ route('client_cart_get') }}">
-            <i class="fas fa-shopping-cart"></i> &nbsp;
-            @if (Auth::check())
-                @if (!empty($cart->getOnCartCount()))
-                    <span class="position-absolute top-1 start-70 translate-middle badge rounded-circle bg-danger">
-                        {{ $cart->getOnCartCount() }}
-                    </span>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        {{-- Cart --}}
+        <li class="nav-item px-2">
+            <a class="nav-link fw-light text-secondary position-relative" href="{{ route('client_cart_get') }}">
+                <i class="fas fa-shopping-cart"></i> &nbsp;
+                @if (Auth::check())
+                    @if (!empty($cart->getOnCartCount()))
+                        <span class="position-absolute top-1 start-70 translate-middle badge rounded-circle bg-danger">
+                            {{ $cart->getOnCartCount() }}
+                        </span>
+                    @endif
                 @endif
-            @endif
-        </a>
+            </a>
+        </li>
+        {{-- Cart --}}
 
+        {{-- User --}}
         @if (Auth::check())
-        <a href="#" class="nav-link fw-light text-secondary">
-            <i class="fas fa-user-circle"></i> {{ Auth::user()->name }}
-        </a>
-        <form method="post" action="{{ route('client_logout_post') }}">
-            @csrf
-            <button class="btn nav-link fw-light text-secondary" type="submit">
-                Keluar
-            </button>
-        </form>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user-circle"></i> {{ Auth::user()->name }}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDrodown">
+                <li>
+                    <a class="dropdown-item" href="#">Daftar Transaksi</a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <form method="post" action="{{ route('client_logout_post') }}">
+                        @csrf
+                        <button class="btn dropdown-item fw-light text-secondary" type="submit">
+                            Keluar
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </li>
         @else
 
-        <a class="nav-link fw-light text-secondary" href="{{ route('client_register_get') }}">
-            Daftar
-        </a>
-        <a class="nav-link fw-light text-secondary" href="{{ route('client_login_get') }}">
-            Masuk
-        </a>
+        <li class="nav-item">
+            <a class="nav-link fw-light text-secondary" href="{{ route('client_register_get') }}">
+                Daftar
+            </a>
+        </li>
 
+        <li class="nav-item">
+            <a class="nav-link fw-light text-secondary" href="{{ route('client_login_get') }}">
+                Masuk
+            </a>
+        </li>
         @endif
+        {{-- User --}}
 
-        <a class="nav-link fw-light text-secondary" href="{{ route('client_about') }}">Tentang</a>
-      </div>
+        {{-- About --}}
+        <li class="nav-item">
+            <a class="nav-link fw-light text-secondary" href="{{ route('client_about') }}">Tentang Aplikasi</a>
+        </li>
+        {{-- About --}}
+      </ul>
     </div>
   </div>
 </nav>
