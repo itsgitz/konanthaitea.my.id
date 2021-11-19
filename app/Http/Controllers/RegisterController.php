@@ -31,11 +31,13 @@ class RegisterController extends Controller
                 'password_confirmation' => ['required', 'same:password'],
             ],
             [
-                'required'  => 'Mohon untuk memasukan data ke form registrasi',
-                'email'     => 'Format alamat email yang anda masukan salah',
-                'min'       => 'Minimal harus 6 karakter',
-                'same'      => 'Konfirmasi password tidak sama',
-                'unique'    => 'Data telah digunakan'
+                'required'      => 'Mohon untuk memasukan data ke form registrasi',
+                'email'         => 'Format alamat email yang anda masukan salah',
+                'name.min'      => 'Minimal nama harus 6 karakter',
+                'password.min'  => 'Minimal password harus 6 karakter',
+                'same'          => 'Konfirmasi password tidak sama',
+                'name.unique'   => 'Nama yang anda masukan telah terdaftar',
+                'email.unique'  => 'Alamat email yang anda masukan telah terdaftar'
             ],
         );
 
