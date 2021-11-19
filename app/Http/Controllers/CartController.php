@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 
 use App\Models\Cart;
+use App\Models\Menu;
 
 class CartController extends Controller
 {
@@ -15,13 +16,14 @@ class CartController extends Controller
     const FINISH_STATUS         = 'Finish';
     const CART_ADD_MESSAGE      = 'Berhasil menambahkan item ke dalam keranjang';
     const CART_DELETE_MESSAGE   = 'Berhasil menghapus item dari keranjang';
+    const CART_UPDATE_MESSAGE   = 'Berhasil mengubah item di keranjang';
 
     //
     public function index(Request $r)
     {
         $this->saveCart($r);
 
-        return view('client.cart', [
+        return view('client.carts.index', [
             'carts' => $this->getOnCart(),
         ]);
     }
@@ -30,6 +32,7 @@ class CartController extends Controller
     {
         if (!Auth::check()) {
             $r->session()->put('menu_id', $r->menu_id);
+            $r->session()->put('menu_price', $r->menu_price);
             $r->session()->put('redirect_before_cart', true);
 
             return redirect()
@@ -43,14 +46,50 @@ class CartController extends Controller
             ->with('cart_add_message', self::CART_ADD_MESSAGE);
     }
 
-    public function delete(Request $r)
+    public function delete($cartId)
     {
-        $cart = Cart::find($r->cart_id);
+        $cart = Cart::findOrFail($cartId);
         $cart->delete();
 
         return redirect()
             ->route('client_cart_get')
             ->with('cart_delete_message', self::CART_DELETE_MESSAGE);
+    }
+
+    public function edit($cartId)
+    {
+        $cart = DB::table('carts')
+            ->join('clients', 'carts.client_id', '=', 'clients.id')
+            ->join('menus', 'carts.menu_id', '=', 'menus.id')
+            ->where('carts.id', '=', $cartId)
+            ->select(
+                'carts.id',
+                'menus.name AS menu_name',
+                'carts.quantity AS cart_quantity',
+                'menus.price AS menu_price',
+            )
+            ->first();
+
+        if (!isset( $cart )) {
+            abort(404);
+        }
+
+        return view('client.carts.edit', [
+            'cart' => $cart
+        ]);
+    }
+
+    public function update(Request $r, $cartId)
+    {
+        $cart                   = Cart::find($cartId);
+        $cart->quantity         = $r->cart_quantity;
+        $cart->subtotal_amount  = ( $r->menu_price * $r->cart_quantity );
+        $cart->save();
+
+
+        return redirect()
+            ->route('client_cart_get')
+            ->with('cart_update_message', self::CART_UPDATE_MESSAGE);
     }
 
 
@@ -74,7 +113,8 @@ class CartController extends Controller
                 'carts.id',
                 'menus.name AS menu_name',
                 'carts.quantity AS cart_quantity',
-                'menus.price AS menu_price'
+                'menus.price AS menu_price',
+                'carts.subtotal_amount AS cart_subtotal_amount'
             )
             ->get();
 
@@ -85,6 +125,7 @@ class CartController extends Controller
     private function saveCart(Request $r)
     {
         $menuId = '';
+        $menuPrice = 0;
 
         //Save operation only allowed for logged in user
         if (Auth::check()) {
@@ -96,11 +137,13 @@ class CartController extends Controller
 
                 //Get the menu_id, redirected from login page, get from session
                 if ( $r->session()->has('menu_id') ) {
-                    $menuId = $r->session()->get('menu_id');
+                    $menuId     = $r->session()->get('menu_id');
+                    $menuPrice  = $r->session()->get('menu_price');
 
                 } else {
                     //Else, get menu_id from post input (home page)
-                    $menuId = $r->menu_id;
+                    $menuId     = $r->menu_id;
+                    $menuPrice  = $r->menu_price;
                 }
 
                 //If item is exist on cart, only update the quantity
@@ -112,22 +155,30 @@ class CartController extends Controller
                         'menu_id'   => $menuId,
                         'status'    => self::ON_CART_STATUS
                     ])->first();
+
+                    //Get menu price
+                    $menu = Menu::find($menuId);
  
+                    $quantity       = $currentData->quantity + 1;
+                    $subtotalAmount = $menu->price * $quantity;
+
                     //Update quantity (+1)
                     Cart::where('client_id', Auth::id())
                         ->where('menu_id', $menuId)
                         ->where('status', self::ON_CART_STATUS)
                         ->update([
-                            'quantity' => ( $currentData->quantity + 1 )
+                            'quantity'          => $quantity,
+                            'subtotal_amount'   => $subtotalAmount
                         ]);
 
                 } else {
                     //If item is not exist on cart, create new item on cart
                     $cart = new Cart;
-                    $cart->client_id    = Auth::id();
-                    $cart->menu_id      = $menuId;
-                    $cart->status       = self::ON_CART_STATUS;
-                    $cart->quantity     = 1;
+                    $cart->client_id        = Auth::id();
+                    $cart->menu_id          = $menuId;
+                    $cart->status           = self::ON_CART_STATUS;
+                    $cart->quantity         = 1;
+                    $cart->subtotal_amount  = $menuPrice;
                     $cart->save();
                 }
 
