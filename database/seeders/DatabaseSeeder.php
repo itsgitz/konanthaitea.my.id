@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             StockSeeder::class,
             MenuStockSeeder::class,
+            StockUnitSeeder::class,
         ]);
     }
 }

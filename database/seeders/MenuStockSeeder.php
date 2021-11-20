@@ -19,22 +19,22 @@ class MenuStockSeeder extends Seeder
             [
                 'menu_id'   => 1,   //Thai Tea
                 'stock_id'  => 1,   //Air
-                'quantity'  => 1,   //1 Liter
+                'quantity'  => 1,   //1 Mililiter
             ],
             [
                 'menu_id'   => 1,   //Thai Tea
                 'stock_id'  => 2,   //Gula
-                'quantity'  => 1,   //1 Kilogram
+                'quantity'  => 1,   //1 Gram
             ],
             [
                 'menu_id'   => 2,   //Kopi Sobek
                 'stock_id'  => 1,   //Air
-                'quantity'  => 3,   //3 Liter
+                'quantity'  => 3,   //3 Mililiter
             ],
             [
                 'menu_id'   => 2,   //Kopi Sobek
                 'stock_id'  => 2,   //Gula
-                'quantity'  => 5,   //5 Kilogram
+                'quantity'  => 5,   //5 Gram
             ]
         ];
 

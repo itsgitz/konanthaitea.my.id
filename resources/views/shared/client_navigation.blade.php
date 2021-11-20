@@ -33,7 +33,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDrodown">
                 <li>
-                    <a class="dropdown-item" href="#">Daftar Transaksi</a>
+                    <a class="dropdown-item" href="{{ route('client_orders_get') }}">Daftar Transaksi</a>
                 </li>
                 <li>
                     <hr class="dropdown-divider">

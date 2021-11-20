@@ -1,34 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Orders</title>
-    <link href="/css/app.css" rel="stylesheet">
-    <script src="/js/app.js"></script>
-</head>
-<body>
-    <div class="container">
-        <div class="py-3">
-            <h1 class="text-secondary">MinumanTile</h1>
-        </div>
-        <div class="py-3">
-            <div class="bg-secondary rounded p-2">
-                <p class="text-light">Hei <i>{{ $user->name }}</i>! Order your favorite drinks!</p>
-            </div>
-            <div class="py-2">
-                <form method="post" action="{{ route('client_logout_post') }}">
-                    @csrf
-                    <a href="{{ route('client_logout_post') }}" onclick="event.preventDefault();this.closest('form').submit()">Logout</a>
-                </form>
-                <nav>
-                    <a href="{{ route('client_home') }}">Home</a>
-                </nav>
-            </div>
-        </div>
-        <div class="py-3">
-            My Orders
-        </div>
-    </div> 
-</body>
-</html>
+@extends ('layouts.client')
+@section ('title', 'Daftar Transaksi')
+
+@section ('content')
+<div class="py-3">
+    <table class="table">
+        <th>Order ID</th>
+        <th>Status Pembayaran</th>
+        <th>Metode Pembayaran</th>
+        <th>Status Pengiriman</th>
+        <th>Metode Pengiriman</th>
+        <th>Total Harga</th>
+        
+        @foreach ($orders as $o)
+        <tr>
+            <td>{{ $o->id }}</td>
+            <td>{{ $o->payment_status }}</td>
+            <td>{{ $o->payment_method }}</td>
+            <td>{{ $o->delivery_status }}</td>
+            <td>{{ $o->delivery_method }}</td>
+            <td><span class="fw-bold">Rp. {{ number_format( $o->total_amount, 2, ',', '.' ) }}</span></td>
+        </tr>
+        @endforeach
+    </table>
+
+    <div class="py-3">
+        <a class="btn btn-primary" href="{{ route('client_home') }}">Kembali</a>
+    </div>
+</div>
+@endsection

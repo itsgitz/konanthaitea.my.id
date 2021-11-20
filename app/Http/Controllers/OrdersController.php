@@ -32,28 +32,34 @@ class OrdersController extends Controller
         'failed'        => 'Failed',
     ];
 
-    const FINISH_CART_STATUS = 'Finish';
+    const FINISH_CART_STATUS    = 'Finish';
+    const ORDER_FINISH_MESSAGE  = 'Pesanan anda sedang diproses, harap menunggu status selanjutnya';
+    const ORDER_MARK_AS_PAID    = 'mark_as_paid';
 
     //
     //Admin source code for order controller
-    //
     //
     public function adminIndex(Request $r)
     {
         $orders = DB::table('orders')
             ->join('clients', 'orders.client_id', '=', 'clients.id')
-            ->join('menus', 'orders.menu_id', '=', 'menus.id')
+            ->join('cart_orders', 'orders.id', '=', 'cart_orders.order_id')
+            ->join('carts', 'cart_orders.cart_id', '=', 'carts.id')
+            ->join('menus', 'carts.menu_id', '=', 'menus.id')
             ->select(
-                'orders.id',
-                'menus.name AS menu_name',
-                'orders.quantity',
+                'orders.id AS order_id',
+                'clients.id AS client_id',
                 'clients.name AS client_name',
-                'orders.payment_status',
-                'orders.order_status',
-                'orders.created_at'
+                'orders.payment_status AS order_payment_status',
+                'orders.delivery_method AS order_delivery_method',
+                'orders.delivery_status AS order_delivery_status',
+                'orders.total_amount AS order_total_amount',
+                'orders.created_at AS order_created_at'
             )
+            ->distinct()
             ->get();
 
+        
         return view('admin.orders.index', [
             'orders' => $orders,
         ]);
@@ -61,15 +67,26 @@ class OrdersController extends Controller
 
     public function adminShow(Request $r, $id)
     {
-        $order  = Order::find($id);
-        $client = Client::find($order->client_id);
-        $menu   = Menu::find($order->menu_id);
+        $order = Order::find($id);
 
-        $order->client_name = $client->name;
-        $order->menu_name   = $menu->name;
-        
+        $cartOrders = DB::table('cart_orders')
+            ->join('orders', 'cart_orders.order_id', '=', 'orders.id')
+            ->join('carts', 'cart_orders.cart_id', '=', 'carts.id')
+            ->join('menus', 'carts.menu_id', '=', 'menus.id')
+            ->join('clients', 'carts.client_id', '=', 'clients.id')
+            ->where('orders.id', '=', $id)
+            ->select(
+                'menus.name AS menu_name',
+                'carts.quantity AS cart_quantity',
+                'carts.subtotal_amount AS cart_subtotal_amount',
+                'clients.name AS client_name',
+            )
+            ->get();
+
+
         return view('admin.orders.show', [
-            'order' => $order
+            'order' => $order,
+            'cartOrders' => $cartOrders
         ]);
     }
 
@@ -77,15 +94,14 @@ class OrdersController extends Controller
     {
         $order = Order::find($id);
 
-        switch($r->input('process')) {
-            case 'Mark as Paid':
+        switch($r->action) {
+            case self::ORDER_MARK_AS_PAID:
                 $order->payment_status = 'Paid';
                 $order->save();
 
 
                 return redirect()
-                    ->route('admin_orders_show', [ 'id' => $id ])
-                    ->with('process_message', 'Payment status updated to Paid');
+                    ->route('admin_orders_show_get', [ 'id' => $id ]);
             break;
 
             case 'Mark as Finish':
@@ -94,8 +110,7 @@ class OrdersController extends Controller
 
 
                 return redirect()
-                    ->route('admin_orders_show', [ 'id' => $id ])
-                    ->with('process_message', 'Order status updated to Finish');
+                    ->route('admin_orders_show_get', [ 'id' => $id ]);
             break;
         }
     }
@@ -104,12 +119,15 @@ class OrdersController extends Controller
     //Client source code for order controller
     //
     //
-    /* public function clientIndex(Request $r) */
-    /* { */
-    /*     return view('client.orders.index', [ */
-    /*         'user' => Auth::user(), */
-    /*     ]); */
-    /* } */
+    public function clientIndex(Request $r)
+    {
+        $orders = Order::where('client_id', Auth::id())->get();
+
+
+        return view('client.orders.index', [
+            'orders' => $orders
+        ]);
+    }
 
     /* //Client per order details */
     /* public function clientShow($id) */
@@ -131,33 +149,16 @@ class OrdersController extends Controller
                 'cart_payment_method.required'  => 'Mohon untuk memilih method pembayaran'
             ],
         );
-        
+
         
         //Get order(id) after created an order
         $orderId = $this->saveOrder($r);
-        $this->saveCartOrder($r, $orderId);
-
-        var_dump($orderId);
-                        
-        
-        /* //Menu Stocks process, reduce quantity */
-        /* $menuStocks = MenuStock::where('menu_id', $menuId)->get(); */
+        $this->saveCartOrder($r, $orderId); 
+        $this->saveMenuStock($r);
          
-        /* //Reduce quantity = Order quantity * Applied quantity */
-        /* //Current quantity = Reduce quantity - Current quantity */
-        /* foreach ($menuStocks as $ms) { */
-        /*     $stock = Stock::find($ms->stock_id); */
-
-        /*     $reduceQuantity = ( $orderQuantity * $ms->quantity ); */
-        /*     $currentQuantity = ( $stock->quantity - $reduceQuantity ); */
-
-        /*     $stock->quantity = $currentQuantity; */
-        /*     $stock->save(); */
-        /* } */
-
-        /* return redirect() */
-        /*     ->route('client_home') */
-        /*     ->with('order_message', 'Your order is being process'); */
+        return redirect()
+            ->route('client_home')
+            ->with('order_message', self::ORDER_FINISH_MESSAGE);
     }
 
     private function saveOrder(Request $r)
@@ -167,7 +168,7 @@ class OrdersController extends Controller
         $order->total_amount    = $r->cart_total_amount;
         $order->payment_status  = self::PAYMENT_STATUS['unpaid'];
         $order->payment_method  = $r->cart_payment_method;
-        $order->delivery_type   = $r->cart_delivery_method;
+        $order->delivery_method   = $r->cart_delivery_method;
         $order->delivery_status = self::DELIVERY_STATUS['waiting'];
         $order->save();
 
@@ -186,6 +187,31 @@ class OrdersController extends Controller
                 'order_id'  => $orderId,
                 'cart_id'   => $c['cart_id']
             ]);
+        }
+    }
+
+    private function saveMenuStock(Request $r)
+    {
+        foreach ($r->carts as $c) {
+            //Menu process, reduce quantity on menus table
+            $menu = Menu::find($c['menu_id']);
+            $menu->quantity = ( $menu->quantity - $c['cart_quantity'] );
+            $menu->save();
+
+            //Menu Stocks process, reduce quantity on menu_stocks table
+            $menuStocks = MenuStock::where('menu_id', $c['menu_id'])->get();
+
+            foreach ($menuStocks as $ms) {
+                $stock = Stock::find($ms->stock_id);
+
+                //Reduce quantity = order quantity * applied quantity (recipe)
+                //Current quantity = Reduce quantity - current quantity
+                $reduceQuantity = ( $c['cart_quantity'] * $ms->quantity );
+                $currentQuantity = ( $stock->quantity - $reduceQuantity );
+
+                $stock->quantity = $currentQuantity;
+                $stock->save();
+            }
         }
     }
 }

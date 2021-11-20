@@ -4,6 +4,7 @@
     @if (session('order_message'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('order_message') }}
+        <a href="{{ route('client_orders_get') }}">lihat transaksi</a>
         <button
             class="btn-close"
             data-bs-dismiss="alert"

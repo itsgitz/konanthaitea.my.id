@@ -12,7 +12,7 @@
 
         @include ('shared.message')
 
-        <form action="{{ route('client_order_post') }}" method="post">
+        <form action="{{ route('client_orders_post') }}" method="post">
             @csrf
 
             <div class="row">
@@ -26,9 +26,10 @@
                                 <h5>{{ $c->menu_name }}</h5>
                             </div>
                             <div class="py-1 fw-light">
-                                <input type="hidden" name="carts[{{ $loop->index }}][cart_id]" value="{{ $c->id }}">
-                                <input type="hidden" name="carts[{{ $loop->index }}][menu_price]" value="{{ $c->menu_price }}">
+                                <input type="hidden" name="carts[{{ $loop->index }}][cart_id]" value="{{ $c->cart_id }}">
                                 <input type="hidden" name="carts[{{ $loop->index }}][cart_quantity]" value="{{ $c->cart_quantity }}">
+                                <input type="hidden" name="carts[{{ $loop->index }}][menu_id]" value="{{ $c->menu_id }}">
+                                <input type="hidden" name="carts[{{ $loop->index }}][menu_price]" value="{{ $c->menu_price }}">
                                 Rp. {{ number_format( $c->menu_price, 2, ',', '.' ) }} x {{ $c->cart_quantity }}
                             </div>
 
@@ -42,11 +43,11 @@
                             <div class="py-2"></div>
                             <div class="py-1"> 
                                 {{-- Delete function --}}
-                                <a class="d-inline btn btn-success btn-sm" href="{{ route('client_cart_edit', [ 'cartId' => $c->id ]) }}">
+                                <a class="d-inline btn btn-success btn-sm" href="{{ route('client_cart_edit', [ 'cartId' => $c->cart_id ]) }}">
                                     <i class="fas fa-pencil-alt"></i> Ubah
                                 </a>
                                 <span class="px-1"></span>
-                                <a class="d-inline btn btn-danger btn-sm" href="{{ route('client_cart_delete', [ 'cartId' => $c->id ]) }}">
+                                <a class="d-inline btn btn-danger btn-sm" href="{{ route('client_cart_delete', [ 'cartId' => $c->cart_id ]) }}">
                                     <i class="fas fa-trash-alt"></i> Hapus
                                 </a>
                                 {{-- Delete function --}} 

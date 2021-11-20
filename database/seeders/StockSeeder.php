@@ -17,16 +17,16 @@ class StockSeeder extends Seeder
     {
         $stocks = [
             [
-                'name'      => 'Air',
-                'quantity'  => 100,
-                'unit'      => 'Liter',
-                'status'    => 'Available',
+                'stock_units_id'    => 1, //Mililiter
+                'name'              => 'Air',
+                'quantity'          => 100,
+                'status'            => 'Available',
             ],
             [
-                'name'      => 'Gula',
-                'quantity'  => 100,
-                'unit'      => 'Kilogram',
-                'status'    => 'Available',
+                'stock_units_id'    => 2, //Gram
+                'name'              => 'Gula',
+                'quantity'          => 100,
+                'status'            => 'Available',
             ]
 
         ];

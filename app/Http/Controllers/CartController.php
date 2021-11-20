@@ -112,7 +112,8 @@ class CartController extends Controller
             ->where('clients.id', '=', Auth::id())
             ->where('carts.status', '=', self::ON_CART_STATUS)
             ->select(
-                'carts.id',
+                'carts.id AS cart_id',
+                'menus.id AS menu_id',
                 'menus.name AS menu_name',
                 'carts.quantity AS cart_quantity',
                 'menus.price AS menu_price',

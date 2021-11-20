@@ -1,28 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Orders Details</title>
-    <link href="/css/app.css" rel="stylesheet">
-    <script src="/js/app.js"></script>
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="py-3">
-            <h1 class="text-secondary">Admin Area</h1>
-        </div>
-        <nav>
-            <a href="{{ route('admin_home') }}">Dashboard</a> |
-            <a href="{{ route('admin_orders') }}">Orders</a> |
-            <!-- <a href="{{ route('admin_invoices') }}">Invoices</a> | -->
-            <a href="{{ route('admin_stocks') }}">Stocks</a> |
-            <a href="{{ route('admin_menus') }}">Menu</a> |
-            <a href="{{ route('client_home') }}">Client Area</a> |
-        </nav>
+@extends ('layouts.admin')
+@section ('title', 'Proses Order')
 
+@section ('content')
         <div class="py-3">
-            <h4>Orders Details</h4>
+            <h4>Proses Order</h4>
 
 
             @if (session('process_message'))
@@ -32,47 +13,56 @@
             @endif
 
             <table class="table">
+                @foreach ($cartOrders as $co)
                 <tr>
-                    <td>Order ID</td>
-                    <td># {{ $order->id }}</td>
-                </tr>
-                <tr>
-                    <td>Item Name</td>
-                    <td>{{ $order->menu_name }}</td>
+                    <td><span class="fw-bold">Menu ke {{ $loop->index + 1 }}</span></td>
+                    <td><span class="fw-bold">{{ $co->menu_name }}</span></td>
                 </tr>
                 <tr>
                     <td>Quantity</td>
-                    <td>{{ $order->quantity }}</td>
+                    <td>{{ $co->cart_quantity }}</td>
                 </tr>
                 <tr>
                     <td>Customer</td>
-                    <td>{{ $order->client_name }}</td>
+                    <td>{{ $co->client_name }}</td>
                 </tr>
                 <tr>
-                    <td>Total Amount</td>
-                    <td>Rp. {{ number_format( $order->total_amount, 2, ',', '.' ) }}</td>
+                    <td>Subtotal Harga</td>
+                    <td>Rp. {{ number_format( $co->cart_subtotal_amount, 2, ',', '.' ) }}</td>
                 </tr>
+                @endforeach
+            </table>
+            
+            <table class="table">
                 <tr>
-                    <td>Payment Status</td>
+                    <td>Status Pembayaran</td>
                     <td>{{ $order->payment_status }}</td>
                 </tr>
                 <tr>
-                    <td>Order Status</td>
-                    <td>{{ $order->order_status }}</td>
+                    <td>Metode Pembayaran</td>
+                    <td>{{ $order->payment_method }}</td>
+                </tr>
+                <tr>
+                    <td>Status Pengiriman</td>
+                    <td>{{ $order->delivery_status }}</td>
+                </tr>
+                <tr>
+                    <td>Metode Pengiriman</td>
+                    <td>{{ $order->delivery_method }}</td>
+                </tr>
+                <tr>
+                    <td><span class="fw-bold">Total Harga</span></td>
+                    <td><span class="fw-bold">Rp. {{ number_format( $order->total_amount, 2, ',', '.' ) }}</span></td>
                 </tr>
             </table>
         </div>
 
         <div class="py-3">
-            <form action="{{ route('admin_orders_post', [ 'id' => $order->id ]) }}" method="post">
-                @csrf
-                <input class="btn btn-primary" name="process" type="submit" value="Mark as Paid">
-                <input class="btn btn-success" name="process" type="submit" value="Mark as Finish">
-            </form>
+            <a class="btn btn-primary" href="{{ route('admin_orders_process', [ 'id' => $order->id, 'action' => 'mark_as_paid' ]) }}">Tandai Lunas</a>
         </div>
 
         <div class="py-3">
-            <a href="{{ route('admin_orders') }}">Back</a>
+            <a href="{{ route('admin_orders_get') }}">Back</a>
         </div>
-    </div>
-</body>
+
+@endsection
