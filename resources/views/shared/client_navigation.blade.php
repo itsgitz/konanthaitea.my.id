@@ -11,7 +11,7 @@
 
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         {{-- Cart --}}
-        <li class="nav-item px-2">
+        <li class="nav-item">
             <a class="nav-link fw-light text-secondary position-relative" href="{{ route('client_cart_get') }}">
                 <i class="fas fa-shopping-cart"></i> &nbsp;
                 @if (Auth::check())
@@ -28,7 +28,7 @@
         {{-- User --}}
         @if (Auth::check())
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle fw-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-user-circle"></i> {{ Auth::user()->name }}
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDrodown">

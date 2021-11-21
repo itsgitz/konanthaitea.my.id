@@ -119,7 +119,8 @@
         {{-- Back Button --}}
         <div class="py-2"></div>
         <div class="card">
-            <div class="card-body"><a class="btn btn-primary" href="{{ route('client_home') }}">Kembali</a></div>        </div>
+            <div class="card-body"><a class="btn btn-primary" href="{{ route('client_home') }}">Lanjut Belanja</a></div>
+        </div>
         {{-- Back Button --}}
     </div> 
 

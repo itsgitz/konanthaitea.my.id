@@ -15,7 +15,7 @@
             <table class="table">
                 @foreach ($cartOrders as $co)
                 <tr>
-                    <td><span class="fw-bold">Menu ke {{ $loop->index + 1 }}</span></td>
+                    <td><span class="fw-bold">Menu #{{ $loop->index + 1 }}</span></td>
                     <td><span class="fw-bold">{{ $co->menu_name }}</span></td>
                 </tr>
                 <tr>

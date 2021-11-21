@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Cart;
 use App\Models\CartOrder;
 use App\Models\Order;
-use App\Models\Client;
 use App\Models\Menu;
 use App\Models\Stock;
 use App\Models\MenuStock;
@@ -41,11 +40,11 @@ class OrdersController extends Controller
     //
     public function adminIndex(Request $r)
     {
-        $orders = DB::table('orders')
-            ->join('clients', 'orders.client_id', '=', 'clients.id')
-            ->join('cart_orders', 'orders.id', '=', 'cart_orders.order_id')
+        $orders = DB::table('cart_orders')
+            ->join('orders', 'cart_orders.order_id', '=', 'orders.id')
             ->join('carts', 'cart_orders.cart_id', '=', 'carts.id')
             ->join('menus', 'carts.menu_id', '=', 'menus.id')
+            ->join('clients', 'carts.client_id', '=', 'clients.id')
             ->select(
                 'orders.id AS order_id',
                 'clients.id AS client_id',
@@ -57,6 +56,7 @@ class OrdersController extends Controller
                 'orders.created_at AS order_created_at'
             )
             ->distinct()
+            ->orderBy('orders.created_at', 'DESC')
             ->get();
 
         
@@ -83,6 +83,9 @@ class OrdersController extends Controller
             )
             ->get();
 
+        if ($cartOrders->isEmpty()) {
+            abort(404);
+        }
 
         return view('admin.orders.show', [
             'order' => $order,
@@ -105,6 +108,7 @@ class OrdersController extends Controller
             break;
 
             case 'Mark as Finish':
+            
                 $order->order_status = 'Finish';
                 $order->save();
 
@@ -121,7 +125,31 @@ class OrdersController extends Controller
     //
     public function clientIndex(Request $r)
     {
-        $orders = Order::where('client_id', Auth::id())->get();
+        $cartOrders = DB::table('cart_orders')
+            ->join('orders', 'cart_orders.order_id', '=', 'orders.id')
+            ->join('carts', 'cart_orders.cart_id', '=', 'carts.id')
+            ->join('menus', 'carts.menu_id', '=', 'menus.id')
+            ->join('clients', 'carts.client_id', '=', 'clients.id')
+            ->where('orders.client_id', '=', Auth::id())
+            ->select(
+                'menus.name AS menu_name',
+                'carts.id AS cart_id',
+                'carts.quantity AS cart_quantity',
+                'carts.subtotal_amount AS cart_subtotal_amount',
+                'orders.id AS order_id',
+                'orders.total_amount AS order_total_amount',
+                'orders.payment_status AS order_payment_status',
+                'orders.payment_method AS order_payment_method',
+                'orders.delivery_method AS delivery_method',
+                'orders.delivery_status AS delivery_status',
+                'orders.created_at AS order_created_at',
+            )
+            ->orderBy('orders.created_at', 'DESC')
+            ->get();
+
+        //Reset order data, remove duplicate order_id
+        $orders = $this->setOrdersData($cartOrders);
+
 
 
         return view('client.orders.index', [
@@ -130,10 +158,10 @@ class OrdersController extends Controller
     }
 
     /* //Client per order details */
-    /* public function clientShow($id) */
-    /* { */
-
-    /* } */
+    public function clientShow($id)
+    {
+        return view('client.orders.show');
+    }
 
     //Client order process
     public function clientProcess(Request $r)
@@ -213,5 +241,57 @@ class OrdersController extends Controller
                 $stock->save();
             }
         }
+    }
+
+    private function removeDuplicateOrders($cartOrders = [])
+    {
+        $orders = [];
+
+        foreach ($cartOrders as $k => $co) {
+            $orders[$k] = $co->order_id;
+        }
+
+        //Remove duplicate order_id
+        $noDuplicateOrders = array_values(array_unique($orders));
+
+        //Reset the orders
+        $orders = [];
+        foreach ( $noDuplicateOrders as $k => $orderId ) {
+            $orders[$k]['id'] = $orderId;
+            $orders[$k]['carts'] = [];
+        }
+
+
+        return $orders;
+    }
+
+    private function setOrdersData($cartOrders = [])
+    {
+        $orders = $this->removeDuplicateOrders($cartOrders);
+
+        foreach ($orders as $k => $o) {
+            foreach ($cartOrders as $co) {
+                if ($o['id'] == $co->order_id) {
+
+                    $orders[$k]['total_amount']     = $co->order_total_amount;
+                    $orders[$k]['payment_status']   = $co->order_payment_status;
+                    $orders[$k]['payment_method']   = $co->order_payment_method;
+                    $orders[$k]['delivery_status']  = $co->delivery_status;
+                    $orders[$k]['delivery_method']  = $co->delivery_method;
+                    $orders[$k]['created_at']       = $co->order_created_at;
+
+                    //Add cart data for each order_id
+                    $cart = [
+                        'id'                => $co->cart_id,
+                        'menu_name'         => $co->menu_name,
+                        'quantity'          => $co->cart_quantity,
+                        'subtotal_amount'   => $co->cart_subtotal_amount,
+                    ];
+                    array_push( $orders[$k]['carts'], $cart);
+                }
+            }
+        }
+        
+        return $orders;
     }
 }
