@@ -8,12 +8,10 @@
     <script defer src="{{ mix ('js/app.js') }}"></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
+    @include ('shared.client_navigation')
     <div class="container">
-        @include ('shared.client_navigation')
-
         @yield ('content')
     </div>
-
     @include ('shared.footer')
 </body>
 </html>
