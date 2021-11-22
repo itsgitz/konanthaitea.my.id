@@ -2,7 +2,7 @@
 @section ('title', 'Detail Transaksi untuk #' . $order->id)
 
 @section ('content')
-<div class="py-3">
+<div id="show-order" class="py-3">
     <div class="card">
         <div class="card-body">
             <h6 class="card-title display-6">
@@ -19,10 +19,10 @@
                     <div class="card-text py-2">
                         <h5 class="card-title">{{ $c->menu_name }}</h5>
                         <div class="card-text">
-                            <span class="fw-light">{{ $c->cart_quantity }} minuman x Rp. {{ number_format( $c->menu_price, 2, ',', '.' ) }}</span>
+                            <div class="fw-light">{{ $c->cart_quantity }} minuman x Rp. {{ number_format( $c->menu_price, 2, ',', '.' ) }}</div>
                         </div>
                         <div class="card-text">
-                            <span class="fw-light">Subtotal Harga</span> <strong>Rp. {{ number_format( $c->cart_subtotal_amount, 2, ',', '.' ) }}</strong>
+                            <div class="fw-light">Subtotal Harga <strong>Rp. {{ number_format( $c->cart_subtotal_amount, 2, ',', '.' ) }}</strong></div> 
                         </div>
                     </div>
                 </li>
@@ -31,19 +31,23 @@
             @endforeach
             <div class="card-text py-2">
                 <h5 class="card-title">Metode Pengiriman</h5>
-                <span class="fw-light">{{ $order->delivery_method }}</span>
+                <div class="fw-light">{{ $order->delivery_method }}</div>
             </div>
             <div class="card-text py-2">
                 <h5 class="card-title">Status Pengiriman</h5>
-                <span class="fw-light">{{ $order->delivery_status }}</span>
+                <div id="order-delivery-status" data-delivery-status="{{ $order->delivery_status }}" class="badge fs-6">
+                    {{ $order->delivery_status }}
+                </div>
             </div>
             <div class="card-text py-2">
                 <h5 class="card-title">Metode Pembayaran</h5>
-                <span class="fw-light">{{ $order->payment_method }}</span>
+                <div class="fw-light">{{ $order->payment_method }}</div>
             </div>
             <div class="card-text py-2">
                 <h5 class="card-title">Status Pembayaran</h5>
-                <span class="fw-light">{{ $order->payment_status }}</span>
+                <div id="order-payment-status" data-payment-status="{{ $order->payment_status }}" class="badge fs-6">
+                    {{ $order->payment_status }}
+                </div>
             </div>
             <div class="card-text py-2">
                 <h5 class="card-title">Total Bayar</h5>

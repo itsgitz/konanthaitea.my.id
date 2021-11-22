@@ -2,7 +2,7 @@
 @section ('title', 'Daftar Transaksi')
 
 @section ('content')
-<div class="py-3">
+<div id="orders-main" class="py-3">
     @if (!empty($orders))
         @foreach ($orders as $o)
         <div class="py-1"></div>
@@ -15,11 +15,11 @@
                     {{ date('j M Y', strtotime( $o['created_at'] )) }}
                 </div>
                 <div class="d-inline px-1"></div>
-                <div class="d-inline card-text badge bg-danger">
+                <div data-payment-status="{{ $o['payment_status'] }}" class="order-payment-status d-inline card-text badge">
                     {{ $o['payment_status'] }}
                 </div>
                 <div class="d-inline px-1"></div>
-                <div class="card-text d-inline badge bg-warning">
+                <div data-delivery-status="{{ $o['delivery_status'] }}" class="order-delivery-status card-text d-inline badge">
                     {{ $o['delivery_status'] }}
                 </div>
                 <div class="d-inline px-1"></div>
