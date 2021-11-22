@@ -18,10 +18,7 @@ class RegisterController extends Controller
     //
     public function index(Request $r)
     { 
-        return view('register', [
-            'menuId' => !empty( $r->query('menu_id') ) ? $r->query('menu_id') : '',
-            'redirectBeforeOrder' => !empty( $r->query('redirect_before_order') ) ? $r->query('redirect_before_order') : '',
-        ]);
+        return view('client.auth.register');
     }
 
     public function create(Request $r)
