@@ -1,3 +1,3 @@
-<footer class="footer mt-auto p-5 bg-light">
-    &copy; 2021 
+<footer class="container footer mt-auto p-4 bg-white border-top">
+    <span class="fw-light">&copy; Aplikasi Minuman v0.1 2021</span> 
 </footer>

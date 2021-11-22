@@ -12,7 +12,8 @@
         @include ('shared.client_navigation')
 
         @yield ('content')
+    </div>
 
-    </div> 
+    @include ('shared.footer')
 </body>
 </html>
