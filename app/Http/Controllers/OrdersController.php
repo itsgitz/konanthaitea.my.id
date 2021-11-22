@@ -35,6 +35,15 @@ class OrdersController extends Controller
     const ORDER_FINISH_MESSAGE  = 'Pesanan anda sedang diproses, harap menunggu status selanjutnya';
     const ORDER_MARK_AS_PAID    = 'mark_as_paid';
 
+    public function getOnProgressOrderCount()
+    {
+        return Order::where('client_id', Auth::id())
+            ->where('payment_status', '=', self::PAYMENT_STATUS['unpaid'])
+            ->where('delivery_status', '<>', self::DELIVERY_STATUS['finish'])
+            ->get()
+            ->count();
+    }
+
     //
     //Admin source code for order controller
     //
@@ -67,25 +76,9 @@ class OrdersController extends Controller
 
     public function adminShow(Request $r, $id)
     {
-        $order = Order::find($id);
+        $order      = Order::findOrFail($id);
+        $cartOrders = $this->getCartOrders($id);
 
-        $cartOrders = DB::table('cart_orders')
-            ->join('orders', 'cart_orders.order_id', '=', 'orders.id')
-            ->join('carts', 'cart_orders.cart_id', '=', 'carts.id')
-            ->join('menus', 'carts.menu_id', '=', 'menus.id')
-            ->join('clients', 'carts.client_id', '=', 'clients.id')
-            ->where('orders.id', '=', $id)
-            ->select(
-                'menus.name AS menu_name',
-                'carts.quantity AS cart_quantity',
-                'carts.subtotal_amount AS cart_subtotal_amount',
-                'clients.name AS client_name',
-            )
-            ->get();
-
-        if ($cartOrders->isEmpty()) {
-            abort(404);
-        }
 
         return view('admin.orders.show', [
             'order' => $order,
@@ -133,6 +126,7 @@ class OrdersController extends Controller
             ->where('orders.client_id', '=', Auth::id())
             ->select(
                 'menus.name AS menu_name',
+                'menus.price AS menu_price',
                 'carts.id AS cart_id',
                 'carts.quantity AS cart_quantity',
                 'carts.subtotal_amount AS cart_subtotal_amount',
@@ -151,22 +145,26 @@ class OrdersController extends Controller
         $orders = $this->setOrdersData($cartOrders);
 
 
-
         return view('client.orders.index', [
             'orders' => $orders
         ]);
     }
 
-    /* //Client per order details */
-    public function clientShow($id)
+    //Client per order details
+    public function clientShow(Request $r, $id)
     {
-        return view('client.orders.show');
+        $order  = Order::findOrFail($id);
+        $carts  = $this->getCartOrders($id);
+
+        return view('client.orders.show', [
+            'order' => $order,
+            'carts' => $carts
+        ]);
     }
 
     //Client order process
     public function clientProcess(Request $r)
     {
-
         $r->validate(
             [
                 'cart_delivery_method'  => ['required'],
@@ -284,6 +282,7 @@ class OrdersController extends Controller
                     $cart = [
                         'id'                => $co->cart_id,
                         'menu_name'         => $co->menu_name,
+                        'menu_price'        => $co->menu_price,
                         'quantity'          => $co->cart_quantity,
                         'subtotal_amount'   => $co->cart_subtotal_amount,
                     ];
@@ -293,5 +292,26 @@ class OrdersController extends Controller
         }
         
         return $orders;
+    }
+
+    private function getCartOrders($id)
+    {
+        $cartOrders = DB::table('cart_orders')
+            ->join('orders', 'cart_orders.order_id', '=', 'orders.id')
+            ->join('carts', 'cart_orders.cart_id', '=', 'carts.id')
+            ->join('menus', 'carts.menu_id', '=', 'menus.id')
+            ->join('clients', 'carts.client_id', '=', 'clients.id')
+            ->where('orders.id', '=', $id)
+            ->select(
+                'menus.name AS menu_name',
+                'menus.price AS menu_price',
+                'carts.quantity AS cart_quantity',
+                'carts.subtotal_amount AS cart_subtotal_amount',
+                'clients.name AS client_name',
+            )
+            ->get();
+
+        
+        return $cartOrders;
     }
 }
