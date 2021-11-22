@@ -39,7 +39,7 @@ class OrdersController extends Controller
     {
         return Order::where('client_id', Auth::id())
             ->where('payment_status', '=', self::PAYMENT_STATUS['unpaid'])
-            ->where('delivery_status', '<>', self::DELIVERY_STATUS['finish'])
+            ->orWhere('delivery_status', '<>', self::DELIVERY_STATUS['finish'])
             ->get()
             ->count();
     }
