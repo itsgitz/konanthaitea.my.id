@@ -12,13 +12,13 @@ class HomeController extends Controller
     //
     public function index(Request $r)
     {
-        return view('home', [
+        return view('client.home', [
             'menu' => Menu::all(),
         ]);
     }
 
     public function about(Request $r)
     {
-        return view('about');
+        return view('client.about');
     }
 }
