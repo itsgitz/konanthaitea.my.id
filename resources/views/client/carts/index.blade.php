@@ -128,7 +128,7 @@
 
     <div class="cart-empty py-5">
         <div class="d-flex justify-content-center py-1">
-            <h2>Keranjang belanja anda kosong</h2>
+            <h2 class="display-5">Keranjang belanja anda kosong</h2>
         </div>
         <div class="d-flex justify-content-center py-1">
             <a class="btn btn-primary" href="{{ route('client_home') }}">Mulai Memesan</a>

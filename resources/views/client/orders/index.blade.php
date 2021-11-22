@@ -65,7 +65,7 @@
     @else
         <div class="order-empty py-5">
             <div class="d-flex justify-content-center py-1">
-                <h2>Anda belum memiliki transaksi apapun</h2>
+                <h2 class="display-5">Anda belum memiliki transaksi apapun</h2>
             </div>
             <div class="d-flex justify-content-center py-1">
                 <div class="d-inline p-1">
