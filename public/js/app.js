@@ -9685,14 +9685,24 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-
-__webpack_require__(/*! ./order */ "./resources/js/order.js");
-
-__webpack_require__(/*! @fortawesome/fontawesome-free/js/all.js */ "./node_modules/@fortawesome/fontawesome-free/js/all.js");
+/* harmony import */ var _orders_main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./orders/main */ "./resources/js/orders/main.js");
+/* harmony import */ var _orders_show__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./orders/show */ "./resources/js/orders/show.js");
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //Bootstrap css
 
 
+__webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js"); //Fontawesome
+
+
+__webpack_require__(/*! @fortawesome/fontawesome-free/js/all.js */ "./node_modules/@fortawesome/fontawesome-free/js/all.js"); //Additional/Custom javascript
+
+
+
+
+
+window.onload = function () {
+  (0,_orders_main__WEBPACK_IMPORTED_MODULE_0__.ordersMain)();
+  (0,_orders_show__WEBPACK_IMPORTED_MODULE_1__.showOrder)();
+};
 
 /***/ }),
 
@@ -9727,13 +9737,170 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/order.js":
-/*!*******************************!*\
-  !*** ./resources/js/order.js ***!
-  \*******************************/
-/***/ (() => {
+/***/ "./resources/js/orders/main.js":
+/*!*************************************!*\
+  !*** ./resources/js/orders/main.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ordersMain": () => (/* binding */ ordersMain)
+/* harmony export */ });
+function ordersMain() {
+  var ordersMain = document.querySelector('#orders-main');
 
+  if (ordersMain) {
+    var orderPaymentStatus = document.getElementsByClassName('order-payment-status');
+    var orderDeliveryStatus = document.getElementsByClassName('order-delivery-status');
+    setOrderPaymentStatusClass(orderPaymentStatus);
+    setOrderDeliveryStatusClass(orderDeliveryStatus);
+  }
+}
+
+function setOrderPaymentStatusClass(statusEl) {
+  var paymentStatus = {
+    unpaid: 'Unpaid',
+    paid: 'Paid'
+  };
+  Array.prototype.forEach.call(statusEl, function (el) {
+    switch (el.dataset.paymentStatus) {
+      case paymentStatus.unpaid:
+        el.className += ' bg-danger';
+        break;
+
+      case paymentStatus.paid:
+        el.className += ' bg-success';
+        break;
+    }
+  });
+}
+
+function setOrderDeliveryStatusClass(statusEl) {
+  var deliveryStatus = {
+    waiting: 'Waiting',
+    confirmed: 'Confirmed',
+    onProgress: 'On Progress',
+    ready: 'Ready',
+    delivery: 'Delivery',
+    finish: 'Finish',
+    failed: 'Failed'
+  };
+  Array.prototype.forEach.call(statusEl, function (el) {
+    switch (el.dataset.deliveryStatus) {
+      case deliveryStatus.waiting:
+        el.className += ' bg-secondary';
+        break;
+
+      case deliveryStatus.confirmed:
+        el.className += ' bg-primary';
+        break;
+
+      case deliveryStatus.onProgress:
+        el.className += ' bg-primary';
+        break;
+
+      case deliveryStatus.ready:
+        el.className += ' bg-primary';
+        break;
+
+      case deliveryStatus.delivery:
+        el.className += ' bg-warning';
+        break;
+
+      case deliveryStatus.finish:
+        el.className += ' bg-success';
+        break;
+
+      case deliveryStatus.failed:
+        el.className += ' bg-danger';
+    }
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/orders/show.js":
+/*!*************************************!*\
+  !*** ./resources/js/orders/show.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "showOrder": () => (/* binding */ showOrder)
+/* harmony export */ });
+function showOrder() {
+  var showOrder = document.querySelector('#show-order');
+
+  if (showOrder) {
+    var orderPaymentStatus = document.querySelector('#order-payment-status');
+    var orderDeliveryStatus = document.querySelector('#order-delivery-status');
+    setOrderPaymentStatusClass(orderPaymentStatus);
+    setOrderDeliveryStatusClass(orderDeliveryStatus);
+  }
+}
+
+function setOrderPaymentStatusClass(statusEl) {
+  var paymentStatus = {
+    unpaid: 'Unpaid',
+    paid: 'Paid'
+  };
+
+  switch (statusEl.dataset.paymentStatus) {
+    case paymentStatus.unpaid:
+      statusEl.classList.add('bg-danger');
+      break;
+
+    case paymentStatus.paid:
+      statusEl.classList.add('bg-success');
+      break;
+  }
+}
+
+function setOrderDeliveryStatusClass(statusEl) {
+  var deliveryStatus = {
+    waiting: 'Waiting',
+    confirmed: 'Confirmed',
+    onProgress: 'On Progress',
+    ready: 'Ready',
+    delivery: 'Delivery',
+    finish: 'Finish',
+    failed: 'Failed'
+  };
+
+  switch (statusEl.dataset.deliveryStatus) {
+    case deliveryStatus.waiting:
+      statusEl.classList.add('bg-secondary');
+      break;
+
+    case deliveryStatus.confirmed:
+      statusEl.classList.add('bg-primary');
+      break;
+
+    case deliveryStatus.onProgress:
+      statusEl.classList.add('bg-primary');
+      break;
+
+    case deliveryStatus.ready:
+      statusEl.classList.add('bg-primary');
+      break;
+
+    case deliveryStatus.delivery:
+      statusEl.classList.add('bg-warning');
+      break;
+
+    case deliveryStatus.finish:
+      statusEl.classList.add('bg-success');
+      break;
+
+    case deliveryStatus.failed:
+      statusEl.classList.add('bg-danger');
+      break;
+  }
+}
 
 /***/ }),
 
