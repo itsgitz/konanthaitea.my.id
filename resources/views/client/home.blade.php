@@ -6,6 +6,7 @@
 @include ('shared.message')
 
 <div class="py-3">
+    @if (!$menu->isEmpty())
     <div class="row">
         @foreach ($menu as $m) 
         <div class="col-md-3">
@@ -27,5 +28,15 @@
         </div>
         @endforeach
     </div>
+    @else
+    <div class="menu-empty py-3">
+        <div class="d-flex justify-content-center py-1">
+            <h2 class="display-5">Tidak ada menu yang tersedia</h2>
+        </div>
+        <div class="d-flex justify-content-center py-1">
+            <p>Mohon untuk menunggu beberapa saat</p>
+        </div>
+    </div>
+    @endif
 </div>
 @endsection
