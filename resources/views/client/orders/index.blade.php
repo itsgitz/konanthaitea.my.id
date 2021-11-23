@@ -2,7 +2,7 @@
 @section ('title', 'Daftar Transaksi')
 
 @section ('content')
-<div id="orders-main" class="py-3">
+<div id="client-orders-main" class="py-3">
     @if (!empty($orders))
         @foreach ($orders as $o)
         <div class="py-1"></div>

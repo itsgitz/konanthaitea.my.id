@@ -7,12 +7,9 @@ require('bootstrap');
 require('@fortawesome/fontawesome-free/js/all.js');
 
 //Additional/Custom javascript
-import { ordersMain } from './orders/main';
-import { showOrder } from './orders/show';
-
+import { runOrders } from './orders/orders';
 
 window.onload = function() { 
-  ordersMain();
-  showOrder();
+  runOrders();
 }
 

@@ -1,5 +1,5 @@
-export function ordersMain() {
-  let ordersMain = document.querySelector('#orders-main');
+export function clientOrdersMain() {
+  let ordersMain = document.querySelector('#client-orders-main');
 
   if (ordersMain) {
     let orderPaymentStatus = document.getElementsByClassName('order-payment-status');

@@ -1,5 +1,5 @@
-export function showOrder() {
-  let showOrder = document.querySelector('#show-order');
+export function clientShowOrder() {
+  let showOrder = document.querySelector('#client-show-order');
 
   if (showOrder) {
     let orderPaymentStatus = document.querySelector('#order-payment-status');

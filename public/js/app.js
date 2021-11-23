@@ -9685,8 +9685,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _orders_main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./orders/main */ "./resources/js/orders/main.js");
-/* harmony import */ var _orders_show__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./orders/show */ "./resources/js/orders/show.js");
+/* harmony import */ var _orders_orders__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./orders/orders */ "./resources/js/orders/orders.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //Bootstrap css
 
 
@@ -9698,10 +9697,8 @@ __webpack_require__(/*! @fortawesome/fontawesome-free/js/all.js */ "./node_modul
 
 
 
-
 window.onload = function () {
-  (0,_orders_main__WEBPACK_IMPORTED_MODULE_0__.ordersMain)();
-  (0,_orders_show__WEBPACK_IMPORTED_MODULE_1__.showOrder)();
+  (0,_orders_orders__WEBPACK_IMPORTED_MODULE_0__.runOrders)();
 };
 
 /***/ }),
@@ -9737,19 +9734,186 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/orders/main.js":
-/*!*************************************!*\
-  !*** ./resources/js/orders/main.js ***!
-  \*************************************/
+/***/ "./resources/js/orders/admin/main.js":
+/*!*******************************************!*\
+  !*** ./resources/js/orders/admin/main.js ***!
+  \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ordersMain": () => (/* binding */ ordersMain)
+/* harmony export */   "adminOrdersMain": () => (/* binding */ adminOrdersMain)
 /* harmony export */ });
-function ordersMain() {
-  var ordersMain = document.querySelector('#orders-main');
+function adminOrdersMain() {
+  var ordersMain = document.querySelector('#admin-orders-main');
+
+  if (ordersMain) {
+    var orderPaymentStatus = document.getElementsByClassName('order-payment-status');
+    var orderDeliveryStatus = document.getElementsByClassName('order-delivery-status');
+    setOrderPaymentStatusClass(orderPaymentStatus);
+    setOrderDeliveryStatusClass(orderDeliveryStatus);
+  }
+}
+
+function setOrderPaymentStatusClass(statusEl) {
+  var paymentStatus = {
+    unpaid: 'Unpaid',
+    paid: 'Paid'
+  };
+  Array.prototype.forEach.call(statusEl, function (el) {
+    switch (el.dataset.orderPaymentStatus) {
+      case paymentStatus.unpaid:
+        el.className += ' bg-danger';
+        break;
+
+      case paymentStatus.paid:
+        el.className += ' bg-success';
+        break;
+    }
+  });
+}
+
+function setOrderDeliveryStatusClass(statusEl) {
+  var deliveryStatus = {
+    waiting: 'Waiting',
+    confirmed: 'Confirmed',
+    onProgress: 'On Progress',
+    ready: 'Ready',
+    delivery: 'Delivery',
+    finish: 'Finish',
+    failed: 'Failed'
+  };
+  Array.prototype.forEach.call(statusEl, function (el) {
+    switch (el.dataset.orderDeliveryStatus) {
+      case deliveryStatus.waiting:
+        el.className += ' bg-secondary';
+        break;
+
+      case deliveryStatus.confirmed:
+        el.className += ' bg-primary';
+        break;
+
+      case deliveryStatus.onProgress:
+        el.className += ' bg-primary';
+        break;
+
+      case deliveryStatus.ready:
+        el.className += ' bg-success';
+        break;
+
+      case deliveryStatus.delivery:
+        el.className += ' bg-warning';
+        break;
+
+      case deliveryStatus.finish:
+        el.className += ' bg-success';
+        break;
+
+      case deliveryStatus.failed:
+        el.className += ' bg-danger';
+    }
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/orders/admin/show.js":
+/*!*******************************************!*\
+  !*** ./resources/js/orders/admin/show.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "adminShowOrder": () => (/* binding */ adminShowOrder)
+/* harmony export */ });
+function adminShowOrder() {
+  var showOrder = document.querySelector('#admin-show-order');
+
+  if (showOrder) {
+    var orderPaymentStatus = document.querySelector('#order-payment-status');
+    var orderDeliveryStatus = document.querySelector('#order-delivery-status');
+    setOrderPaymentStatusClass(orderPaymentStatus);
+    setOrderDeliveryStatusClass(orderDeliveryStatus);
+  }
+}
+
+function setOrderPaymentStatusClass(statusEl) {
+  var paymentStatus = {
+    unpaid: 'Unpaid',
+    paid: 'Paid'
+  };
+
+  switch (statusEl.dataset.orderPaymentStatus) {
+    case paymentStatus.unpaid:
+      statusEl.classList.add('bg-danger');
+      break;
+
+    case paymentStatus.paid:
+      statusEl.classList.add('bg-success');
+      break;
+  }
+}
+
+function setOrderDeliveryStatusClass(statusEl) {
+  var deliveryStatus = {
+    waiting: 'Waiting',
+    confirmed: 'Confirmed',
+    onProgress: 'On Progress',
+    ready: 'Ready',
+    delivery: 'Delivery',
+    finish: 'Finish',
+    failed: 'Failed'
+  };
+
+  switch (statusEl.dataset.orderDeliveryStatus) {
+    case deliveryStatus.waiting:
+      statusEl.classList.add('bg-secondary');
+      break;
+
+    case deliveryStatus.confirmed:
+      statusEl.classList.add('bg-primary');
+      break;
+
+    case deliveryStatus.onProgress:
+      statusEl.classList.add('bg-primary');
+      break;
+
+    case deliveryStatus.ready:
+      statusEl.classList.add('bg-success');
+      break;
+
+    case deliveryStatus.delivery:
+      statusEl.classList.add('bg-warning');
+      break;
+
+    case deliveryStatus.finish:
+      statusEl.classList.add('bg-success');
+      break;
+
+    case deliveryStatus.failed:
+      statusEl.classList.add('bg-danger');
+      break;
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/js/orders/client/main.js":
+/*!********************************************!*\
+  !*** ./resources/js/orders/client/main.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "clientOrdersMain": () => (/* binding */ clientOrdersMain)
+/* harmony export */ });
+function clientOrdersMain() {
+  var ordersMain = document.querySelector('#client-orders-main');
 
   if (ordersMain) {
     var orderPaymentStatus = document.getElementsByClassName('order-payment-status');
@@ -9821,19 +9985,19 @@ function setOrderDeliveryStatusClass(statusEl) {
 
 /***/ }),
 
-/***/ "./resources/js/orders/show.js":
-/*!*************************************!*\
-  !*** ./resources/js/orders/show.js ***!
-  \*************************************/
+/***/ "./resources/js/orders/client/show.js":
+/*!********************************************!*\
+  !*** ./resources/js/orders/client/show.js ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "showOrder": () => (/* binding */ showOrder)
+/* harmony export */   "clientShowOrder": () => (/* binding */ clientShowOrder)
 /* harmony export */ });
-function showOrder() {
-  var showOrder = document.querySelector('#show-order');
+function clientShowOrder() {
+  var showOrder = document.querySelector('#client-show-order');
 
   if (showOrder) {
     var orderPaymentStatus = document.querySelector('#order-payment-status');
@@ -9900,6 +10064,36 @@ function setOrderDeliveryStatusClass(statusEl) {
       statusEl.classList.add('bg-danger');
       break;
   }
+}
+
+/***/ }),
+
+/***/ "./resources/js/orders/orders.js":
+/*!***************************************!*\
+  !*** ./resources/js/orders/orders.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "runOrders": () => (/* binding */ runOrders)
+/* harmony export */ });
+/* harmony import */ var _client_main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./client/main */ "./resources/js/orders/client/main.js");
+/* harmony import */ var _client_show__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./client/show */ "./resources/js/orders/client/show.js");
+/* harmony import */ var _admin_main__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./admin/main */ "./resources/js/orders/admin/main.js");
+/* harmony import */ var _admin_show__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./admin/show */ "./resources/js/orders/admin/show.js");
+
+
+
+
+function runOrders() {
+  //Client area code
+  (0,_client_main__WEBPACK_IMPORTED_MODULE_0__.clientOrdersMain)();
+  (0,_client_show__WEBPACK_IMPORTED_MODULE_1__.clientShowOrder)(); //Admin area code
+
+  (0,_admin_main__WEBPACK_IMPORTED_MODULE_2__.adminOrdersMain)();
+  (0,_admin_show__WEBPACK_IMPORTED_MODULE_3__.adminShowOrder)();
 }
 
 /***/ }),

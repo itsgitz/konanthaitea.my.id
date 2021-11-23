@@ -2,7 +2,7 @@
 @section ('title', 'Detail Transaksi untuk #' . $order->id)
 
 @section ('content')
-<div id="show-order" class="py-3">
+<div id="client-show-order" class="py-3">
     <div class="card">
         <div class="card-body">
             <h6 class="card-title display-6">

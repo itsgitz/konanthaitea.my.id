@@ -2,7 +2,7 @@
 @section ('title', 'Proses Order #' . $order->id)
 
 @section ('content')
-<div class="py-3">
+<div id="admin-show-order" class="py-3">
     <h5>Proses Order #{{ $order->id }}</h5>
 
     @include ('shared.message')    
@@ -41,7 +41,9 @@
                         </div>
                         <div class="card-text py-2">
                             <h5 class="card-title">Status Pengiriman</h5>
-                            <div class="fw-light">{{ $order->delivery_status }}</div>
+                            <div id="order-delivery-status" class="badge" data-order-delivery-status="{{ $order->delivery_status }}">
+                                {{ $order->delivery_status }}
+                            </div>
                         </div>
                         <div class="card-text py-2">
                             <h5 class="card-title">Metode Pembayaran</h5>
@@ -49,7 +51,9 @@
                         </div>
                         <div class="card-text py-2">
                             <h5 class="card-title">Status Pembayaran</h5>
-                            <div class="fw-light">{{ $order->payment_status }}</div>
+                            <div id="order-payment-status" class="badge" data-order-payment-status="{{ $order->payment_status }}">
+                                {{ $order->payment_status }}
+                            </div>
                         </div>
                         <div class="card-text py-2">
                             <h5 class="card-title">Total Bayar</h5>
