@@ -3,7 +3,7 @@
 
 @section ('content')
 <div class="py-3">
-    <h4>Manajemen Stock</h4>
+    <h5>Manajemen Stock</h5>
 
     <a href="{{ route('admin_stock_units_get') }}">Tambah Satuan Unit</a>
     <table class="table">

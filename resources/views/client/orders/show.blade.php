@@ -35,7 +35,7 @@
             </div>
             <div class="card-text py-2">
                 <h5 class="card-title">Status Pengiriman</h5>
-                <div id="order-delivery-status" data-delivery-status="{{ $order->delivery_status }}" class="badge fs-6">
+                <div id="order-delivery-status" data-delivery-status="{{ $order->delivery_status }}" class="badge">
                     {{ $order->delivery_status }}
                 </div>
             </div>
@@ -45,7 +45,7 @@
             </div>
             <div class="card-text py-2">
                 <h5 class="card-title">Status Pembayaran</h5>
-                <div id="order-payment-status" data-payment-status="{{ $order->payment_status }}" class="badge fs-6">
+                <div id="order-payment-status" data-payment-status="{{ $order->payment_status }}" class="badge">
                     {{ $order->payment_status }}
                 </div>
             </div>

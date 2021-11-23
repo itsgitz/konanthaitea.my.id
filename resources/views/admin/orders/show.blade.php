@@ -1,68 +1,120 @@
 @extends ('layouts.admin')
-@section ('title', 'Proses Order')
+@section ('title', 'Proses Order #' . $order->id)
 
 @section ('content')
-        <div class="py-3">
-            <h4>Proses Order</h4>
+<div class="py-3">
+    <h5>Proses Order #{{ $order->id }}</h5>
 
+    @include ('shared.message')    
 
-            @if (session('process_message'))
-            <div class="py-3">
-                <h4 class="text-success">{{ session('process_message') }}</h4>
+    <div id="process-order">
+        <div id="carts-list">
+            @foreach ($cartOrders as $cart)
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="py-2">
+                        <h5 class="card-title">{{ $cart->menu_name }}</h5>
+                        <div class="card-text">
+                            <div class="fw-light">
+                                {{ $cart->cart_quantity }} minuman x Rp. {{ number_format( $cart->menu_price, 2, ',', '.' ) }}
+                            </div>
+                        </div>
+                        <div class="card-text">
+                            <div class="fw-light">
+                                Subtotal Harga <strong>Rp. {{ number_format( $cart->cart_subtotal_amount, 2, ',', '.' ) }}</strong>
+                            </div>
+                        </div>
+                    </div>            
+                </li>
+                <div class="py-1"></div>
+            </ul>
+            @endforeach
+        </div>
+        
+        <div class="row">
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-text py-2">
+                            <h5 class="card-title">Metode Pengiriman</h5>
+                            <div class="fw-light">{{ $order->delivery_method }}</div>
+                        </div>
+                        <div class="card-text py-2">
+                            <h5 class="card-title">Status Pengiriman</h5>
+                            <div class="fw-light">{{ $order->delivery_status }}</div>
+                        </div>
+                        <div class="card-text py-2">
+                            <h5 class="card-title">Metode Pembayaran</h5>
+                            <div class="fw-light">{{ $order->payment_method }}</div>
+                        </div>
+                        <div class="card-text py-2">
+                            <h5 class="card-title">Status Pembayaran</h5>
+                            <div class="fw-light">{{ $order->payment_status }}</div>
+                        </div>
+                        <div class="card-text py-2">
+                            <h5 class="card-title">Total Bayar</h5>
+                            <div class="fw-bold">Rp. {{ number_format( $order->total_amount, 2, ',', '.' ) }}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            @endif
-
-            <table class="table">
-                @foreach ($cartOrders as $co)
-                <tr>
-                    <td><span class="fw-bold">Menu #{{ $loop->index + 1 }}</span></td>
-                    <td><span class="fw-bold">{{ $co->menu_name }}</span></td>
-                </tr>
-                <tr>
-                    <td>Quantity</td>
-                    <td>{{ $co->cart_quantity }}</td>
-                </tr>
-                <tr>
-                    <td>Customer</td>
-                    <td>{{ $co->client_name }}</td>
-                </tr>
-                <tr>
-                    <td>Subtotal Harga</td>
-                    <td>Rp. {{ number_format( $co->cart_subtotal_amount, 2, ',', '.' ) }}</td>
-                </tr>
-                @endforeach
-            </table>
-            
-            <table class="table">
-                <tr>
-                    <td>Status Pembayaran</td>
-                    <td>{{ $order->payment_status }}</td>
-                </tr>
-                <tr>
-                    <td>Metode Pembayaran</td>
-                    <td>{{ $order->payment_method }}</td>
-                </tr>
-                <tr>
-                    <td>Status Pengiriman</td>
-                    <td>{{ $order->delivery_status }}</td>
-                </tr>
-                <tr>
-                    <td>Metode Pengiriman</td>
-                    <td>{{ $order->delivery_method }}</td>
-                </tr>
-                <tr>
-                    <td><span class="fw-bold">Total Harga</span></td>
-                    <td><span class="fw-bold">Rp. {{ number_format( $order->total_amount, 2, ',', '.' ) }}</span></td>
-                </tr>
-            </table>
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Perbaharui/Proses Data</h5> 
+                        <div class="card-text">
+                            <form action="{{ route('admin_orders_process', ['id' => $order->id]) }}" method="post" autocomplete="off">
+                                @csrf
+                                @method('PUT')
+                                <div class="mb-3">
+                                    <select class="form-select fw-light" name="order_payment_status">
+                                        <option value="">Status Pembayaran</option>
+                                        @foreach ($paymentStatus as $status) 
+                                        <option
+                                            value="{{ $status['value'] }}"
+                                            @if ($status['selected'])
+                                            selected
+                                            @endif
+                                        >{{ $status['value'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error ('order_payment_status')
+                                    <div>
+                                        <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <h5 class="card-title">{{ $order->delivery_method }}</h5>
+                                    <div class="py-1"></div>
+                                    <select class="form-select fw-light" name="order_delivery_status">
+                                        <option value="">Status Pengiriman</option>
+                                        @foreach ($deliveryStatus as $status)
+                                        <option 
+                                            value="{{ $status['value'] }}"
+                                            @if ($status['selected'])
+                                            selected
+                                            @endif
+                                        >{{ $status['value'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error ('order_delivery_status')
+                                    <div>
+                                        <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                                    </div>
+                                    @enderror
+                                </div>
+                                <input class="btn btn-primary" type="submit" value="Simpan">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+</div>
 
-        <div class="py-3">
-            <a class="btn btn-primary" href="{{ route('admin_orders_process', [ 'id' => $order->id, 'action' => 'mark_as_paid' ]) }}">Tandai Lunas</a>
-        </div>
-
-        <div class="py-3">
-            <a href="{{ route('admin_orders_get') }}">Back</a>
-        </div>
-
+<div class="py-3">
+    <a class="btn btn-danger" href="{{ route('admin_orders_get') }}">Kembali</a>
+</div>
 @endsection

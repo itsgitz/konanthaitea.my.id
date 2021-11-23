@@ -3,7 +3,7 @@
 
 @section ('content')
 <div class="py-3">
-    <h4>Orders Management</h4>
+    <h5>Orders Management</h5>
     <table class="table">
         <th>Order ID</th>
         <th>Customer</th>
@@ -12,7 +12,7 @@
         <th>Metode Pengiriman</th>
         <th>Total Harga</th>
         <th>Dibuat Tanggal</th>
-        <th>Aksi</th>
+        <th></th>
         
         @foreach ($orders as $o)
         <tr>
@@ -24,7 +24,7 @@
             <td>Rp. {{ number_format( $o->order_total_amount, 2, ',', '.' ) }}</td>
             <td>{{ $o->order_created_at }}</td>
             <td>
-                <a href="{{ route('admin_orders_show_get', [ 'id' => $o->order_id ]) }}">Process</a>
+                <a href="{{ route('admin_orders_show_get', [ 'id' => $o->order_id ]) }}">Proses</a>
             </td>
         </tr>
         @endforeach

@@ -31,15 +31,22 @@ class OrdersController extends Controller
         'failed'        => 'Failed',
     ];
 
+    const DELIVERY_METHOD = [
+        'pickup'    => 'Pickup',
+        'delivery'  => 'Delivery',
+    ];
+
     const FINISH_CART_STATUS    = 'Finish';
     const ORDER_FINISH_MESSAGE  = 'Pesanan anda sedang diproses, harap menunggu status selanjutnya';
-    const ORDER_MARK_AS_PAID    = 'mark_as_paid';
+
+    const ADMIN_ORDER_PROCESS_MESSAGE = 'Berhasil memproses order';
 
     public function getOnProgressOrderCount()
     {
         return Order::where('client_id', Auth::id())
             ->where('payment_status', '=', self::PAYMENT_STATUS['unpaid'])
             ->orWhere('delivery_status', '<>', self::DELIVERY_STATUS['finish'])
+            ->where('delivery_status', '<>', self::DELIVERY_STATUS['ready'])
             ->get()
             ->count();
     }
@@ -76,40 +83,42 @@ class OrdersController extends Controller
 
     public function adminShow(Request $r, $id)
     {
-        $order      = Order::findOrFail($id);
-        $cartOrders = $this->getCartOrders($id);
+        $order                  = Order::findOrFail($id);
+        $cartOrders             = $this->getCartOrders($id);
+        $deliveryStatusOptions  = $this->setDeliveryStatusOptions($order);
+        $paymentStatusOptions   = $this->setPaymentStatusOptions($order);
 
+        
 
         return view('admin.orders.show', [
-            'order' => $order,
-            'cartOrders' => $cartOrders
+            'order'             => $order,
+            'cartOrders'        => $cartOrders,
+            'deliveryStatus'    => $deliveryStatusOptions,
+            'paymentStatus'     => $paymentStatusOptions,
         ]);
     }
 
     public function adminProcess(Request $r, $id)
     {
+        $r->validate(
+            [
+                'order_payment_status'  => ['required'],
+                'order_delivery_status' => ['required'],
+            ],
+            [
+                'order_payment_status.required'  => 'Mohon untuk memilih status pembayaran',
+                'order_delivery_status.required' => 'Mohon untuk memilih status pengiriman',
+            ]
+        );
+
         $order = Order::find($id);
+        $order->payment_status  = $r->order_payment_status;
+        $order->delivery_status = $r->order_delivery_status;
+        $order->save();
 
-        switch($r->action) {
-            case self::ORDER_MARK_AS_PAID:
-                $order->payment_status = 'Paid';
-                $order->save();
-
-
-                return redirect()
-                    ->route('admin_orders_show_get', [ 'id' => $id ]);
-            break;
-
-            case 'Mark as Finish':
-            
-                $order->order_status = 'Finish';
-                $order->save();
-
-
-                return redirect()
-                    ->route('admin_orders_show_get', [ 'id' => $id ]);
-            break;
-        }
+        return redirect()
+            ->route('admin_orders_show_get', [ 'id' => $id ])
+            ->with('admin_orders_process_message', self::ADMIN_ORDER_PROCESS_MESSAGE . ' #' . $id);
     }
 
     //
@@ -313,5 +322,76 @@ class OrdersController extends Controller
 
         
         return $cartOrders;
+    }
+
+    private function setPaymentStatusOptions($order)
+    {
+        $options = [];
+
+        $options['paid'] = [
+            'value' => self::PAYMENT_STATUS['paid'],
+            'selected' => ( ( $order->payment_status == self::PAYMENT_STATUS['paid'] ) ? true : false ),
+        ];
+
+        $options['unpaid'] = [
+            'value' => self::PAYMENT_STATUS['unpaid'],
+            'selected' => ( ( $order->payment_status == self::PAYMENT_STATUS['unpaid'] ) ? true : false ),
+        ];
+
+
+        return $options;
+    }
+
+    private function setDeliveryStatusOptions($order)
+    {
+        $options = [];
+
+        $options['waiting']     = [
+            'value'     => self::DELIVERY_STATUS['waiting'],
+            'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['waiting'] ) ? true : false ),
+        ];
+
+        $options['confirmed']     = [
+            'value'     => self::DELIVERY_STATUS['confirmed'],
+            'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['confirmed'] ) ? true : false ),
+        ];
+
+        $options['on_progress']   = [
+            'value'     => self::DELIVERY_STATUS['on_progress'],
+            'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['on_progress'] ) ? true : false ),
+        ];
+
+
+        switch ($order->delivery_method) {
+            case self::DELIVERY_METHOD['pickup']:
+                $options['ready']         = [
+                    'value'     => self::DELIVERY_STATUS['ready'],
+                    'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['ready'] ) ? true : false ),
+                ]; 
+
+                break;
+
+            case self::DELIVERY_METHOD['delivery']:
+                $options['delivery']      = [
+                    'value'     => self::DELIVERY_STATUS['delivery'],
+                    'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['delivery'] ) ? true : false ),
+                ];
+
+                $options['finish']        = [
+                    'value'     => self::DELIVERY_STATUS['finish'],
+                    'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['finish'] ) ? true : false ), 
+                ];
+
+                $options['failed']        = [
+                    'value'     => self::DELIVERY_STATUS['failed'],
+                    'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['failed'] ) ? true : false ), 
+                ];
+
+
+                break;
+        }
+
+
+        return $options;
     }
 }

@@ -26,7 +26,7 @@
                 <form action="{{ route('client_login_post') }}" method="post">
                      @csrf
                     <div class="input-group mb-3">
-                        <span class="input-group-text text-secondary">@</span>
+                        <span class="input-group-text text-secondary bg-white">@</span>
                         <input name="email" id="client-email" class="form-control" type="email" placeholder="Alamat Email" value="{{ old('email') }}" required>
                         @error ('email')
                         <div>
@@ -35,7 +35,7 @@
                         @enderror
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text text-secondary"><i class="fas fa-lock"></i></span>
+                        <span class="input-group-text text-secondary bg-white"><i class="fas fa-lock"></i></span>
                         <input name="password" id="client-password" class="form-control" type="password" placeholder="Password" required>
                         @error ('password')
                         <div>

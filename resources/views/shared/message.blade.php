@@ -74,5 +74,21 @@
     </div>
     @endif
     {{-- UPDATED CART MESSAGE --}}
+
+
+    {{-- ADMIN PROCESS ORDER --}}
+    @if (session('admin_orders_process_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_orders_process_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- ADMIN PROCESS ORDER --}}
 </div>
 <div class="py-1"></div>

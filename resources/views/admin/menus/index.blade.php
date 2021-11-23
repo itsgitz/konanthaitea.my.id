@@ -3,7 +3,7 @@
 
 @section ('content')
 <div class="py-3">
-    <h4>Menu Management</h4>
+    <h5>Menu Management</h5>
 
     <a href="">Tambah Menu</a>
     <table class="table">

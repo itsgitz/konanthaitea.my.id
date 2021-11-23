@@ -3,7 +3,7 @@
 
 @section ('content')
 <div class="py-3">
-    <h4>Resep untuk {{ $menu->name }}</h4>
+    <h5>Resep untuk {{ $menu->name }}</h5>
     
     <div class="py-3">
         <table class="table">

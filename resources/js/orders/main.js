@@ -56,7 +56,7 @@ function setOrderDeliveryStatusClass(statusEl) {
         break;
 
       case deliveryStatus.ready:
-        el.className += ' bg-primary';
+        el.className += ' bg-success';
         break;
 
       case deliveryStatus.delivery:

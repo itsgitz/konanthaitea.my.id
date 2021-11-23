@@ -22,6 +22,11 @@
                 <div class="mb-3">
                     <label class="label" for="quantity">Jumlah</label>
                     <input id="quantity" class="form-control w-25" type="number" name="cart_quantity" value="{{ $cart->cart_quantity }}">
+                    @error ('cart_quantity')
+                        <div>
+                            <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                        </div>
+                    @enderror
                 </div>
                 <a class="btn btn-danger" href="{{ route('client_cart_get') }}">Batal</a>
                 <input class="btn btn-success" type="submit" value="Simpan">

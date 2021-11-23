@@ -9802,7 +9802,7 @@ function setOrderDeliveryStatusClass(statusEl) {
         break;
 
       case deliveryStatus.ready:
-        el.className += ' bg-primary';
+        el.className += ' bg-success';
         break;
 
       case deliveryStatus.delivery:
@@ -9885,7 +9885,7 @@ function setOrderDeliveryStatusClass(statusEl) {
       break;
 
     case deliveryStatus.ready:
-      statusEl.classList.add('bg-primary');
+      statusEl.classList.add('bg-success');
       break;
 
     case deliveryStatus.delivery:

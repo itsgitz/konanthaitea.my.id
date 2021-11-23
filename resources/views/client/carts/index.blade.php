@@ -71,7 +71,7 @@
                             <div class="py-1"></div>
                             <div class="card-text">
                                 <div class="mb-3">
-                                    <select id="cart-delivery" class="form-select" name="cart_delivery_method">
+                                    <select id="cart-delivery" class="form-select fw-light" name="cart_delivery_method">
                                         <option value="" selected>Pilih Metode Pengiriman</option>
                                         <option value="Pickup">Pickup</option>
                                         <option value="Delivery">Delivery</option>
@@ -86,7 +86,7 @@
                             <div class="py-1"></div>
                             <div class="card-text">
                                 <div class="mb-3">
-                                    <select id="cart-payment-method" class="form-select" name="cart_payment_method">
+                                    <select id="cart-payment-method" class="form-select fw-light" name="cart_payment_method">
                                         <option value="" selected>Pilih Metode Pembayaran</option>
                                         <option value="Bank Transfer">Bank Transfer</option>
                                         <option value="E-money">E-money</option>

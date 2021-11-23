@@ -8,9 +8,8 @@
     <script defer src="{{ mix ('js/app.js') }}"></script>
 </head>
 <body>
+    @include ('shared.admin_navigation')
     <div class="container-fluid">
-        @include ('shared.admin_navigation')
-
         @yield ('content')
     </div> 
 </body>

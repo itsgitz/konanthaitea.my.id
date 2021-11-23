@@ -3,7 +3,7 @@
 
 @section ('content')
 <div class="py-3">
-    <h4>Unit yang tersedia:</h4> 
+    <h5>Unit yang tersedia:</h5> 
     
     <table class="table">
         <th>ID</th>
@@ -19,7 +19,7 @@
         @endforeach
     </table>
 
-    <h4>Tambah Unit</h4>
+    <h5>Tambah Unit</h5>
     <form action="{{ route('admin_stock_units_post') }}" method="post">
         @csrf
         <div class="mb-3">

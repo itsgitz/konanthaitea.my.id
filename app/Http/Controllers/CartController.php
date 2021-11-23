@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Cart;
 use App\Models\Menu;
+use Illuminate\Validation\Rule;
 
 class CartController extends Controller
 {
@@ -84,6 +85,15 @@ class CartController extends Controller
 
     public function update(Request $r, $cartId)
     {
+        $r->validate(
+            [
+                'cart_quantity'  => ['required', 'numeric', 'not_in:0'],
+            ],
+            [
+                'cart_quantity.not_in' => 'Jumlah minuman tidak boleh kosong atau nol',
+            ],
+        );
+
         $cart                   = Cart::find($cartId);
         $cart->quantity         = $r->cart_quantity;
         $cart->subtotal_amount  = ( $r->menu_price * $r->cart_quantity );
