@@ -1,9 +1,9 @@
 @extends ('layouts.admin')
-@section ('title', 'Admins')
+@section ('title', 'Clients Management')
 
 @section ('content')
 <div class="py-3">
-    <h5>Clients</h5>
+    <h5>Clients Management</h5>
 
     @include ('shared.message')
 
