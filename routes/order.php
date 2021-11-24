@@ -17,3 +17,14 @@ Route::get('/minuman/orders/{id}', [\App\Http\Controllers\OrdersController::clas
 Route::post('/minuman/orders', [\App\Http\Controllers\OrdersController::class, 'clientProcess'])
     ->name('client_orders_post')
     ->middleware('auth');
+
+
+Route::get('/admin/orders', [\App\Http\Controllers\OrdersController::class, 'adminIndex'])
+    ->name('admin_orders_get');
+
+Route::get('/admin/orders/{id}', [\App\Http\Controllers\OrdersController::class, 'adminShow'])
+    ->name('admin_orders_show_get');
+
+Route::put('/admin/orders/process/{id}', [\App\Http\Controllers\OrdersController::class, 'adminProcess'])
+    ->name('admin_orders_process');
+
