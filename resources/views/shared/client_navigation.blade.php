@@ -44,7 +44,9 @@
                     <li>
                         <a class="dropdown-item" href="{{ route('client_orders_get') }}">
                             <span class="pe-3">Daftar Transaksi</span>
+                            @if ($order->getOnProgressOrderCount())
                             <span class="badge rounded-pill bg-primary">{{ $order->getOnProgressOrderCount() }}</span>
+                            @endif
                         </a>
                     </li>
                     <li>
