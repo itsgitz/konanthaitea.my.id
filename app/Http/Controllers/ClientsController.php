@@ -21,16 +21,6 @@ class ClientsController extends Controller
         ]);
     }
 
-    public function create()
-    {
-
-    }
-
-    public function store()
-    {
-
-    }
-
     public function edit($id)
     {
         $client = Client::findOrFail($id);
@@ -42,11 +32,32 @@ class ClientsController extends Controller
 
     public function update(Request $r, $id)
     {
+        $r->validate(
+            [
+                'name'      => ['required', 'min:6'],
+                'email'     => ['required', 'email:rfc,dns'],
+            ],
+            [
+                'name.required'     => 'Nama tidak boleh kosong',
+                'email.required'    => 'Email tidak boleh kosong',
+                'email.email'       => 'Format alamat email yang anda masukan salah',
+                'name.min'          => 'Minimal nama harus 6 karakter',
+            ]
+        );
+
         $client = Client::find($id);
         $client->name = $r->name;
         $client->email = $r->email;
 
         if ( isset($r->password) ) {
+            $r->validate(
+                [
+                    'password' => ['min:6']
+                ],
+                [
+                    'password.min' => 'Password minimal harus 6 karakter'
+                ]
+            );
             $client->password = Hash::make($r->password);
         }
 
