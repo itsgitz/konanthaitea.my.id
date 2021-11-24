@@ -22,7 +22,7 @@
     </div>
 
     <div class="py-3">
-        <a href="{{ route('admin_menus_get') }}">Back</a>
+        <a href="{{ route('admin_menu_get') }}">Back</a>
     </div>
 
 </div>

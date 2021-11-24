@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-
 use App\Models\Menu;
-use App\Models\MenuStock;
-use App\Models\Stock;
+
 
 class MenusController extends Controller
 {
@@ -39,5 +36,30 @@ class MenusController extends Controller
             'menu'       => $menu,
             'menuStocks' => $menuStocks,
         ]);
+    }
+
+    public function create()
+    {
+        return view('admin.menus.create');
+    }
+
+    public function store(Request $r)
+    {
+
+    }
+
+    public function edit($id)
+    {
+
+    }
+
+    public function update(Request $r, $id)
+    {
+
+    }
+
+    public function delete(Request $r, $id)
+    {
+
     }
 }
