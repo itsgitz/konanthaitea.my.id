@@ -8,20 +8,26 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('admin_home') }}">Dashboard</a>
+              <a class="nav-link" href="{{ route('admin_home') }}"><i class="fas fa-chalkboard-teacher"></i> Dashboard</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('admin_orders_get') }}">Orders</a>
+                <a class="nav-link" href="{{ route('admin_orders_get') }}">
+                    <i class="fas fa-clipboard-list"></i> Orders
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin_stocks_get') }}">Stocks</a>
+                <a class="nav-link" href="{{ route('admin_stocks_get') }}">
+                    <i class="fas fa-tags"></i> Stocks
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin_menus_get') }}">Menu</a>
+                <a class="nav-link" href="{{ route('admin_menus_get') }}">
+                    <i class="fas fa-wine-bottle"></i> Menu
+                </a>
             </li> 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Accounts
+                    <i class="fas fa-users"></i> Accounts
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDrodown">
                     <li>
