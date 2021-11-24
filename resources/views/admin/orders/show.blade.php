@@ -118,7 +118,11 @@
     </div>
 </div>
 
-<div class="py-3">
-    <a class="btn btn-danger" href="{{ route('admin_orders_get') }}">Kembali</a>
+<div class="card">
+    <div class="card-body">
+        <div class="card-text">
+            <a class="btn btn-danger" href="{{ route('admin_orders_get') }}">Kembali</a>
+        </div>
+    </div>
 </div>
 @endsection
