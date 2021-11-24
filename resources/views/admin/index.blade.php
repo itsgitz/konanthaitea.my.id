@@ -50,7 +50,7 @@
             </a>
         </div> 
         <div class="col-md">
-            <a class="text-decoration-none" href="{{ route('admin_menus_get') }}">
+            <a class="text-decoration-none" href="{{ route('admin_menu_get') }}">
                 <div class="card btn btn-outline-danger">
                     <div class="card-body">
                         <div class="card-text d-flex justify-content-center">

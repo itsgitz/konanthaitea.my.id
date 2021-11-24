@@ -21,7 +21,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin_menus_get') }}">
+                <a class="nav-link" href="{{ route('admin_menu_get') }}">
                     <i class="fas fa-wine-bottle"></i> Menu
                 </a>
             </li> 
