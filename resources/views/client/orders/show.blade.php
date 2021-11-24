@@ -8,6 +8,8 @@
             <h6 class="card-title display-6">
                 <i class="fa fa-shopping-bag text-success"></i>
                 &middot;
+                {{ date('j M Y', strtotime( $order->created_at )) }}
+                &middot;
                 Order ID
                 <a class="text-success" href="{{ route('client_order_show', ['id' => $order->id]) }}">#{{ $order->id }}</a>
                 &middot;
