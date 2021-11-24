@@ -29,7 +29,7 @@
                         <span class="input-group-text text-secondary bg-white">@</span>
                         <input name="email" id="client-email" class="form-control" type="email" placeholder="Alamat Email" value="{{ old('email') }}" required>
                         @error ('email')
-                        <div>
+                        <div class="input-group">
                             <span class="text-danger fw-light"><small>{{ $message }}</small></span>
                         </div>
                         @enderror
@@ -38,15 +38,15 @@
                         <span class="input-group-text text-secondary bg-white"><i class="fas fa-lock"></i></span>
                         <input name="password" id="client-password" class="form-control" type="password" placeholder="Password" required>
                         @error ('password')
-                        <div>
+                        <div class="input-group">
                             <span class="text-danger fw-light"><small>{{ $message }}</small></span>
                         </div>
                         @enderror
                     </div>
 
-                   <div class="mb-3">
+                    <div class="mb-3">
                         <input id="client-login-submit" class="form-control btn btn-primary" type="submit" value="Lanjut">
-                   </div>
+                    </div>
 
                     <div class="py-3">
                         Belum memiliki akun? <a href="{{ route('client_register_get') }}">Daftar sekarang!</a>
