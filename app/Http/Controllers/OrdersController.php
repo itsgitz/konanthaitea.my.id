@@ -44,11 +44,12 @@ class OrdersController extends Controller
     public function getOnProgressOrderCount()
     {
         return Order::where('client_id', Auth::id())
-            ->where('payment_status', '=', self::PAYMENT_STATUS['unpaid'])
-            ->orWhere('delivery_status', '<>', self::DELIVERY_STATUS['finish'])
-            ->where('delivery_status', '<>', self::DELIVERY_STATUS['ready'])
-            ->get()
-            ->count();
+            ->where(function($query) {
+                $query->where('delivery_status', '<>', self::DELIVERY_STATUS['finish'])
+                    ->where('delivery_status', '<>', self::DELIVERY_STATUS['ready'])
+                    ->orWhere('payment_status', self::PAYMENT_STATUS['unpaid']);
+            })
+            ->get()->count();
     }
 
     //
@@ -126,7 +127,7 @@ class OrdersController extends Controller
     //
     //
     public function clientIndex(Request $r)
-    {
+    { 
         $cartOrders = DB::table('cart_orders')
             ->join('orders', 'cart_orders.order_id', '=', 'orders.id')
             ->join('carts', 'cart_orders.cart_id', '=', 'carts.id')
