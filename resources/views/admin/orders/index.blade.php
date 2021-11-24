@@ -32,7 +32,7 @@
             </td>
             <td>{{ $o->order_delivery_method }}</td>
             <td class="fw-light">Rp. {{ number_format( $o->order_total_amount, 2, ',', '.' ) }}</td>
-            <td>{{ $o->order_created_at }}</td>
+            <td>{{ date('j M Y H:i:s', strtotime( $o->order_created_at )) }}</td>
             <td>
                 <a class="btn btn-primary btn-sm" href="{{ route('admin_orders_show_get', [ 'id' => $o->order_id ]) }}">Proses</a>
             </td>
