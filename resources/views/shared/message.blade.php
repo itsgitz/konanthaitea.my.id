@@ -120,5 +120,50 @@
     </div>
     @endif
     {{-- ADMIN DELETE CLIENT --}}
+
+    {{-- ADMIN ADD ADMIN --}}
+    @if (session('admin_add_admin_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_add_admin_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- ADMIN ADD ADMIN --}}
+
+    {{-- ADMIN UPDATE ADMIN --}}
+    @if (session('admin_update_admin_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_update_admin_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- ADMIN UPDATE ADMIN --}}
+
+    {{-- ADMIN DELETE ADMIN --}}
+    @if (session('admin_delete_admin_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_delete_admin_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- ADMIN DELETE ADMIN --}}
 </div>
 <div class="py-1"></div>
