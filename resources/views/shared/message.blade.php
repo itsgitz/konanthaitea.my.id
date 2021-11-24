@@ -90,5 +90,35 @@
     </div>
     @endif
     {{-- ADMIN PROCESS ORDER --}}
+
+    {{-- ADMIN UPDATE CLIENT --}}
+    @if (session('admin_update_client_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_update_client_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- ADMIN UPDATE CLIENT --}} 
+
+    {{-- ADMIN DELETE CLIENT --}}
+    @if (session('admin_delete_client_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_delete_client_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- ADMIN DELETE CLIENT --}}
 </div>
 <div class="py-1"></div>
