@@ -63,6 +63,34 @@
                 </div>
             </a>
         </div> 
+        <div class="col-md">
+            <a class="text-decoration-none" href="{{ route('admin_clients_get') }}">
+                <div class="card btn btn-outline-secondary">
+                    <div class="card-body">
+                        <div class="card-text d-flex justify-content-center">
+                            <i class="fas fa-users display-3"></i>
+                        </div>
+                        <div class="card-text d-flex justify-content-center py-3">
+                            Clients
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md">
+            <a class="text-decoration-none" href="{{ route('admin_accounts_get') }}">
+                <div class="card btn btn-outline-dark">
+                    <div class="card-body">
+                        <div class="card-text d-flex justify-content-center">
+                            <i class="fas fas fa-user-shield display-3"></i>
+                        </div>
+                        <div class="card-text d-flex justify-content-center py-3">
+                            Admins
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
 @endsection
