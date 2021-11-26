@@ -13,11 +13,11 @@ class RegisterController extends Controller
 {
     const REGISTERED_MESSAGE    = 'Akunmu telah aktif dan terdaftar, silahkan pesan minumanmu!';
     const ORDER_FINISH_MESSAGE  = 'Pesanan anda sedang diproses, harap menunggu status selanjutnya';
- 
+
 
     //
     public function index(Request $r)
-    { 
+    {
         return view('client.auth.register');
     }
 
