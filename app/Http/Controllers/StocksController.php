@@ -22,9 +22,39 @@ class StocksController extends Controller
             )
             ->get();
 
-        
-        return view('admin.stocks', [
+
+        return view('admin.stocks.index', [
             'stocks' => $stocks,
         ]);
+    }
+
+    public function show($id)
+    {
+
+    }
+
+    public function create()
+    {
+
+    }
+
+    public function store(Request $r, $id)
+    {
+
+    }
+
+    public function edit($id)
+    {
+
+    }
+
+    public function update(Request $r, $id)
+    {
+
+    }
+
+    public function delete($id)
+    {
+
     }
 }
