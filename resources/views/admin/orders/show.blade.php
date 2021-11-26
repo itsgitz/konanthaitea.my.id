@@ -5,7 +5,7 @@
 <div id="admin-show-order" class="py-3">
     <h5>Proses Order #{{ $order->id }}</h5>
 
-    @include ('shared.message')    
+    @include ('shared.message')
 
     <div id="process-order">
         <div id="carts-list">
@@ -24,13 +24,13 @@
                                 Subtotal Harga <strong>Rp. {{ number_format( $cart->cart_subtotal_amount, 2, ',', '.' ) }}</strong>
                             </div>
                         </div>
-                    </div>            
+                    </div>
                 </li>
                 <div class="py-1"></div>
             </ul>
             @endforeach
         </div>
-        
+
         <div class="row">
             <div class="col-md">
                 <div class="card">
@@ -65,7 +65,7 @@
             <div class="col-md">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Perbaharui/Proses Data</h5> 
+                        <h5 class="card-title">Perbaharui/Proses Data</h5>
                         <div class="card-text">
                             <form action="{{ route('admin_orders_process', ['id' => $order->id]) }}" method="post" autocomplete="off">
                                 @csrf
@@ -73,7 +73,7 @@
                                 <div class="mb-3">
                                     <select class="form-select fw-light" name="order_payment_status">
                                         <option value="">Status Pembayaran</option>
-                                        @foreach ($paymentStatus as $status) 
+                                        @foreach ($paymentStatus as $status)
                                         <option
                                             value="{{ $status['value'] }}"
                                             @if ($status['selected'])
@@ -94,7 +94,7 @@
                                     <select class="form-select fw-light" name="order_delivery_status">
                                         <option value="">Status Pengiriman</option>
                                         @foreach ($deliveryStatus as $status)
-                                        <option 
+                                        <option
                                             value="{{ $status['value'] }}"
                                             @if ($status['selected'])
                                             selected
@@ -108,7 +108,7 @@
                                     </div>
                                     @enderror
                                 </div>
-                                <input class="btn btn-primary" type="submit" value="Simpan">
+                                <input class="btn btn-primary btn-sm" type="submit" value="Simpan">
                             </form>
                         </div>
                     </div>
@@ -121,7 +121,7 @@
 <div class="card">
     <div class="card-body">
         <div class="card-text">
-            <a class="btn btn-danger" href="{{ route('admin_orders_get') }}">Kembali</a>
+            <a class="btn btn-danger btn-sm" href="{{ route('admin_orders_get') }}">Kembali</a>
         </div>
     </div>
 </div>
