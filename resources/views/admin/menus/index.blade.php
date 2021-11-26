@@ -12,6 +12,7 @@
 
     <table class="table table-hover">
         <thead>
+            <th scope="col">Nama</th>
             <th scope="col">Harga</th>
             <th scope="col">Status</th>
             <th scope="col">Jumlah</th>
@@ -22,7 +23,6 @@
         @if ($menus->isNotEmpty())
             @foreach ($menus as $m)
             <tr>
-                <td>{{ $m->id }}</td>
                 <td>{{ $m->name }}</td>
                 <td>Rp. {{ number_format( $m->price, 2, ',', '.' ) }}</td>
                 <td>{{ $m->status }}</td>
