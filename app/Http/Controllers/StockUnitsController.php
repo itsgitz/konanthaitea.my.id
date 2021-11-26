@@ -9,13 +9,15 @@ use App\Models\StockUnit;
 
 class StockUnitsController extends Controller
 {
+    const ADD_STOCK_UNIT_MESSAGE = 'Berhasil menambahkan unit';
+
     //
-    public function unit()
+    public function index()
     {
         $stockUnits = StockUnit::all();
 
 
-        return view('admin.stock_units', [
+        return view('admin.stocks.units.index', [
             'stockUnits' => $stockUnits,
         ]);
     }
@@ -27,6 +29,7 @@ class StockUnitsController extends Controller
         $stockUnit->save();
 
         return redirect()
-            ->route('admin_stock_units_get');
+            ->route('admin_stock_units_get')
+            ->with('add_stock_unit_message', self::ADD_STOCK_UNIT_MESSAGE);
     }
 }
