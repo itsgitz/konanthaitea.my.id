@@ -4,6 +4,8 @@
 @section ('content')
 <div id="admin-orders-main" class="py-3">
     <h5>Orders Management</h5>
+
+    @include ('shared.message')
     <table class="table table-hover">
         <thead>
             <th scope="col">Order ID</th>
@@ -15,7 +17,8 @@
             <th scope="col">Dibuat Tanggal</th>
             <th scope="col">#</th>
         </thead>
-        
+
+        @if ($orders->isNotEmpty())
         @foreach ($orders as $o)
         <tr>
             <td class="fw-light"># {{ $o->order_id }}</td>
@@ -38,6 +41,11 @@
             </td>
         </tr>
         @endforeach
+        @else
+            <tr>
+                <td class="fw-light text-center" colspan="8">Tidak ada order atau transaksi yang tercatat</td>
+            </tr>
+        @endif
     </table>
 </div>
 @endsection
