@@ -14,31 +14,37 @@
             <th scope="col">Dibuat Tanggal</th>
             <th scope="col">#</th>
         </thead>
-        
-        @foreach ($clients as $c)
-        <tr>
-            <td class="fw-light">{{ $c->name }}</td>
-            <td class="fw-light">{{ $c->email }}</td>
-            <td class="fw-light">{{ $c->created_at }}</td>
-            <td>
-                <a class="btn btn-warning" href="{{ route('admin_clients_edit_get', [ 'id' => $c->id ]) }}">
-                    Edit
-                </a>
-                <span class="px-2"></span>
-                <a
-                    class="btn btn-danger"
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#remove-client-modal"
-                    data-client-name="{{ $c->name }}"
-                    data-remove-client-link="{{ route('admin_clients_delete_get', ['id' => $c->id]) }}"
-                    onclick="getClient(this)"
-                >
-                    Remove
-                </a>
-            </td>
-        </tr>
-        @endforeach
+
+        @if ($clients->isNotEmpty())
+            @foreach ($clients as $c)
+            <tr>
+                <td class="fw-light">{{ $c->name }}</td>
+                <td class="fw-light">{{ $c->email }}</td>
+                <td class="fw-light">{{ $c->created_at }}</td>
+                <td>
+                    <a class="btn btn-warning btn-sm" href="{{ route('admin_clients_edit_get', [ 'id' => $c->id ]) }}">
+                        <i class="fas fa-pencil-alt"></i> Edit
+                    </a>
+                    <span class="px-2"></span>
+                    <a
+                        class="btn btn-danger btn-sm"
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#remove-client-modal"
+                        data-client-name="{{ $c->name }}"
+                        data-remove-client-link="{{ route('admin_clients_delete_get', ['id' => $c->id]) }}"
+                        onclick="getClient(this)"
+                    >
+                        <i class="fas fa-trash-alt"></i> Remove
+                    </a>
+                </td>
+            </tr>
+            @endforeach
+        @else
+            <tr>
+                <td class="fw-light text-center" colspan="4">Data clients kosong</td>
+            </tr>
+        @endif
     </table>
 
     {{-- Modal --}}
@@ -53,8 +59,8 @@
                     Apakah anda yakin ingin menghapus client <span id="client-name" class="fw-bold"></span>?
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" data-bs-dismiss="modal">Batal</button>
-                    <a id="remove-client-button" class="btn btn-danger" href="">Hapus</a>
+                    <button class="btn btn-primary btn-sm" data-bs-dismiss="modal">Batal</button>
+                    <a id="remove-client-button" class="btn btn-danger btn-sm" href="">Hapus</a>
                 </div>
             </div>
         </div>
