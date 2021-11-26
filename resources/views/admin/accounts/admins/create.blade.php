@@ -32,8 +32,8 @@
             @enderror
         </div>
 
-        <a class="btn btn-danger" href="{{ route('admin_accounts_get') }}">Batal</a>
-        <input class="btn btn-primary" type="submit" value="Simpan">
+        <a class="btn btn-danger btn-sm" href="{{ route('admin_accounts_get') }}">Kembali</a>
+        <input class="btn btn-primary btn-sm" type="submit" value="Simpan">
     </form>
 </div>
 @endsection
