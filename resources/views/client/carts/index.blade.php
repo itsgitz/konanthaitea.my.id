@@ -15,7 +15,7 @@
         <form action="{{ route('client_orders_post') }}" method="post">
             @csrf
 
-            <div class="row">
+            <div class="row gy-3">
                 {{-- Cart List --}}
                 <div class="cart-list col-md-6">
                     @foreach ($carts as $c)
@@ -41,7 +41,7 @@
                             {{-- Sub Total --}}
 
                             <div class="py-2"></div>
-                            <div class="py-1"> 
+                            <div class="py-1">
                                 {{-- Delete function --}}
                                 <a class="d-inline btn btn-success btn-sm" href="{{ route('client_cart_edit', [ 'cartId' => $c->cart_id ]) }}">
                                     <i class="fas fa-pencil-alt"></i> Ubah
@@ -50,13 +50,13 @@
                                 <a class="d-inline btn btn-danger btn-sm" href="{{ route('client_cart_delete', [ 'cartId' => $c->cart_id ]) }}">
                                     <i class="fas fa-trash-alt"></i> Hapus
                                 </a>
-                                {{-- Delete function --}} 
+                                {{-- Delete function --}}
                             </div>
                         </div>
                         <div class="py-1"></div>
                     </div>
                     @endforeach
-                </div> 
+                </div>
                 {{-- Cart List --}}
 
                 {{-- Total Price/Amount --}}
@@ -66,7 +66,7 @@
                             <h5 class="card-title">Ringkasan Belanja</h5>
                             <div class="py-1"></div>
                             <div class="card-text fw-light border-bottom py-3">
-                                Total Belanja ({{ $cart->getOnCartCount() }} jenis minuman) 
+                                Total Belanja ({{ $cart->getOnCartCount() }} jenis minuman)
                             </div>
                             <div class="py-1"></div>
                             <div class="card-text">
@@ -113,16 +113,16 @@
                     </div>
                 </div>
                 {{-- Total Price/Amount --}}
-            </div> 
+            </div>
         </form>
-        
+
         {{-- Back Button --}}
         <div class="py-2"></div>
         <div class="card">
             <div class="card-body"><a class="btn btn-primary" href="{{ route('client_home') }}">Lanjut Belanja</a></div>
         </div>
         {{-- Back Button --}}
-    </div> 
+    </div>
 
     @else
 
