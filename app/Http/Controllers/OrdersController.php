@@ -76,7 +76,6 @@ class OrdersController extends Controller
             ->orderBy('orders.created_at', 'DESC')
             ->get();
 
-        
         return view('admin.orders.index', [
             'orders' => $orders,
         ]);
@@ -89,7 +88,7 @@ class OrdersController extends Controller
         $deliveryStatusOptions  = $this->setDeliveryStatusOptions($order);
         $paymentStatusOptions   = $this->setPaymentStatusOptions($order);
 
-        
+
 
         return view('admin.orders.show', [
             'order'             => $order,
@@ -127,7 +126,7 @@ class OrdersController extends Controller
     //
     //
     public function clientIndex(Request $r)
-    { 
+    {
         $cartOrders = DB::table('cart_orders')
             ->join('orders', 'cart_orders.order_id', '=', 'orders.id')
             ->join('carts', 'cart_orders.cart_id', '=', 'carts.id')
@@ -186,12 +185,12 @@ class OrdersController extends Controller
             ],
         );
 
-        
+
         //Get order(id) after created an order
         $orderId = $this->saveOrder($r);
-        $this->saveCartOrder($r, $orderId); 
+        $this->saveCartOrder($r, $orderId);
         $this->saveMenuStock($r);
-         
+
         return redirect()
             ->route('client_home')
             ->with('order_message', self::ORDER_FINISH_MESSAGE);
@@ -300,7 +299,7 @@ class OrdersController extends Controller
                 }
             }
         }
-        
+
         return $orders;
     }
 
@@ -321,7 +320,7 @@ class OrdersController extends Controller
             )
             ->get();
 
-        
+
         return $cartOrders;
     }
 
@@ -368,7 +367,7 @@ class OrdersController extends Controller
                 $options['ready']         = [
                     'value'     => self::DELIVERY_STATUS['ready'],
                     'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['ready'] ) ? true : false ),
-                ]; 
+                ];
 
                 break;
 
@@ -380,12 +379,12 @@ class OrdersController extends Controller
 
                 $options['finish']        = [
                     'value'     => self::DELIVERY_STATUS['finish'],
-                    'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['finish'] ) ? true : false ), 
+                    'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['finish'] ) ? true : false ),
                 ];
 
                 $options['failed']        = [
                     'value'     => self::DELIVERY_STATUS['failed'],
-                    'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['failed'] ) ? true : false ), 
+                    'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['failed'] ) ? true : false ),
                 ];
 
 
