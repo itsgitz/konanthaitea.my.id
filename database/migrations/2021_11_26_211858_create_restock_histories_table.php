@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMenusTable extends Migration
+class CreateRestockHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateMenusTable extends Migration
      */
     public function up()
     {
-        Schema::create('menus', function (Blueprint $table) {
+        Schema::create('restock_histories', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('stock_id');
+            $table->unsignedBigInteger('stock_units_id');
             $table->string('name');
-            $table->decimal('price', $precision = 10, $scale = 2);
             $table->integer('quantity');
-            $table->enum('status', ['Available', 'Sold Out']);
+            $table->enum('status', ['Available', 'Not Available']);
+            $table->decimal('total_price', $precision = 10, $scale = 2);
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateMenusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('restock_histories');
     }
 }

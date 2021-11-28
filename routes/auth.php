@@ -13,7 +13,7 @@ Route::post('/login', [\App\Http\Controllers\LoginController::class, 'auth'])
     ->middleware('guest')
     ->name('client_login_post');
 
-Route::post('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])
+Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])
     ->middleware('auth')
     ->name('client_logout_post');
 

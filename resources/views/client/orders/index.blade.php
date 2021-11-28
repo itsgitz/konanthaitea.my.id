@@ -10,7 +10,7 @@
             <div class="card-body">
                 <div class="d-inline card-text px-3">
                     <i class="fa fa-shopping-bag text-success"></i>
-                </div> 
+                </div>
                 <div class="d-inline card-text fw-bold">
                     {{ date('j M Y', strtotime( $o['created_at'] )) }}
                 </div>
@@ -26,7 +26,7 @@
                 <div class="d-inline card-text fw-bold">
                     Order ID: #{{ $o['id'] }}
                 </div>
- 
+
                 {{-- Ordered Carts --}}
                 <div class="py-1"></div>
                 <div class="card-text">
@@ -35,7 +35,7 @@
                         <li class="list-group-item">
                             <h5 class="card-title">{{ $cart['menu_name'] }}</h5>
                             <div class="card-text fw-light">
-                               {{ $cart['quantity'] }} minuman x Rp. {{ number_format( $cart['menu_price'], 2, ',', '.' ) }} 
+                               {{ $cart['quantity'] }} minuman x Rp. {{ number_format( $cart['menu_price'], 2, ',', '.' ) }}
                             </div>
                             <div class="card-text fw-light">
                                 Subtotal Harga Rp. {{ number_format( $cart['subtotal_amount'], 2, ',', '.') }}
@@ -65,8 +65,8 @@
         @endforeach
 
         <div class="py-4">
-            <a class="btn btn-primary" href="{{ route('client_home') }}">Belanja</a>
-            <a class="btn btn-primary" href="{{ route('client_cart_get') }}">Keranjang</a>
+            <a class="btn btn-primary btn-sm" href="{{ route('client_home') }}">Lanjut Belanja</a>
+            <a class="btn btn-primary btn-sm" href="{{ route('client_cart_get') }}">Lihat Keranjang</a>
         </div>
     @else
         <div class="order-empty py-5">

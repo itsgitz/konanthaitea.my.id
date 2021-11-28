@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Menu;
 use App\Models\MenuStock;
-use App\Models\Stock;
 
 class MenusController extends Controller
 {
@@ -123,7 +122,23 @@ class MenusController extends Controller
 
     public function edit($id)
     {
+        $menu = Menu::find($id);
+        $stocks = DB::table('stocks')
+            ->join('stock_units', 'stocks.stock_units_id', '=', 'stock_units.id')
+            ->select(
+                'stocks.id AS stock_id',
+                'stocks.name AS stock_name',
+                'stocks.quantity AS stock_quantity',
+                'stocks.status AS stock_status',
+                'stock_units.name AS unit_name',
+                'stocks.created_at AS stock_created_at'
+            )
+            ->get();
 
+        return view('admin.menus.edit', [
+            'menu'      => $menu,
+            'stocks'    => $stocks,
+        ]);
     }
 
     public function update(Request $r, $id)

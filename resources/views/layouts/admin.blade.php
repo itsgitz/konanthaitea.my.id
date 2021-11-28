@@ -11,7 +11,8 @@
     @include ('shared.admin_navigation')
     <div class="container">
         @yield ('content')
-    </div> 
+    </div>
+    <div class="py-2"></div>
     @include ('shared.footer')
 </body>
 </html>

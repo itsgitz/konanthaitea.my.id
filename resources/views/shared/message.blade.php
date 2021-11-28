@@ -166,7 +166,6 @@
     @endif
     {{-- ADMIN DELETE ADMIN --}}
 
-
     {{-- ADMIN ERROR ADD MENU --}}
     @if (session('admin_error_add_menu_message'))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -196,5 +195,20 @@
     </div>
     @endif
     {{-- ADD MENU MESSAGE --}}
+
+    {{-- ADD STOCK MESSAGE --}}
+    @if (session('admin_add_stock_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_add_stock_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- ADD STOCK MESSAGE --}}
 </div>
 <div class="py-1"></div>

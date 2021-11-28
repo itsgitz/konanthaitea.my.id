@@ -1,14 +1,14 @@
 @extends ('layouts.admin')
-@section ('title', 'Admins Management')
+@section ('title', 'Manajemen User Admin')
 
 @section ('content')
 <div class="py-3">
-    <h5>Admins Management</h5>
+    <h5>Manajemen User Admin</h5>
 
     @include ('shared.message')
 
     <div class="pt-2 pb-3">
-        <a class="btn btn-primary btn-sm" href="{{ route('admin_accounts_add_get') }}">
+        <a class="btn btn-sm btn-primary" href="{{ route('admin_accounts_add_get') }}">
             Tambah Admin
         </a>
     </div>
@@ -25,13 +25,14 @@
             <tr>
                 <td class="fw-light">{{ $a->name }}</td>
                 <td class="fw-light">{{ $a->email }}</td>
-                <td class="fw-light">{{ $a->created_at }}</td>
+                <td class="fw-light">{{ date('j M Y H:i:s', strtotime( $a->created_at )) }}</td>
                 <td>
                     <a class="btn btn-warning btn-sm" href="{{ route('admin_accounts_edit_get', [ 'id' => $a->id ]) }}">
                         <i class="fas fa-pencil-alt"></i> Edit
                     </a>
-                    <span class="px-2"></span>
-                    <a
+                </td>
+                <td>
+                    <button
                         class="btn btn-danger btn-sm"
                         href="#"
                         data-bs-toggle="modal"
@@ -40,8 +41,8 @@
                         data-remove-admin-link="{{ route('admin_accounts_delete_get', ['id' => $a->id]) }}"
                         onclick="getAdmin(this)"
                     >
-                        <i class="fas fa-trash-alt"></i> Remove
-                    </a>
+                        <i class="fas fa-trash-alt"></i> Hapus
+                    </button>
                 </td>
             </tr>
             @endforeach
@@ -54,7 +55,7 @@
 
     {{-- Modal --}}
     <div id="remove-admin-modal" class="modal fade fw-light" tabindex="-1" aria-labelledby="remove-admin-modal-label">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 id="remove-admin-modal-label" class="modal-title">Hapus Admins</h5>

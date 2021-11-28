@@ -6,7 +6,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-top border-bottom">
       <div class="container">
         <a class="navbar-brand text-primary fs-2" href="/"><i class="fas fa-prescription-bottle"></i> Minuman Tile</a>
-        <button 
+        <button
             class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
@@ -53,12 +53,9 @@
                         <hr class="dropdown-divider">
                     </li>
                     <li>
-                        <form method="post" action="{{ route('client_logout_post') }}">
-                            @csrf
-                            <button class="btn dropdown-item fw-light text-secondary" type="submit">
-                                Keluar
-                            </button>
-                        </form>
+                        <a class="btn dropdown-item fw-light text-secondary" href="{{ route('client_logout_post') }}">
+                            Keluar
+                        </a>
                     </li>
                 </ul>
             </li>

@@ -3,7 +3,7 @@
 
 @section ('content')
 <div id="admin-show-order" class="py-3">
-    <h5>Proses Order #{{ $order->id }}</h5>
+    <h5>Proses Transaksi &middot; Order #{{ $order->id }}</h5>
 
     @include ('shared.message')
 
@@ -31,7 +31,7 @@
             @endforeach
         </div>
 
-        <div class="row">
+        <div class="row gy-3">
             <div class="col-md">
                 <div class="card">
                     <div class="card-body">

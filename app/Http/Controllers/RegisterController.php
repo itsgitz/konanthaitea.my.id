@@ -12,8 +12,6 @@ use App\Models\Client;
 class RegisterController extends Controller
 {
     const REGISTERED_MESSAGE    = 'Akunmu telah aktif dan terdaftar, silahkan pesan minumanmu!';
-    const ORDER_FINISH_MESSAGE  = 'Pesanan anda sedang diproses, harap menunggu status selanjutnya';
-
 
     //
     public function index(Request $r)
@@ -55,8 +53,7 @@ class RegisterController extends Controller
         if ( $r->session()->has('redirect_before_cart') ) {
             return redirect()
                 ->route('client_cart_get')
-                ->with('registered_message', self::REGISTERED_MESSAGE)
-                ->with('order_message', self::ORDER_FINISH_MESSAGE);
+                ->with('registered_message', self::REGISTERED_MESSAGE);
         }
 
         return redirect()

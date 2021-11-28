@@ -9686,6 +9686,7 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _orders_orders__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./orders/orders */ "./resources/js/orders/orders.js");
+/* harmony import */ var _menus_main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./menus/main */ "./resources/js/menus/main.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //Bootstrap css
 
 
@@ -9697,8 +9698,10 @@ __webpack_require__(/*! @fortawesome/fontawesome-free/js/all.js */ "./node_modul
 
 
 
+
 window.onload = function () {
   (0,_orders_orders__WEBPACK_IMPORTED_MODULE_0__.runOrders)();
+  (0,_menus_main__WEBPACK_IMPORTED_MODULE_1__.editMenuQuantity)();
 };
 
 /***/ }),
@@ -9731,6 +9734,41 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/menus/main.js":
+/*!************************************!*\
+  !*** ./resources/js/menus/main.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "editMenuQuantity": () => (/* binding */ editMenuQuantity)
+/* harmony export */ });
+function editMenuQuantity() {
+  var editMenu = document.querySelector('#edit-menu');
+
+  if (editMenu) {
+    //<input id="edit-quantity-input" class="form-control" type="number" min="1">
+    var addMenuQuantityButton = document.querySelector('#add-menu-quantity-button');
+    var reduceMenuQuantityButton = document.querySelector('#reduce-menu-quantity-button');
+    var editAdd = document.querySelector('#edit-add');
+    var editReduce = document.querySelector('#edit-reduce');
+
+    addMenuQuantityButton.onclick = function () {
+      editAdd.classList.remove('d-none');
+      editReduce.classList.add('d-none');
+    };
+
+    reduceMenuQuantityButton.onclick = function () {
+      editReduce.classList.remove('d-none');
+      editAdd.classList.add('d-none');
+    };
+  }
+}
 
 /***/ }),
 
