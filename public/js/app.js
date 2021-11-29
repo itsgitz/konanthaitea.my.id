@@ -9701,7 +9701,7 @@ __webpack_require__(/*! @fortawesome/fontawesome-free/js/all.js */ "./node_modul
 
 window.onload = function () {
   (0,_orders_orders__WEBPACK_IMPORTED_MODULE_0__.runOrders)();
-  (0,_menus_main__WEBPACK_IMPORTED_MODULE_1__.editMenuQuantity)();
+  (0,_menus_main__WEBPACK_IMPORTED_MODULE_1__.runMenu)();
 };
 
 /***/ }),
@@ -9737,9 +9737,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/menus/main.js":
+/***/ "./resources/js/menus/edit.js":
 /*!************************************!*\
-  !*** ./resources/js/menus/main.js ***!
+  !*** ./resources/js/menus/edit.js ***!
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -9749,33 +9749,94 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "editMenuQuantity": () => (/* binding */ editMenuQuantity)
 /* harmony export */ });
 function editMenuQuantity() {
-  var editMenu = document.querySelector('#edit-menu');
+  var editMenu = document.querySelector('#admin-menu-edit');
 
   if (editMenu) {
-    //<input id="edit-quantity-input" class="form-control" type="number" min="1">
     var addMenuQuantityButton = document.querySelector('#add-menu-quantity-button');
     var reduceMenuQuantityButton = document.querySelector('#reduce-menu-quantity-button');
+    var addBox = document.querySelector('#add-box');
+    var reduceBox = document.querySelector('#reduce-box');
     var editAdd = document.querySelector('#edit-add');
     var editReduce = document.querySelector('#edit-reduce');
 
     addMenuQuantityButton.onclick = function () {
-      editAdd.classList.remove('d-none');
-      editReduce.classList.add('d-none');
+      addBox.classList.remove('d-none');
+      reduceBox.classList.add('d-none');
+      editReduce.value = '';
     };
 
     reduceMenuQuantityButton.onclick = function () {
-      editReduce.classList.remove('d-none');
-      editAdd.classList.add('d-none');
+      reduceBox.classList.remove('d-none');
+      addBox.classList.add('d-none');
+      editAdd.value = '';
     };
   }
 }
 
 /***/ }),
 
-/***/ "./resources/js/orders/admin/main.js":
-/*!*******************************************!*\
-  !*** ./resources/js/orders/admin/main.js ***!
-  \*******************************************/
+/***/ "./resources/js/menus/index.js":
+/*!*************************************!*\
+  !*** ./resources/js/menus/index.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "setStatusClass": () => (/* binding */ setStatusClass)
+/* harmony export */ });
+function setStatusClass() {
+  var adminMenuMain = document.querySelector('#admin-menu-main');
+
+  if (adminMenuMain) {
+    var menuStatus = {
+      available: 'Available',
+      soldOut: 'Sold Out'
+    };
+    var menuStatusElement = document.getElementsByClassName('menu-status');
+    Array.prototype.forEach.call(menuStatusElement, function (el) {
+      switch (el.dataset.menuStatus) {
+        case menuStatus.available:
+          el.className += ' text-success';
+          break;
+
+        case menuStatus.soldOut:
+          el.className += ' text-danger';
+          break;
+      }
+    });
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/js/menus/main.js":
+/*!************************************!*\
+  !*** ./resources/js/menus/main.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "runMenu": () => (/* binding */ runMenu)
+/* harmony export */ });
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./resources/js/menus/index.js");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./resources/js/menus/edit.js");
+
+
+function runMenu() {
+  (0,_edit__WEBPACK_IMPORTED_MODULE_1__.editMenuQuantity)();
+  (0,_index__WEBPACK_IMPORTED_MODULE_0__.setStatusClass)();
+}
+
+/***/ }),
+
+/***/ "./resources/js/orders/admin/index.js":
+/*!********************************************!*\
+  !*** ./resources/js/orders/admin/index.js ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -9939,10 +10000,10 @@ function setOrderDeliveryStatusClass(statusEl) {
 
 /***/ }),
 
-/***/ "./resources/js/orders/client/main.js":
-/*!********************************************!*\
-  !*** ./resources/js/orders/client/main.js ***!
-  \********************************************/
+/***/ "./resources/js/orders/client/index.js":
+/*!*********************************************!*\
+  !*** ./resources/js/orders/client/index.js ***!
+  \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10117,9 +10178,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "runOrders": () => (/* binding */ runOrders)
 /* harmony export */ });
-/* harmony import */ var _client_main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./client/main */ "./resources/js/orders/client/main.js");
+/* harmony import */ var _client_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./client/index */ "./resources/js/orders/client/index.js");
 /* harmony import */ var _client_show__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./client/show */ "./resources/js/orders/client/show.js");
-/* harmony import */ var _admin_main__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./admin/main */ "./resources/js/orders/admin/main.js");
+/* harmony import */ var _admin_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./admin/index */ "./resources/js/orders/admin/index.js");
 /* harmony import */ var _admin_show__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./admin/show */ "./resources/js/orders/admin/show.js");
 
 
@@ -10127,10 +10188,10 @@ __webpack_require__.r(__webpack_exports__);
 
 function runOrders() {
   //Client area code
-  (0,_client_main__WEBPACK_IMPORTED_MODULE_0__.clientOrdersMain)();
+  (0,_client_index__WEBPACK_IMPORTED_MODULE_0__.clientOrdersMain)();
   (0,_client_show__WEBPACK_IMPORTED_MODULE_1__.clientShowOrder)(); //Admin area code
 
-  (0,_admin_main__WEBPACK_IMPORTED_MODULE_2__.adminOrdersMain)();
+  (0,_admin_index__WEBPACK_IMPORTED_MODULE_2__.adminOrdersMain)();
   (0,_admin_show__WEBPACK_IMPORTED_MODULE_3__.adminShowOrder)();
 }
 
