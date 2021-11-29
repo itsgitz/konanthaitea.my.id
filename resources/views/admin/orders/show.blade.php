@@ -65,7 +65,7 @@
             <div class="col-md">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Perbaharui/Proses Data</h5>
+                        <h5 class="card-title">Perbaharui / Proses Data</h5>
                         <div class="card-text">
                             <form action="{{ route('admin_orders_process', ['id' => $order->id]) }}" method="post" autocomplete="off">
                                 @csrf
