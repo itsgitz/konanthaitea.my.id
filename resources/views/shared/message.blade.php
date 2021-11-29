@@ -196,6 +196,21 @@
     @endif
     {{-- ADD MENU MESSAGE --}}
 
+    {{-- EDIT MENU MESSAGE --}}
+    @if (session('admin_edit_menu_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_edit_menu_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- EDIT MENU MESSAGE --}}
+
     {{-- ADD STOCK MESSAGE --}}
     @if (session('admin_add_stock_message'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
