@@ -31,7 +31,9 @@
                     <td>{{ $su->name }}</td>
                     <td>{{ date('j M Y H:i:s', strtotime( $su->created_at )) }}</td>
                     <td>
-                        <button></button>
+                        <button class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i> Hapus
+                        </button>
                     </td>
                 </tr>
                 @endforeach
