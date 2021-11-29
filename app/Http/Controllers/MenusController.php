@@ -12,6 +12,9 @@ class MenusController extends Controller
     const RECIPE_EMPTY_ERROR_MESSAGE    = 'Rincian resep tidak boleh kosong (minimal masukan satu item)';
     const STOCK_EMPTY_ERROR_MESSAGE     = 'Jumlah / kuantitas item pada resep tidak boleh kosong';
     const ADD_MENU_MESSAGE              = 'Berhasil menambah menu';
+    const EDIT_MENU                     = 'Berhasil mengubah rincian menu';
+    const STATUS_AVAILABLE              = 'Available';
+    const STATUS_SOLD_OUT               = 'Sold Out';
 
     //
     public function index(Request $r)
@@ -81,8 +84,8 @@ class MenusController extends Controller
         $r->validate(
             [
                 'name'      => ['required', 'unique:App\Models\Menu,name', 'min:3'],
-                'price'     => ['required', 'numeric'],
-                'quantity'  => ['required', 'min:1'],
+                'price'     => ['required', 'numeric', 'min:1'],
+                'quantity'  => ['required', 'numeric', 'min:1'],
             ],
             [
                 'name.required'     => 'Nama menu tidak boleh kosong',
@@ -123,27 +126,101 @@ class MenusController extends Controller
     public function edit($id)
     {
         $menu = Menu::find($id);
-        $stocks = DB::table('stocks')
-            ->join('stock_units', 'stocks.stock_units_id', '=', 'stock_units.id')
-            ->select(
-                'stocks.id AS stock_id',
-                'stocks.name AS stock_name',
-                'stocks.quantity AS stock_quantity',
-                'stocks.status AS stock_status',
-                'stock_units.name AS unit_name',
-                'stocks.created_at AS stock_created_at'
-            )
-            ->get();
+        $selectedStatus[self::STATUS_AVAILABLE] = [
+            'value'     => self::STATUS_AVAILABLE,
+            'selected'  => false,
+        ];
+        $selectedStatus[self::STATUS_SOLD_OUT] = [
+            'value'     => self::STATUS_SOLD_OUT,
+            'selected'  => false,
+        ];
+
+        switch ($menu->status) {
+            case self::STATUS_AVAILABLE:
+                $selectedStatus[self::STATUS_AVAILABLE]['selected'] = true;
+                break;
+
+            case self::STATUS_SOLD_OUT:
+                $selectedStatus[self::STATUS_SOLD_OUT]['selected'] = true;
+                break;
+        }
+
 
         return view('admin.menus.edit', [
             'menu'      => $menu,
-            'stocks'    => $stocks,
+            'status'    => $selectedStatus,
         ]);
     }
 
     public function update(Request $r, $id)
     {
+        $r->validate(
+            [
+                'name'      => ['required', 'min:3'],
+                'price'     => ['required', 'min:1'],
+            ],
+            [
+                'name.required'     => 'Mohon isi nama menu',
+                'name.min'          => 'Nama menu minimal 3 karakter',
+                'price.required'    => 'Mohon isi harga',
+                'price.min'         => 'Harga tidak boleh kosong',
+            ]
+        );
 
+
+        $newQuantity = 0;
+        $menu = Menu::find($id);
+
+        //If add quantity
+        if ( isset($r->edit_add) ) {
+            $r->validate(
+                [
+                    'edit_add'  => ['required', 'numeric', 'min:1']
+                ],
+                [
+                    'edit_add'  => 'Data tidak boleh kosong',
+                ]
+            );
+
+            //add
+            $newQuantity = ( $menu->quantity + $r->edit_add );
+        }
+
+        //If reduce quantity
+        if ( isset($r->edit_reduce) ) {
+            $minimumReduce = $r->quantity - 1;
+
+            $r->validate(
+                [
+                    'edit_reduce'       => ['required', 'numeric', "max:$minimumReduce"]
+                ],
+                [
+                    'edit_reduce.required'      => 'Data tidak boleh kosong',
+                    'edit_reduce.max'           => 'Jumlah yang akan dikurangi tidak boleh kurang dari jumlah saat ini',
+                ]
+            );
+
+            //reduce
+            $newQuantity = ( $menu->quantity - $r->edit_reduce );
+        }
+
+
+        //Update new data
+        $menu->name     = $r->name;
+        $menu->price    = $r->price;
+        $menu->status   = $r->status;
+
+        //If new quantity is not changed
+        if ($newQuantity) {
+            $menu->quantity = $newQuantity;
+        }
+
+        $menu->save();
+
+
+        return redirect()
+            ->route('admin_menu_get')
+            ->with('admin_edit_menu_message', self::EDIT_MENU);
     }
 
     public function delete(Request $r, $id)
