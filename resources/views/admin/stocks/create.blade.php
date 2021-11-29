@@ -9,7 +9,7 @@
 
     <form action="{{ route('admin_stocks_add_get') }}" method="post">
         @csrf
-        <div class="mb-4 col-md-4">
+        <div class="mb-3 col-md-4">
             <input class="form-control" type="text" name="name" placeholder="Nama" required>
             @error ('name')
             <div>
@@ -17,7 +17,7 @@
             </div>
             @enderror
         </div>
-        <div class="mb-4 col-md-4">
+        <div class="mb-3 col-md-4">
             <input class="form-control" type="number" name="quantity" placeholder="Jumlah" min="1" required>
             @error ('quantity')
             <div>
@@ -25,7 +25,7 @@
             </div>
             @enderror
         </div>
-        <div class="mb-4 col-md-4">
+        <div class="mb-3 col-md-4">
             <select class="form-select" name="unit" required>
                 <option value="">Pilih Satuan Unit</option>
                 @foreach ($units as $u)
@@ -38,7 +38,7 @@
             </div>
             @enderror
         </div>
-        <div class="mb-4 col-md-4">
+        <div class="mb-3 col-md-4">
             <input class="form-control" type="number" name="total_price" placeholder="Total Belanja (Rp)" min="1" required>
             @error ('total_price')
             <div>
