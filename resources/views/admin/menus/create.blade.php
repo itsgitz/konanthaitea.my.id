@@ -53,17 +53,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="py-2"></div>
-                <div class="card">
-                    <div class="card-body">
-                        <a class="btn btn-danger btn-sm" href="{{ route('admin_menu_get') }}">Kembali</a>
-                        <input
-                            class="btn btn-primary btn-sm"
-                            type="submit"
-                            value="Simpan"
-                        >
-                    </div>
-                </div>
             </div>
             {{-- Menu --}}
 
@@ -125,6 +114,17 @@
                 </div>
             </div>
             {{-- Stocks --}}
+        </div>
+        <div class="py-2"></div>
+        <div class="card">
+            <div class="card-body">
+                <a class="btn btn-danger btn-sm" href="{{ route('admin_menu_get') }}">Kembali</a>
+                <input
+                    class="btn btn-primary btn-sm"
+                    type="submit"
+                    value="Simpan"
+                >
+            </div>
         </div>
     </form>
 </div>
