@@ -225,5 +225,20 @@
     </div>
     @endif
     {{-- ADD STOCK MESSAGE --}}
+
+    {{-- ADD MENU STOCK MESSAGE --}}
+    @if (session('admin_add_menu_stock_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_add_menu_stock_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- ADD MENU STOCK MESSAGE --}}
 </div>
 <div class="py-1"></div>

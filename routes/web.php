@@ -21,3 +21,4 @@ require __DIR__ . '/cart.php';
 require __DIR__ . '/menu.php';
 require __DIR__ . '/stocks.php';
 require __DIR__ . '/history.php';
+require __DIR__ . '/menu_stocks.php';

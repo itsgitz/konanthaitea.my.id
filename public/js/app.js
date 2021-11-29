@@ -9824,11 +9824,45 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./resources/js/menus/index.js");
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edit */ "./resources/js/menus/edit.js");
+/* harmony import */ var _show__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./show */ "./resources/js/menus/show.js");
+
 
 
 function runMenu() {
   (0,_edit__WEBPACK_IMPORTED_MODULE_1__.editMenuQuantity)();
   (0,_index__WEBPACK_IMPORTED_MODULE_0__.setStatusClass)();
+  (0,_show__WEBPACK_IMPORTED_MODULE_2__.addMenuRecipeItems)();
+}
+
+/***/ }),
+
+/***/ "./resources/js/menus/show.js":
+/*!************************************!*\
+  !*** ./resources/js/menus/show.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addMenuRecipeItems": () => (/* binding */ addMenuRecipeItems)
+/* harmony export */ });
+function addMenuRecipeItems() {
+  var adminMenuShow = document.querySelector('#admin-menu-show');
+
+  if (adminMenuShow) {
+    var addRecipeItemsButton = document.querySelector('#add-menu-recipe-items-button');
+    var closeAddMenuBox = document.querySelector('#close-add-menu-box');
+    var addMenuRecipeBox = document.querySelector('#add-menu-recipe-box');
+
+    addRecipeItemsButton.onclick = function () {
+      addMenuRecipeBox.classList.remove('d-none');
+    };
+
+    closeAddMenuBox.onclick = function () {
+      addMenuRecipeBox.classList.add('d-none');
+    };
+  }
 }
 
 /***/ }),
