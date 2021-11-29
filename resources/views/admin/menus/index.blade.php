@@ -2,7 +2,7 @@
 @section ('title', 'Manajemen Menu')
 
 @section ('content')
-<div class="py-3">
+<div id="admin-menu-main" class="py-3">
     <h5>Manajemen Menu</h5>
 
     @include ('shared.message')
@@ -26,7 +26,11 @@
                 <tr>
                     <td>{{ $m->name }}</td>
                     <td>Rp. {{ number_format( $m->price, 2, ',', '.' ) }}</td>
-                    <td>{{ $m->status }}</td>
+                    <td>
+                        <span class="menu-status fw-bold" data-menu-status="{{ $m->status }}">
+                            {{ $m->status }}
+                        </span>
+                    </td>
                     <td>{{ $m->quantity }}</td>
                     <td>{{ date('j M Y H:i:s', strtotime( $m->created_at )) }}</td>
                     <td>
