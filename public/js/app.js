@@ -9855,13 +9855,15 @@ function addMenuRecipeItems() {
     var closeAddMenuBox = document.querySelector('#close-add-menu-box');
     var addMenuRecipeBox = document.querySelector('#add-menu-recipe-box');
 
-    addRecipeItemsButton.onclick = function () {
-      addMenuRecipeBox.classList.remove('d-none');
-    };
+    if (addRecipeItemsButton) {
+      addRecipeItemsButton.onclick = function () {
+        addMenuRecipeBox.classList.remove('d-none');
+      };
 
-    closeAddMenuBox.onclick = function () {
-      addMenuRecipeBox.classList.add('d-none');
-    };
+      closeAddMenuBox.onclick = function () {
+        addMenuRecipeBox.classList.add('d-none');
+      };
+    }
   }
 }
 

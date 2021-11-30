@@ -226,10 +226,10 @@
     @endif
     {{-- ADD STOCK MESSAGE --}}
 
-    {{-- ADD MENU STOCK MESSAGE --}}
-    @if (session('admin_add_menu_stock_message'))
+    {{-- EDIT MENU STOCK MESSAGE --}}
+    @if (session('admin_edit_menu_stock_message'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('admin_add_menu_stock_message') }}
+        {{ session('admin_edit_menu_stock_message') }}
         <button
             type="button"
             class="btn-close"
@@ -239,6 +239,6 @@
         </button>
     </div>
     @endif
-    {{-- ADD MENU STOCK MESSAGE --}}
+    {{-- EDIT MENU STOCK MESSAGE --}}
 </div>
 <div class="py-1"></div>

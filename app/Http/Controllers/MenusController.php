@@ -36,6 +36,7 @@ class MenusController extends Controller
                 'stocks.id AS stock_id',
                 'stocks.name AS stock_name',
                 'menu_stocks.quantity AS recipe_quantity',
+                'menu_stocks.id AS menu_stock_id',
                 'stock_units.name AS unit'
             )
             ->get();

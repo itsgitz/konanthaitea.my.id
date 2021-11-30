@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 
 class MenuStocksController extends Controller
 {
-    const ADD_MENU_STOCK_MESSAGE = 'Berhasil menambah item pada resep';
+    const ADD_MENU_STOCK_MESSAGE        = 'Berhasil menambah item pada resep';
+    const EDIT_MENU_STOCK_ERROR_MESSAGE = 'Jumlah item pada resep tidak boleh kosong atau 0';
+    const EDIT_MENU_STOCK_MESSAGE       = 'Berhasil mengubah jumlah item pada resep';
 
     //
     public function store(Request $r, $id)
@@ -34,5 +36,17 @@ class MenuStocksController extends Controller
         return redirect()
             ->route('admin_menu_show_get', [ 'id' => $id ])
             ->with('admin_add_menu_stock_message', self::ADD_MENU_STOCK_MESSAGE);
+    }
+
+    public function update(Request $r)
+    {
+        $menuStocks = MenuStock::find($r->menu_stock_id);
+        $menuStocks->quantity = $r->update_quantity;
+        $menuStocks->save();
+
+
+        return redirect()
+            ->route('admin_menu_show_get', [ 'id' => $r->menu_id ])
+            ->with('admin_edit_menu_stock_message', self::EDIT_MENU_STOCK_MESSAGE);
     }
 }
