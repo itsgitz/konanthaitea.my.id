@@ -40,12 +40,15 @@
                     <td>
                         <button
                             class="btn btn-danger btn-sm"
+                            data-menu-id="{{ $menu->id }}"
                             data-menu-stock-id="{{ $s->menu_stock_id }}"
                             data-menu-stock-name="{{ $s->stock_name }}"
                             data-menu-stock-quantity="{{ $s->recipe_quantity }}"
                             data-menu-stock-unit="{{ $s->unit }}"
+                            data-menu-stock-remove-link="{{ route('admin_menu_stocks_delete_get', ['id' => $s->menu_stock_id, 'menu_id' => $menu->id]) }}"
                             data-bs-toggle="modal"
                             data-bs-target="#remove-modal"
+                            onclick="removeRecipeItem(this)"
                         >
                             <i class="fas fa-trash-alt"></i> Hapus
                         </button>
@@ -102,7 +105,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 id="edit-modal-label" class="modal-title">
-                            Edit <span id="menu-stock-name"></span>
+                            Edit <span id="edit-menu-stock-name"></span>
                         </h5>
                         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -129,12 +132,17 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 id="remove-modal-label" class="modal-title">
-                        Hapus <span id="menu-stock-name"></span>
+                        Hapus Resep Item
                     </h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body"></div>
-                <div class="modal-footer"></div>
+                <div class="modal-body">
+                    Apakah anda yakin ingin menghapus <span id="remove-menu-stock-name" class="fw-bold"></span>?
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Batal</button>
+                    <a id="remove-button" class="btn btn-danger">Hapus</a>
+                </div>
             </div>
         </div>
     </div>
@@ -151,7 +159,7 @@
             let menuStockName = el.dataset.menuStockName;
             let menuStockQuantity = el.dataset.menuStockQuantity;
             let menuStockUnit = el.dataset.menuStockUnit;
-            let stockNameEl = document.querySelector('#menu-stock-name');
+            let stockNameEl = document.querySelector('#edit-menu-stock-name');
             let menuIdInput = document.querySelector('#menu-id');
             let menuStockIdInput = document.querySelector('#menu-stock-id');
             let updateQuantityInput = document.querySelector('#update-quantity');
@@ -160,7 +168,21 @@
             menuStockIdInput.value = menuStockId;
             updateQuantityInput.value = menuStockQuantity;
             updateQuantityInput.setAttribute('placeholder', 'Jumlah saat ini ' + menuStockQuantity + ' ' + menuStockUnit);
-            stockNameEl.innerHTML = menuStockName + ' (' + menuStockUnit + ')' ;
+            stockNameEl.innerHTML = menuStockName + ' (' + menuStockUnit + ')';
+        }
+
+        function removeRecipeItem(el) {
+            let menuId = el.dataset.menuId;
+            let menuStockId = el.dataset.menuStockId;
+            let menuStockName = el.dataset.menuStockName;
+            let menuStockQuantity = el.dataset.menuStockQuantity;
+            let menuStockUnit = el.dataset.menuStockUnit;
+            let removeLink = el.dataset.menuStockRemoveLink;
+            let stockNameEl = document.querySelector('#remove-menu-stock-name');
+            let removeButton = document.querySelector('#remove-button');
+
+            stockNameEl.innerHTML = menuStockQuantity + ' ' + menuStockName + ' (' + menuStockUnit + ')';
+            removeButton.href = removeLink;
         }
     </script>
 
