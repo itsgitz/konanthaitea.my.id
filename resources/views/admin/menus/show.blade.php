@@ -25,7 +25,7 @@
         </table>
     </div>
 
-    <button id="add-menu-recipe-items-button" class="btn btn-secondary btn-sm" type="button">Tambah Komposisi Resep</button>
+    <button id="add-menu-recipe-items-button" class="btn btn-primary btn-sm" type="button">Tambah Komposisi Resep</button>
     <div class="py-2"></div>
 
     <div id="add-menu-recipe-box" class="card d-none">
@@ -55,8 +55,8 @@
                     </div>
                     @enderror
                 </div>
-                <input class="btn btn-primary btn-sm" type="submit" value="Simpan">
-                <button id="close-add-menu-box" class="btn btn-warning btn-sm" type="button">Tutup</button>
+                <input class="btn btn-secondary btn-sm" type="submit" value="Simpan">
+                <button id="close-add-menu-box" class="btn btn-secondary btn-sm" type="button">Tutup</button>
             </form>
         </div>
     </div>

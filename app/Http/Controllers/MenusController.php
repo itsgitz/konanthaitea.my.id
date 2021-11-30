@@ -33,6 +33,7 @@ class MenusController extends Controller
             ->join('stock_units', 'stocks.stock_units_id', '=', 'stock_units.id')
             ->where('menus.id', '=', $id)
             ->select(
+                'stocks.id AS stock_id',
                 'stocks.name AS stock_name',
                 'menu_stocks.quantity AS recipe_quantity',
                 'stock_units.name AS unit'
@@ -51,7 +52,17 @@ class MenusController extends Controller
             )
             ->get();
 
-        dd($stocks); die();
+
+
+        //Show only unused stocks / recipe composition
+        foreach ($stocks as $k => $s) {
+            foreach ( $menuStocks as $ms ) {
+                if ( $s->stock_id == $ms->stock_id ) {
+                    unset( $stocks[$k] );
+                }
+            }
+        }
+
 
         return view('admin.menus.show', [
             'stocks'        => $stocks,
