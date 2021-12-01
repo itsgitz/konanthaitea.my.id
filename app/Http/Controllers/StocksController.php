@@ -12,6 +12,7 @@ class StocksController extends Controller
 {
     const ADD_STOCK_MESSAGE = 'Berhasil menambah stock baru';
     const EDIT_STOCK_MESSAGE = 'Berhasil mengubah rincian stock';
+    const ADD_STOCK_QUANTITY_MESSAGE = 'Berhasil menambah jumlah stock (restock)';
 
     //
     public function index(Request $r)
@@ -194,9 +195,34 @@ class StocksController extends Controller
             ]
         );
 
-        var_dump( $r->input() );
         //Update `stocks` table
+        $stock = Stock::find($id);
+
+        //Only update quantity
+        //current quantity + add quantity
+        $stock->quantity = $stock->quantity + $r->add_quantity;
+        $stock->save();
+
+        $stockId = $stock->id;
+
         //Add data to `restock_histories` table
+        $restock = new RestockHistory;
+        $restock->stock_id          = $stockId;
+        $restock->stock_units_id    = $stock->stock_units_id;
+        $restock->name              = $stock->name;
+        $restock->quantity          = $r->add_quantity;
+        $restock->status            = $stock->status;
+        $restock->total_price       = $r->total_price;
+
+        //Upload invoice
+        $image = $r->file('upload_invoice')->store('invoices');
+        $restock->invoice_image = $image;
+
+        $restock->save();
+
+        return redirect()
+            ->route('admin_stocks_get')
+            ->with('admin_edit_stock_message', self::ADD_STOCK_QUANTITY_MESSAGE);
     }
 
     public function delete($id)

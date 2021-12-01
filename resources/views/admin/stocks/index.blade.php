@@ -27,7 +27,7 @@
                 @foreach ($stocks as $s)
                 <tr>
                     <td>{{ $s->stock_name }}</td>
-                    <td>{{ $s->stock_quantity }}</td>
+                    <td>{{ number_format( $s->stock_quantity, 0, '', '.' ) }}</td>
                     <td>{{ $s->unit_name }}</td>
                     <td>{{ $s->stock_status }}</td>
                     <td>{{ date('j M Y H:i:s', strtotime( $s->stock_created_at )) }}</td>
