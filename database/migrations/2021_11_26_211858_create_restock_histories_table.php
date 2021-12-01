@@ -19,7 +19,6 @@ class CreateRestockHistoriesTable extends Migration
             $table->unsignedBigInteger('stock_units_id');
             $table->string('name');
             $table->integer('quantity');
-            $table->enum('status', ['Available', 'Not Available']);
             $table->decimal('total_price', $precision = 10, $scale = 2);
             $table->text('invoice_image');
             $table->timestamps();

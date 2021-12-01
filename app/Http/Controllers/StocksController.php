@@ -89,7 +89,6 @@ class StocksController extends Controller
         $restock->stock_units_id    = $r->unit;
         $restock->name              = $r->name;
         $restock->quantity          = $r->quantity;
-        $restock->status            = 'Available';
         $restock->total_price       = $r->total_price;
 
         //Upload invoice
@@ -117,6 +116,10 @@ class StocksController extends Controller
             )
             ->where('stocks.id', '=', $id)
             ->first();
+
+        if ( !isset( $stock ) ) {
+            abort( 404 );
+        }
 
         $units = StockUnit::all();
 
@@ -147,6 +150,18 @@ class StocksController extends Controller
         $stock->name            = $r->name;
         $stock->status          = $r->status;
         $stock->save();
+
+        $stockId = $stock->id;
+
+        //Also update the name on restock_histories table
+        $histories = RestockHistory::where('stock_id', $stockId)->get();
+
+        foreach ($histories as $h) {
+            $updateHistory = RestockHistory::find($h->id);
+            $updateHistory->stock_units_id = $r->unit;
+            $updateHistory->name = $r->name;
+            $updateHistory->save();
+        }
 
 
         return redirect()
@@ -211,7 +226,6 @@ class StocksController extends Controller
         $restock->stock_units_id    = $stock->stock_units_id;
         $restock->name              = $stock->name;
         $restock->quantity          = $r->add_quantity;
-        $restock->status            = $stock->status;
         $restock->total_price       = $r->total_price;
 
         //Upload invoice
