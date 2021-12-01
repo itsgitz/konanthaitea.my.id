@@ -109,6 +109,10 @@ class StocksController extends Controller
             ->where('stocks.id', '=', $id)
             ->first();
 
+        if ( !isset( $stock ) ) {
+            abort(404);
+        }
+
         return view('admin.stocks.edit', [
             'stock' => $stock,
         ]);
@@ -128,6 +132,7 @@ class StocksController extends Controller
             ]
         );
 
+        var_dump( $r->input() );
         //Update `stocks` table
         //Add data to `restock_histories` table
     }

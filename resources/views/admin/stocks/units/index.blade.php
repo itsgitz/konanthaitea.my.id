@@ -3,7 +3,7 @@
 
 @section ('content')
 <div class="py-3">
-    <h5>Tambah Unit</h5>
+    <h5>Tambah satuan unit</h5>
     <form action="{{ route('admin_stock_units_post') }}" method="post">
         @csrf
         <div class="mb-3 col-md-4">
@@ -14,7 +14,7 @@
 
     <div class="py-2"></div>
 
-    <h5>Unit yang tersedia</h5>
+    <h5>Satuan unit yang tersedia</h5>
 
     @include ('shared.message')
     <div class="table-responsive">
@@ -39,7 +39,7 @@
                 @endforeach
             @else
                 <tr>
-                    <td class="fw-light text-center" colspan="3">Data stock units kosong</td>
+                    <td class="fw-light text-center" colspan="3">Data satuan unit kosong</td>
                 </tr>
             @endif
         </table>

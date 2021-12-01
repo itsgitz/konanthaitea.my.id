@@ -7,6 +7,13 @@
 
     @include ('shared.message')
 
+    @if ($units->isEmpty())
+    <div class="alert alert-danger">
+        Saat ini anda tidak bisa menambahkan stock karena satuan unit (Mililiter, Gram, Buah, dll) tidak tersedia.
+        Mohon untuk menambahkan <a href="{{ route('admin_stock_units_get') }}">satuan unit</a> terlebih dahulu.
+    </div>
+    @endif
+
     <form action="{{ route('admin_stocks_add_get') }}" method="post">
         @csrf
         <div class="mb-3 col-md-4">
@@ -47,7 +54,14 @@
             @enderror
         </div>
         <a class="btn btn-danger btn-sm" href="{{ route('admin_stocks_get') }}">Kembali</a>
-        <input class="btn btn-primary btn-sm" type="submit" value="Simpan">
+        <input
+            class="btn btn-primary btn-sm"
+            type="submit"
+            value="Simpan"
+            @if ($units->isEmpty())
+            disabled
+            @endif
+        >
     </form>
 </div>
 @endsection
