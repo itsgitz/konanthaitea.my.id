@@ -20,7 +20,7 @@
                 <th scope="col">Unit</th>
                 <th scope="col">Status</th>
                 <th scope="col">Ditambahkan Tanggal</th>
-                <th scope="col">#</th>
+                <th scope="col" colspan="2">#</th>
             </thead>
 
             @if ($stocks->isNotEmpty())
@@ -32,8 +32,11 @@
                     <td>{{ $s->stock_status }}</td>
                     <td>{{ date('j M Y H:i:s', strtotime( $s->stock_created_at )) }}</td>
                     <td>
-
+                        <a class="btn btn-warning btn-sm" href="{{ route('admin_stocks_edit_get', ['id' => $s->stock_id]) }}">
+                            <i class="fas fa-pencil-alt"></i> Tambah
+                        </a>
                     </td>
+                    <td></td>
                 </tr>
                 @endforeach
             @else

@@ -226,6 +226,21 @@
     @endif
     {{-- ADD STOCK MESSAGE --}}
 
+
+    {{-- ADD MENU STOCK MESSAGE --}}
+    @if (session('admin_add_menu_stock_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_add_menu_stock_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- ADD MENU STOCK MESSAGE --}}
     {{-- EDIT MENU STOCK MESSAGE --}}
     @if (session('admin_edit_menu_stock_message'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -255,5 +270,21 @@
     </div>
     @endif
     {{-- DELETE MENU STOCK MESSAGE --}}
+
+
+    {{-- ADD STOCK UNIT MESSAGE --}}
+    @if (session('add_stock_unit_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('add_stock_unit_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- ADD STOCK UNIT MESSAGE --}}
 </div>
 <div class="py-1"></div>

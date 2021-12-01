@@ -39,9 +39,9 @@ class MenuStocksController extends Controller
             ->with('admin_add_menu_stock_message', self::ADD_MENU_STOCK_MESSAGE);
     }
 
-    public function update(Request $r)
+    public function update(Request $r, $id)
     {
-        $menuStocks = MenuStock::find($r->menu_stock_id);
+        $menuStocks = MenuStock::find($id);
         $menuStocks->quantity = $r->update_quantity;
         $menuStocks->save();
 

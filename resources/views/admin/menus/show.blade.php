@@ -30,6 +30,7 @@
                             data-menu-stock-name="{{ $s->stock_name }}"
                             data-menu-stock-quantity="{{ $s->recipe_quantity }}"
                             data-menu-stock-unit="{{ $s->unit }}"
+                            data-menu-stock-edit-link="{{ route('admin_menu_stocks_edit_get', ['id' => $s->menu_stock_id, 'menu_id' => $menu->id]) }}"
                             data-bs-toggle="modal"
                             data-bs-target="#edit-modal"
                             onclick="editQuantity(this)"
@@ -98,31 +99,25 @@
 
     {{-- EDIT MODAL --}}
     <div id="edit-modal" class="modal fade" tabindex="-1" aria-labelledby="edit-modal-label" aria-hidden="true">
-        <form id="edit-form" action="" method="post">
-            @csrf
-            @method('PUT')
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 id="edit-modal-label" class="modal-title">
-                            Edit <span id="edit-menu-stock-name"></span>
-                        </h5>
-                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3 col-md-8">
-                            <input id="menu-id" type="hidden" name="menu_id">
-                            <input id="menu-stock-id" type="hidden" name="menu_stock_id">
-                            <input id="update-quantity" class="form-control" type="number" name="update_quantity" min="1" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Batal</button>
-                        <input class="btn btn-danger" type="submit" value="Simpan">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="edit-modal-label" class="modal-title">
+                        Edit <span id="edit-menu-stock-name"></span>
+                    </h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 col-md-8">
+                        <input id="update-quantity" class="form-control" type="number" name="update_quantity" min="1" required>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Batal</button>
+                    <button id="edit-button" class="btn btn-primary">Simpan</button>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
     {{-- EDIT MODAL --}}
 
@@ -159,16 +154,21 @@
             let menuStockName = el.dataset.menuStockName;
             let menuStockQuantity = el.dataset.menuStockQuantity;
             let menuStockUnit = el.dataset.menuStockUnit;
+            let menuStockEditLink = el.dataset.menuStockEditLink;
             let stockNameEl = document.querySelector('#edit-menu-stock-name');
-            let menuIdInput = document.querySelector('#menu-id');
-            let menuStockIdInput = document.querySelector('#menu-stock-id');
             let updateQuantityInput = document.querySelector('#update-quantity');
+            let editButton = document.querySelector('#edit-button');
 
-            menuIdInput.value = menuId;
-            menuStockIdInput.value = menuStockId;
             updateQuantityInput.value = menuStockQuantity;
             updateQuantityInput.setAttribute('placeholder', 'Jumlah saat ini ' + menuStockQuantity + ' ' + menuStockUnit);
             stockNameEl.innerHTML = menuStockName + ' (' + menuStockUnit + ')';
+
+            editButton.onclick = function() {
+                let userInput = updateQuantityInput.value;
+                let updateLink = menuStockEditLink + '&update_quantity=' + userInput;
+
+                window.location.href = updateLink;
+            }
         }
 
         function removeRecipeItem(el) {
