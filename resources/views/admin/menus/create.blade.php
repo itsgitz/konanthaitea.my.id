@@ -18,7 +18,7 @@
                         <h6 class="card-title py-1 border-bottom">Rincian Menu</h6>
                         <div class="py-1"></div>
                         <div class="mb-3 col-md-8">
-                            <label class="label" for="name">Nama</label>
+                            <label class="form-label" for="name">Nama</label>
                             <input id="name" class="form-control" type="text" name="name" value="{{ old('name') }}" required>
                             @error ('name')
                             <div>
@@ -27,7 +27,7 @@
                             @enderror
                         </div>
                         <div class="mb-3 col-md-8">
-                            <label class="label" for="price">Harga (Rp.)</label>
+                            <label class="form-label" for="price">Harga (Rp.)</label>
                             <input id="price" class="form-control" type="number" name="price" value="{{ old('price') }}" min="1" required>
                             @error ('price')
                             <div>
@@ -36,7 +36,7 @@
                             @enderror
                         </div>
                         <div class="mb-3 col-md-8">
-                            <label class="label" for="quantity">Jumlah (kuantitas)</label>
+                            <label class="form-label" for="quantity">Jumlah (kuantitas)</label>
                             <input id="quantity" class="form-control" type="number" name="quantity" value="{{ old('quantity') }}" min="1" required>
                             @error ('quantity')
                             <div>
@@ -45,7 +45,7 @@
                             @enderror
                         </div>
                         <div class="mb-3 col-md-8">
-                            <label class="label" for="status">Status</label>
+                            <label class="form-label" for="status">Status</label>
                             <select id="status" class="form-select" name="status" required>
                                 <option value="Available">Available</option>
                                 <option value="Sold Out">Sold Out</option>

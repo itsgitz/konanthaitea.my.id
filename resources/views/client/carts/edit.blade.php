@@ -20,7 +20,7 @@
                     Rp. {{ number_format( $cart->menu_price, 2, ',', '.' ) }}
                 </div>
                 <div class="mb-3 col-md-4">
-                    <label class="label" for="quantity">Jumlah</label>
+                    <label class="form-label" for="quantity">Jumlah</label>
                     <input id="quantity" class="form-control w-50" type="number" min="1" name="cart_quantity" value="{{ $cart->cart_quantity }}" required>
                     @error ('cart_quantity')
                         <div>

@@ -36,7 +36,11 @@
                             <i class="fas fa-pencil-alt"></i> Tambah
                         </a>
                     </td>
-                    <td></td>
+                    <td>
+                        <button class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i> Hapus
+                        </button>
+                    </td>
                 </tr>
                 @endforeach
             @else

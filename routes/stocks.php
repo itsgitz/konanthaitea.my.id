@@ -15,7 +15,7 @@ Route::get('/admin/stocks/edit/{id}', [\App\Http\Controllers\StocksController::c
     ->name('admin_stocks_edit_get');
 
 Route::put('/admin/stocks/edit/{id}', [\App\Http\Controllers\StocksController::class, 'update'])
-    ->name('admin_stocks_edit_post');
+    ->name('admin_stocks_edit_put');
 
 Route::get('/admin/stocks/delete/{id}', [\App\Http\Controllers\StocksController::class, 'delete'])
     ->name('admin_stocks_delete_get');

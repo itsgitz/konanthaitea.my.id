@@ -11,7 +11,7 @@
         @csrf
         @method('PUT')
         <div class="mb-3 col-md-4">
-            <label class="label" for="name">Nama</label>
+            <label class="form-label" for="name">Nama</label>
             <input
                 id="name"
                 class="form-control"
@@ -28,7 +28,7 @@
             @enderror
         </div>
         <div class="mb-3 col-md-4">
-            <label class="label" for="price">Harga (Rp.)</label>
+            <label class="form-label" for="price">Harga (Rp.)</label>
             <input
                 id="price"
                 class="form-control"
@@ -46,7 +46,7 @@
             @enderror
         </div>
         <div class="mb-3 col-md-4">
-            <label class="label" for="quantity">Jumlah</label>
+            <label class="form-label" for="quantity">Jumlah</label>
             <input type="hidden" name="quantity" value="{{ $menu->quantity }}">
             <input
                 class="form-control"
@@ -64,7 +64,7 @@
                 </button>
                 <div class="py-2"></div>
                 <div id="add-box" class="d-none">
-                    <label class="label" for="edit-add">
+                    <label class="form-label" for="edit-add">
                         Masukan jumlah yang akan ditambah dengan <strong>{{ $menu->quantity }}</strong>
                     </label>
                     <input
@@ -77,7 +77,7 @@
                     >
                 </div>
                 <div id="reduce-box" class="d-none">
-                    <label class="label" for="edit-reduce">
+                    <label class="form-label" for="edit-reduce">
                         Masukan jumlah yang akan dikurangi dengan <strong>{{ $menu->quantity }}</strong>
                     </label>
                     <input
@@ -102,7 +102,7 @@
             @enderror
         </div>
         <div class="mb-3 col-md-4">
-            <label class="label" for="status">Status</label>
+            <label class="form-label" for="status">Status</label>
             <select class="form-select" name="status" id="status" required>
                 @foreach ($status as $s)
                 <option
