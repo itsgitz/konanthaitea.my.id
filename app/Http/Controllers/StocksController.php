@@ -7,6 +7,7 @@ use App\Models\Stock;
 use App\Models\StockUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class StocksController extends Controller
 {
@@ -92,8 +93,8 @@ class StocksController extends Controller
         $restock->total_price       = $r->total_price;
 
         //Upload invoice
-        $image = $r->file('upload_invoice')->store('invoices');
-        $restock->invoice_image = $image;
+        $image = $r->file('upload_invoice')->store('public/invoices');
+        $restock->invoice_image = Storage::url($image);
 
         $restock->save();
 
@@ -229,8 +230,8 @@ class StocksController extends Controller
         $restock->total_price       = $r->total_price;
 
         //Upload invoice
-        $image = $r->file('upload_invoice')->store('invoices');
-        $restock->invoice_image = $image;
+        $image = $r->file('upload_invoice')->store('public/invoices');
+        $restock->invoice_image = Storage::url($image);
 
         $restock->save();
 

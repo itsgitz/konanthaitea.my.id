@@ -9,7 +9,7 @@
     <div class="pt-2 pb-3">
         <a class="btn btn-primary btn-sm" href="{{ route('admin_stocks_add_get') }}">Tambah Jenis Stock</a>
         <a class="btn btn-primary btn-sm" href="{{ route('admin_stock_units_get') }}">Tambah Satuan Unit</a>
-        <a class="btn btn-primary btn-sm" href="{{ route('admin_stocks_histories_get') }}">Riwayat Re-stock</a>
+        <a class="btn btn-primary btn-sm" href="{{ route('admin_stocks_histories_get') }}">Riwayat Isi Ulang</a>
     </div>
 
     <div class="table-responsive">
