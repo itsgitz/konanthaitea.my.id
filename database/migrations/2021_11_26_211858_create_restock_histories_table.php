@@ -21,6 +21,7 @@ class CreateRestockHistoriesTable extends Migration
             $table->integer('quantity');
             $table->enum('status', ['Available', 'Not Available']);
             $table->decimal('total_price', $precision = 10, $scale = 2);
+            $table->text('invoice_image');
             $table->timestamps();
         });
     }

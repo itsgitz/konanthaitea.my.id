@@ -241,6 +241,7 @@
     </div>
     @endif
     {{-- ADD MENU STOCK MESSAGE --}}
+
     {{-- EDIT MENU STOCK MESSAGE --}}
     @if (session('admin_edit_menu_stock_message'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -286,5 +287,20 @@
     </div>
     @endif
     {{-- ADD STOCK UNIT MESSAGE --}}
+
+    {{-- EDIT STOCK MESSAGE --}}
+    @if (session('admin_edit_stock_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_edit_stock_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- EDIT STOCK MESSAGE --}}
 </div>
 <div class="py-1"></div>

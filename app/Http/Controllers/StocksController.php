@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 class StocksController extends Controller
 {
     const ADD_STOCK_MESSAGE = 'Berhasil menambah stock baru';
+    const EDIT_STOCK_MESSAGE = 'Berhasil mengubah rincian stock';
 
     //
     public function index(Request $r)
@@ -51,20 +52,23 @@ class StocksController extends Controller
     {
         $r->validate(
             [
-                'name'          => ['required', 'min:3', 'unique:App\Models\Stock,name'],
-                'quantity'      => ['required', 'min:1', 'numeric'],
-                'unit'          => ['required'],
-                'total_price'   => ['required', 'min:1', 'numeric']
+                'name'              => ['required', 'min:3', 'unique:App\Models\Stock,name'],
+                'quantity'          => ['required', 'min:1', 'numeric'],
+                'unit'              => ['required'],
+                'total_price'       => ['required', 'min:1', 'numeric'],
+                'upload_invoice'    => ['required', 'image'],
             ],
             [
-                'name.required'         => 'Mohon untuk mengisi nama stock',
-                'name.min'              => 'Minimal nama 3 karakter',
-                'name.unique'           => 'Nama stock telah terdaftar',
-                'quantity.required'     => 'Mohon untuk mengisi jumlah stock',
-                'quantity.min'          => 'Minimal jumlah stock adalah 1 atau tidak boleh kosong',
-                'unit.required'         => 'Mohon untuk mengisi unit stock',
-                'total_price.required'  => 'Mohon untuk mengisi total belanja stock',
-                'total_price.min'       => 'Total belanja tidak boleh nol atau kosong',
+                'name.required'             => 'Mohon untuk mengisi nama stock',
+                'name.min'                  => 'Minimal nama 3 karakter',
+                'name.unique'               => 'Nama stock telah terdaftar',
+                'quantity.required'         => 'Mohon untuk mengisi jumlah stock',
+                'quantity.min'              => 'Minimal jumlah stock adalah 1 atau tidak boleh kosong',
+                'unit.required'             => 'Mohon untuk mengisi unit stock',
+                'total_price.required'      => 'Mohon untuk mengisi total belanja stock',
+                'total_price.min'           => 'Total belanja tidak boleh nol atau kosong',
+                'upload_invoice.required'   => 'Mohon untuk melampirkan bukti pembelian',
+                'upload_invoice.image'      => 'File harus gambar',
             ]
         );
 
@@ -86,6 +90,11 @@ class StocksController extends Controller
         $restock->quantity          = $r->quantity;
         $restock->status            = 'Available';
         $restock->total_price       = $r->total_price;
+
+        //Upload invoice
+        $image = $r->file('upload_invoice')->store('invoices');
+        $restock->invoice_image = $image;
+
         $restock->save();
 
         return redirect()
@@ -94,6 +103,57 @@ class StocksController extends Controller
     }
 
     public function edit($id)
+    {
+        $stock = DB::table('stocks')
+            ->join('stock_units', 'stocks.stock_units_id', '=', 'stock_units.id')
+            ->select(
+                'stocks.id AS stock_id',
+                'stocks.name AS stock_name',
+                'stocks.quantity AS stock_quantity',
+                'stocks.status AS stock_status',
+                'stock_units.name AS unit_name',
+                'stocks.created_at AS stock_created_at'
+            )
+            ->where('stocks.id', '=', $id)
+            ->first();
+
+        $units = StockUnit::all();
+
+        $availableStatus[0] = 'Available';
+        $availableStatus[1] = 'Not Available';
+
+        return view('admin.stocks.edit_details', [
+            'stock' => $stock,
+            'units' => $units,
+            'availableStatus' => $availableStatus,
+        ]);
+    }
+
+    public function update(Request $r, $id)
+    {
+        $r->validate(
+            [
+                'name' => ['required', 'min:3']
+            ],
+            [
+                'name.required' => 'Nama tidak boleh kosong',
+                'name.min'      => 'Minimal nama harus 3 karakter'
+            ]
+        );
+
+        $stock = Stock::find($id);
+        $stock->stock_units_id  = $r->unit;
+        $stock->name            = $r->name;
+        $stock->status          = $r->status;
+        $stock->save();
+
+
+        return redirect()
+            ->route('admin_stocks_get')
+            ->with('admin_edit_stock_message', self::EDIT_STOCK_MESSAGE);
+    }
+
+    public function editAddQuantity($id)
     {
 
         $stock = DB::table('stocks')
@@ -113,17 +173,19 @@ class StocksController extends Controller
             abort(404);
         }
 
-        return view('admin.stocks.edit', [
+        return view('admin.stocks.edit_add_quantity', [
             'stock' => $stock,
         ]);
     }
 
-    public function update(Request $r, $id)
+    //Restock function (edit)
+    public function updateAddQuantity(Request $r, $id)
     {
         $r->validate(
             [
-                'add_quantity'      => ['required',  'numeric', 'min:1'],
+                'add_quantity'      => ['required', 'numeric', 'min:1'],
                 'upload_invoice'    => ['required', 'image'],
+                'total_price'       => ['required', 'numeric', 'min:1']
             ],
             [
                 'required'  => 'Data tidak boleh kosong',

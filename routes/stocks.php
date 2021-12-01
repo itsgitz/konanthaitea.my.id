@@ -11,6 +11,12 @@ Route::get('/admin/stocks/add', [\App\Http\Controllers\StocksController::class, 
 Route::post('/admin/stocks/add', [\App\Http\Controllers\StocksController::class, 'store'])
     ->name('admin_stocks_add_post');
 
+Route::get('/admin/stocks/edit/add/quantity/{id}', [\App\Http\Controllers\StocksController::class, 'editAddQuantity'])
+    ->name('admin_stocks_edit_add_quantity_get');
+
+Route::put('/admin/stocks/edit/add/quantity/{id}', [\App\Http\Controllers\StocksController::class, 'updateAddQuantity'])
+    ->name('admin_stocks_edit_add_quantity_put');
+
 Route::get('/admin/stocks/edit/{id}', [\App\Http\Controllers\StocksController::class, 'edit'])
     ->name('admin_stocks_edit_get');
 

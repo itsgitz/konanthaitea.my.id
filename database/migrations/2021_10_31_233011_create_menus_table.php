@@ -19,6 +19,7 @@ class CreateMenusTable extends Migration
             $table->decimal('price', $precision = 10, $scale = 2);
             $table->integer('quantity');
             $table->enum('status', ['Available', 'Sold Out']);
+            $table->text('image');
             $table->timestamps();
         });
     }

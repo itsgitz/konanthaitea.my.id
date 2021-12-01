@@ -3,11 +3,11 @@
 
 @section ('content')
 <div class="py-3">
-    <h5>Tambah Jumlah {{ $stock->stock_name }}</h5>
+    <h5>Tambah Jumlah (<i>Restock</i>) {{ $stock->stock_name }}</h5>
 
     @include ('shared.message')
 
-    <form action="{{ route('admin_stocks_edit_put', ['id' => $stock->stock_id]) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('admin_stocks_edit_add_quantity_put', ['id' => $stock->stock_id]) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-3 col-md-4">
@@ -18,6 +18,16 @@
             <label class="form-label" for="add-quantity">Tambah Jumlah</label>
             <input id="add-quantity" class="form-control" type="number" name="add_quantity" min="1" required>
             @error ('add_quantity')
+            <div>
+                <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+            </div>
+            @enderror
+        </div>
+
+        <div class="mb-3 col-md-4">
+            <label class="form-label" for="total-price">Total Pembelian (Rp.)</label>
+            <input id="total-price" class="form-control" name="total_price" type="number" min="1" required>
+            @error ('total_price')
             <div>
                 <span class="text-danger fw-light"><small>{{ $message }}</small></span>
             </div>

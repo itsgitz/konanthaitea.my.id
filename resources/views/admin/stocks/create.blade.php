@@ -14,10 +14,11 @@
     </div>
     @endif
 
-    <form action="{{ route('admin_stocks_add_get') }}" method="post">
+    <form action="{{ route('admin_stocks_add_get') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="mb-3 col-md-4">
-            <input class="form-control" type="text" name="name" placeholder="Nama" required>
+            <label class="form-label" for="name">Nama</label>
+            <input id="name" class="form-control" type="text" name="name" required>
             @error ('name')
             <div>
                 <span class="text-danger fw-light"><small>{{ $message }}</small></span>
@@ -25,7 +26,8 @@
             @enderror
         </div>
         <div class="mb-3 col-md-4">
-            <input class="form-control" type="number" name="quantity" placeholder="Jumlah" min="1" required>
+            <label class="form-label" for="quantity">Jumlah</label>
+            <input id="quantity" class="form-control" type="number" name="quantity" min="1" required>
             @error ('quantity')
             <div>
                 <span class="text-danger fw-light"><small>{{ $message }}</small></span>
@@ -46,8 +48,18 @@
             @enderror
         </div>
         <div class="mb-3 col-md-4">
-            <input class="form-control" type="number" name="total_price" placeholder="Total Belanja (Rp)" min="1" required>
+            <label class="form-label" for="total-price">Total Belanja (Rp.)</label>
+            <input id="total-price" class="form-control" type="number" name="total_price" min="1" required>
             @error ('total_price')
+            <div>
+                <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+            </div>
+            @enderror
+        </div>
+        <div class="mb-3 col-md-4">
+            <label class="form-label" for="upload-invoice">Upload Bukti Pembelian</label>
+            <input id="upload-invoice" class="form-control" name="upload_invoice" type="file" required>
+            @error ('upload_invoice')
             <div>
                 <span class="text-danger fw-light"><small>{{ $message }}</small></span>
             </div>
