@@ -67,6 +67,7 @@ class OrdersController extends Controller
                 'clients.id AS client_id',
                 'clients.name AS client_name',
                 'orders.payment_status AS order_payment_status',
+                'orders.payment_method AS order_payment_method',
                 'orders.delivery_method AS order_delivery_method',
                 'orders.delivery_status AS order_delivery_status',
                 'orders.total_amount AS order_total_amount',

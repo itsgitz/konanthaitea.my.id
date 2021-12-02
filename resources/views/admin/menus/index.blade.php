@@ -18,7 +18,7 @@
                 <th scope="col">Status</th>
                 <th scope="col">Jumlah</th>
                 <th scope="col">Ditambahkan Tanggal</th>
-                <th scope="col" colspan="3">#</th>
+                <th scope="col" colspan="4">#</th>
             </thead>
 
             @if ($menus->isNotEmpty())
@@ -32,11 +32,25 @@
                         </span>
                     </td>
                     <td>{{ $m->quantity }}</td>
-                    <td>{{ date('j M Y H:i:s', strtotime( $m->created_at )) }}</td>
+                    <td>{{ date('d M Y H:i:s', strtotime( $m->created_at )) }}</td>
                     <td>
                         <a class="btn btn-success btn-sm" href="{{ route('admin_menu_show_get', [ 'id' => $m->id ]) }}">
                             <i class="fas fa-eye"></i> Lihat Resep
                         </a>
+                    </td>
+                    <td>
+                        <button
+                            type="button"
+                            class="btn btn-secondary btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#show-image"
+                            data-menu-name="{{ $m->name }}"
+                            data-menu-price="Rp. {{ number_format( $m->price, 2, ',', '.' ) }}"
+                            data-menu-image="{{ $m->image }}"
+                            onclick="showImage(this)"
+                        >
+                           <i class="fas fa-file-image"></i> Gambar
+                        </button>
                     </td>
                     <td>
                         <a class="btn btn-warning btn-sm" href="{{ route('admin_menu_edit_get', ['id' => $m->id]) }}">
@@ -57,5 +71,48 @@
             @endif
         </table>
     </div>
+
+    {{-- SHOW IMAGE --}}
+    <!-- Modal -->
+    <div class="modal fade" id="show-image" tabindex="-1" aria-labelledby="show-image-label" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="show-image-label">Gambar Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="py-2">
+                Nama Menu: <span class="fw-bold" id="menu-name"></span>
+            </div>
+            <div class="py-2">
+                Harga: <span class="fw-bold" id="menu-price"></span>
+            </div>
+            <div class="py-2">
+                <img class="img-fluid" id="menu-image" alt="">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{-- SHOW IMAGE --}}
+
+    <script>
+        function showImage(el) {
+            let menuNameEl = document.querySelector('#menu-name');
+            let menuPriceEl = document.querySelector('#menu-price');
+            let menuImageEl = document.querySelector('#menu-image');
+            let menuName = el.dataset.menuName;
+            let menuPrice = el.dataset.menuPrice;
+            let menuImage = el.dataset.menuImage;
+
+            menuNameEl.innerHTML = menuName;
+            menuPriceEl.innerHTML = menuPrice;
+            menuImageEl.src = menuImage;
+        }
+    </script>
 </div>
 @endsection

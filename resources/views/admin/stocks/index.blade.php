@@ -30,7 +30,7 @@
                     <td>{{ number_format( $s->stock_quantity, 0, '', '.' ) }}</td>
                     <td>{{ $s->unit_name }}</td>
                     <td>{{ $s->stock_status }}</td>
-                    <td>{{ date('j M Y H:i:s', strtotime( $s->stock_created_at )) }}</td>
+                    <td>{{ date('d M Y H:i:s', strtotime( $s->stock_created_at )) }}</td>
                     <td>
                         <a class="btn btn-success btn-sm" href="{{ route('admin_stocks_edit_add_quantity_get', ['id' => $s->stock_id]) }}">
                             <i class="fas fa-plus-circle"></i> Tambah

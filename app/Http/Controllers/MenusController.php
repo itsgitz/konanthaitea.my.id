@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Menu;
 use App\Models\MenuStock;
+use Illuminate\Support\Facades\Storage;
 
 class MenusController extends Controller
 {
@@ -110,18 +111,21 @@ class MenusController extends Controller
 
         $r->validate(
             [
-                'name'      => ['required', 'unique:App\Models\Menu,name', 'min:3'],
-                'price'     => ['required', 'numeric', 'min:1'],
-                'quantity'  => ['required', 'numeric', 'min:1'],
+                'name'          => ['required', 'unique:App\Models\Menu,name', 'min:3'],
+                'price'         => ['required', 'numeric', 'min:1'],
+                'quantity'      => ['required', 'numeric', 'min:1'],
+                'menu_image'    => ['required', 'image']
             ],
             [
-                'name.required'     => 'Nama menu tidak boleh kosong',
-                'name.unique'       => 'Nama menu telah terdaftar',
-                'name.min'          => 'Nama menu minimal 3 karakter',
-                'price.required'    => 'Harga menu tidak boleh kosong',
-                'price.numeric'     => 'Harga menu harus angka',
-                'quantity.required' => 'Jumlah menu tidak boleh kosong',
-                'quantity.min'      => 'Jumlah menu minimal harus 1',
+                'name.required'         => 'Nama menu tidak boleh kosong',
+                'name.unique'           => 'Nama menu telah terdaftar',
+                'name.min'              => 'Nama menu minimal 3 karakter',
+                'price.required'        => 'Harga menu tidak boleh kosong',
+                'price.numeric'         => 'Harga menu harus angka',
+                'quantity.required'     => 'Jumlah menu tidak boleh kosong',
+                'quantity.min'          => 'Jumlah menu minimal harus 1',
+                'menu_image.required'   => 'Gambar untuk menu tidak boleh kosong',
+                'menu_image.image'      => 'Format file harus gambar'
             ]
         );
 
@@ -131,6 +135,10 @@ class MenusController extends Controller
         $menu->price    = $r->price;
         $menu->quantity = $r->quantity;
         $menu->status   = $r->status;
+
+        //Upload image
+        $image          = $r->file('menu_image')->store('public/menus');
+        $menu->image    = Storage::url($image);
         $menu->save();
 
         $menuId = $menu->id;

@@ -7,7 +7,7 @@
 
     @include ('shared.message')
 
-    <form action="{{ route('admin_menu_add_post') }}" method="post">
+    <form action="{{ route('admin_menu_add_post') }}" method="post" enctype="multipart/form-data">
         @csrf
 
         <div class="row gy-3">
@@ -50,6 +50,15 @@
                                 <option value="Available">Available</option>
                                 <option value="Sold Out">Sold Out</option>
                             </select>
+                        </div>
+                        <div class="mb-3 col-md-8">
+                            <label class="form-label" for="file">Upload Gambar Menu</label>
+                            <input id="file" class="form-control" type="file" name="menu_image" required>
+                            @error ('menu_image')
+                            <div>
+                                <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                            </div>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -94,7 +103,7 @@
                                                 value="{{ $s->stock_id }}"
                                             >
                                             <label class="form-check-label" for="check-{{ $s->stock_id }}">
-                                                {{ $s->stock_name }} ({{ $s->unit_name }}) &rarr; Tersedia: {{ $s->stock_quantity }} {{ $s->unit_name }}
+                                                {{ $s->stock_name }} ({{ $s->unit_name }}) &rarr; Tersedia: {{ number_format( $s->stock_quantity, 0, ',', '.' ) }} {{ $s->unit_name }}
                                             </label>
                                             <div class="mb-3 col-md-4">
                                                 <input type="hidden" name="stocks[{{ $loop->index }}][current_quantity]" value="{{ $s->stock_quantity }}">

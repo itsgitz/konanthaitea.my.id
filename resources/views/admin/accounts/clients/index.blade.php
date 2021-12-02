@@ -21,7 +21,7 @@
                 <tr>
                     <td class="fw-light">{{ $c->name }}</td>
                     <td class="fw-light">{{ $c->email }}</td>
-                    <td class="fw-light">{{ date('j M Y H:i:s', strtotime( $c->created_at )) }}</td>
+                    <td class="fw-light">{{ date('d M Y H:i:s', strtotime( $c->created_at )) }}</td>
                     <td>
                         <a class="btn btn-warning btn-sm" href="{{ route('admin_clients_edit_get', [ 'id' => $c->id ]) }}">
                             <i class="fas fa-pencil-alt"></i> Edit

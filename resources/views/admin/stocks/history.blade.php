@@ -7,12 +7,19 @@
 
     @include ('shared.message')
 
+    @include ('shared.message')
+    <div class="py-2">
+        <a class="btn btn-success btn-sm" href="{{ route('admin_export_excel_restock_histories_get') }}">
+            <i class="fas fa-file-excel"></i> Export ke Excel
+        </a>
+    </div>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
                 <th scope="col">Nama</th>
                 <th scope="col">Jumlah</th>
                 <th scope="col">Unit</th>
+                <th scope="col">Total Pembelian</th>
                 <th scope="col">Ditambahkan Tanggal</th>
                 <th scope="col">#</th>
             </thead>
@@ -22,18 +29,19 @@
                 <td>{{ $h->stock_name }}</td>
                 <td>{{ number_format( $h->stock_quantity, 0, '', '.' ) }}</td>
                 <td>{{ $h->unit_name }}</td>
-                <td>{{ date('j M Y H:i:s', strtotime( $h->stock_created_at )) }}</td>
+                <td>Rp. {{ number_format( $h->stock_total_price, 2, ',', '.' ) }}</td>
+                <td>{{ date('d M Y H:i:s', strtotime( $h->stock_created_at )) }}</td>
                 <td>
                     <button
-                        class="btn btn-success btn-sm"
+                        class="btn btn-secondary btn-sm"
                         data-bs-toggle="modal"
                         data-bs-target="#show-invoice"
                         data-history-stock-name="{{ $h->stock_name }}"
-                        data-history-stock-date="{{ date('j M Y H:i:s', strtotime( $h->stock_created_at )) }}"
+                        data-history-stock-date="{{ date('d M Y H:i:s', strtotime( $h->stock_created_at )) }}"
                         data-history-stock-invoice-image="{{ $h->invoice_image }}"
                         onclick="showInvoice(this)"
                     >
-                        <i class="fas fa-eye"></i> Lihat Bukti Pembelian
+                        <i class="fas fa-file-image"></i> Bukti Pembelian
                     </button>
                 </td>
             </tr>
