@@ -10,6 +10,9 @@ DOCKER_BUILDKIT=1 \
 echo "[*] Run Composer Install ..."
 ./script/cloud/composer.sh
 
+echo "[*] Change folder's permissions for storage and vendor ..."
+chmod 775 -Rv vendor storage
+
 echo "[*] Clear Cache ..."
 ./script/cloud/cache.sh
 

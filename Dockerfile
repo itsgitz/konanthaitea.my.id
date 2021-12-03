@@ -23,7 +23,3 @@ RUN apt-get update; \
     docker-php-ext-configure zip; \
     docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip; \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer;
-
-# change permission
-RUN chown -Rv www-data:www-data vendor storage; \
-        chmod 777 -Rv vendor storage;
