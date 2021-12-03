@@ -41,11 +41,11 @@
                 </div>
                 <div class="mb-3">
                     <input
-                        class="form-control" 
-                        type="email" 
-                        name="email" 
-                        id="client-email" 
-                        placeholder="Alamat Email" 
+                        class="form-control"
+                        type="email"
+                        name="email"
+                        id="client-email"
+                        placeholder="Alamat Email"
                         value="{{ old('email') }}"
                         required
                     >
@@ -79,6 +79,9 @@
                 </div>
             </form>
         </div>
+
+        <div class="py-4"></div>
+        <div class="py-2"></div>
     </div>
 </div>
 @endsection
