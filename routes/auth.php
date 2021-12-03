@@ -28,3 +28,17 @@ Route::post('/register', [\App\Http\Controllers\RegisterController::class, 'crea
     ->middleware('guest')
     ->name('client_register_post');
 
+//
+//Login routes for admin
+//
+Route::get('/admin/login', [\App\Http\Controllers\AdminsController::class, 'login'])
+    ->middleware('guest.admin')
+    ->name('admin_login_get');
+
+Route::post('/admin/login', [\App\Http\Controllers\AdminsController::class, 'auth'])
+    ->middleware('guest.admin')
+    ->name('admin_login_post');
+
+Route::get('/admin/logout', [\App\Http\Controllers\AdminsController::class, 'logout'])
+    ->middleware('auth.admin')
+    ->name('admin_logout_get');

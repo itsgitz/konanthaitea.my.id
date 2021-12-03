@@ -302,5 +302,20 @@
     </div>
     @endif
     {{-- EDIT STOCK MESSAGE --}}
+
+    {{-- ADMIN LOGIN MESSAGE --}}
+    @if (session('admin_login_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_login_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- ADMIN LOGIN MESSAGE --}}
 </div>
 <div class="py-1"></div>

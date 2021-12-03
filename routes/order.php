@@ -20,11 +20,14 @@ Route::post('/minuman/orders', [\App\Http\Controllers\OrdersController::class, '
 
 
 Route::get('/admin/orders', [\App\Http\Controllers\OrdersController::class, 'adminIndex'])
+    ->middleware('auth.admin')
     ->name('admin_orders_get');
 
 Route::get('/admin/orders/{id}', [\App\Http\Controllers\OrdersController::class, 'adminShow'])
+    ->middleware('auth.admin')
     ->name('admin_orders_show_get');
 
 Route::put('/admin/orders/process/{id}', [\App\Http\Controllers\OrdersController::class, 'adminProcess'])
+    ->middleware('auth.admin')
     ->name('admin_orders_process');
 

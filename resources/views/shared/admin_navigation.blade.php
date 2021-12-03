@@ -24,7 +24,7 @@
                 <a class="nav-link" href="{{ route('admin_menu_get') }}">
                     <i class="fas fa-wine-bottle"></i> Menu
                 </a>
-            </li> 
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-users"></i> Accounts
@@ -32,12 +32,26 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDrodown">
                     <li>
                         <a class="dropdown-item" href="{{ route('admin_clients_get') }}">
-                            Clients 
+                            Clients
                         </a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="{{ route('admin_accounts_get') }}">
                             Admins
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a id="navbarAuthDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user-circle"></i> {{ Auth::guard('admin')->user()->name }}
+                </a>
+
+                <ul class="dropdown-menu" aria-labelledby="navbarAuthDropdown">
+                    <li>
+                        <a class="dropdown-item" href="{{ route('admin_logout_get') }}">
+                            Logout
                         </a>
                     </li>
                 </ul>

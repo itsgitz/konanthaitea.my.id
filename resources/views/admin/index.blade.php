@@ -5,6 +5,8 @@
 <div class="py-3">
     <h5>Dashboard</h5>
 
+    @include ('shared.message')
+
     <div class="py-2"></div>
     <div class="row gy-3">
         <div class="col-md">
@@ -48,7 +50,7 @@
                     </div>
                 </div>
             </a>
-        </div> 
+        </div>
         <div class="col-md">
             <a class="text-decoration-none" href="{{ route('admin_menu_get') }}">
                 <div class="card btn btn-outline-danger">
@@ -62,7 +64,7 @@
                     </div>
                 </div>
             </a>
-        </div> 
+        </div>
         <div class="col-md">
             <a class="text-decoration-none" href="{{ route('admin_clients_get') }}">
                 <div class="card btn btn-outline-secondary">

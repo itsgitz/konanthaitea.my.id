@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <input id="client-login-submit" class="form-control btn btn-primary" type="submit" value="Lanjut">
+                        <input id="client-login-submit" class="form-control btn btn-primary" type="submit" value="Masuk">
                     </div>
 
                     <div class="py-3">

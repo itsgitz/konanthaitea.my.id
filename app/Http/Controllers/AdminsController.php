@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdminsController extends Controller
 {
     const ADD_ADMIN_MESSAGE     = 'Berhasil menambahkan user admin';
-    const UPDATE_ADMIN_MESSAGE  = 'Berhasil mengubah informasi user admin'; 
+    const UPDATE_ADMIN_MESSAGE  = 'Berhasil mengubah informasi user admin';
     const DELETE_ADMIN_MESSAGE  = 'Berhasil menghapus user admin';
+    const LOGIN_MESSAGE         = 'Berhasil login ke admin dashboard';
 
     //
     public function index()
@@ -117,5 +119,39 @@ class AdminsController extends Controller
         return redirect()
             ->route('admin_accounts_get')
             ->with('admin_delete_admin_message', self::DELETE_ADMIN_MESSAGE);
+    }
+
+    public function login()
+    {
+        return view('admin.auth.login');
+    }
+
+    public function auth(Request $r)
+    {
+        $credentials = $r->validate([
+            'email'     => ['required', 'email'],
+            'password'  => ['required'],
+        ]);
+
+        if ( Auth::guard('admin')->attempt($credentials) ) {
+            $r->session()->regenerate();
+
+            return redirect()
+                ->intended(route('admin_home'))
+                ->with('admin_login_message', self::LOGIN_MESSAGE);
+        }
+
+        return back()->withErrors([
+            'email'     => 'Alamat e-mail yang anda masukan salah atau tidak terdaftar',
+            'password'  => 'Password yang anda masukan salah',
+        ]);
+    }
+
+    public function logout(Request $r)
+    {
+        Auth::guard('admin')->logout();
+
+        return redirect()
+            ->route('admin_login_get');
     }
 }
