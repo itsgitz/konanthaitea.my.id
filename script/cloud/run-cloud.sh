@@ -5,7 +5,13 @@ echo "[*] Run the services on Cloud (Production) ..."
 DOCKER_BUILDKIT=1 \
     docker-compose -f cloud.yaml \
     -p cloud-minuman_tile_itsgitz_com \
-    up --build -d
+    up --build --force-recreate -d
+
+echo "[*] Run Composer Install ..."
+./script/cloud/composer.sh
+
+echo "[*] Clear Cache ..."
+./script/cloud/cache.sh
 
 echo "[*] Waiting MariaDB ..."
 sleep 10
