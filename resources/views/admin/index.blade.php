@@ -10,7 +10,7 @@
     <div class="py-2"></div>
     <div class="row gy-3">
         <div class="col-md">
-            <a class="text-decoration-none" href="{{ route('client_home') }}">
+            <a class="text-decoration-none" href="{{ route('client_home') }}" target="__blank">
                 <div class="card btn btn-outline-success">
                     <div class="card-body">
                         <div class="card-text d-flex justify-content-center">

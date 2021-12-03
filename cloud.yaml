@@ -1,0 +1,41 @@
+version: '3'
+services:
+  db:
+    image: mariadb
+    container_name: minuman-tile.itsgitz.com-db-prod
+    restart: always
+    volumes:
+      - ./.docker/mariadb:/var/lib/mysql
+    env_file:
+      - .env
+    ports:
+      - 3336:3306
+    networks:
+      - minuman-tile.itsgitz.com-network
+
+  web:
+    build:
+      context: .
+    container_name: minuman-tile.itsgitz.com-web-prod
+    restart: always
+    volumes:
+      - ./:/var/www/minuman-tile.itsgitz.com/
+    networks:
+      - minuman-tile.itsgitz.com-network
+
+  server:
+    image: nginx
+    container_name: minuman-tile.itsgitz.com-server-prod
+    restart: always
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./:/var/www/minuman-tile.itsgitz.com/
+    ports:
+      - 127.0.0.1:8004:80
+    networks:
+      - minuman-tile.itsgitz.com-network
+
+networks:
+  minuman-tile.itsgitz.com-network:
+    name: minuman-tile.itsgitz.com-network
+    driver: bridge

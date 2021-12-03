@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "[*] Run MariaDB ..."
-./script/run-mariadb.sh
+./script/local/run-mariadb.sh
 
 echo "[*] Run migrations ..."
 sleep 1

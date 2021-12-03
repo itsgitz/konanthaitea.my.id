@@ -1,9 +1,14 @@
 run-local:
-	./script/run-local.sh
+	./script/local/run-local.sh
 run-db:
-	./script/run-mariadb.sh
+	./script/local/run-mariadb.sh
 down-db:
-	./script/down-mariadb.sh
-
+	./script/local/down-mariadb.sh
 destroy-local:
-	./script/destroy.sh
+	./script/local/destroy.sh
+
+run-cloud:
+	./script/cloud/run-cloud.sh
+	./script/cloud/log.sh
+down-cloud:
+	./script/cloud/down-cloud.sh

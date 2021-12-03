@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminSeeder::class,
             ClientSeeder::class,
-            /* StockUnitSeeder::class, */
+            StockUnitSeeder::class,
             /* StockSeeder::class, */
             /* RestockHistoriesSeeder::class, */
             /* MenuSeeder::class, */

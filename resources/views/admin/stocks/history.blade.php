@@ -9,7 +9,10 @@
 
     @include ('shared.message')
     <div class="py-2">
-        <a class="btn btn-success btn-sm" href="{{ route('admin_export_excel_restock_histories_get') }}">
+        <a
+            class="btn btn-success btn-sm @if ($histories->isEmpty()) disabled @endif"
+            href="{{ route('admin_export_excel_restock_histories_get') }}"
+        >
             <i class="fas fa-file-excel"></i> Export ke Excel
         </a>
     </div>
@@ -24,28 +27,34 @@
                 <th scope="col">#</th>
             </thead>
 
-            @foreach ($histories as $h)
-            <tr>
-                <td>{{ $h->stock_name }}</td>
-                <td>{{ number_format( $h->stock_quantity, 0, '', '.' ) }}</td>
-                <td>{{ $h->unit_name }}</td>
-                <td>Rp. {{ number_format( $h->stock_total_price, 2, ',', '.' ) }}</td>
-                <td>{{ date('d M Y H:i:s', strtotime( $h->stock_created_at )) }}</td>
-                <td>
-                    <button
-                        class="btn btn-secondary btn-sm"
-                        data-bs-toggle="modal"
-                        data-bs-target="#show-invoice"
-                        data-history-stock-name="{{ $h->stock_name }}"
-                        data-history-stock-date="{{ date('d M Y H:i:s', strtotime( $h->stock_created_at )) }}"
-                        data-history-stock-invoice-image="{{ $h->invoice_image }}"
-                        onclick="showInvoice(this)"
-                    >
-                        <i class="fas fa-file-image"></i> Bukti Pembelian
-                    </button>
-                </td>
-            </tr>
-            @endforeach
+            @if ($histories->isNotEmpty())
+                @foreach ($histories as $h)
+                <tr>
+                    <td>{{ $h->stock_name }}</td>
+                    <td>{{ number_format( $h->stock_quantity, 0, '', '.' ) }}</td>
+                    <td>{{ $h->unit_name }}</td>
+                    <td>Rp. {{ number_format( $h->stock_total_price, 2, ',', '.' ) }}</td>
+                    <td>{{ date('d M Y H:i:s', strtotime( $h->stock_created_at )) }}</td>
+                    <td>
+                        <button
+                            class="btn btn-secondary btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#show-invoice"
+                            data-history-stock-name="{{ $h->stock_name }}"
+                            data-history-stock-date="{{ date('d M Y H:i:s', strtotime( $h->stock_created_at )) }}"
+                            data-history-stock-invoice-image="{{ $h->invoice_image }}"
+                            onclick="showInvoice(this)"
+                        >
+                            <i class="fas fa-file-image"></i> Bukti Pembelian
+                        </button>
+                    </td>
+                </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="6" class="text-center fw-light">Data riwayat isi ulang stock kosong</td>
+                </tr>
+            @endif
         </table>
     </div>
 
