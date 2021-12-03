@@ -2,7 +2,7 @@
 @section ('title', 'Manajamen Stock')
 
 @section ('content')
-<div class="py-3">
+<div id="admin-stock-index" class="py-3">
     <h5>Manajemen Stock</h5>
 
     @include ('shared.message')
@@ -29,7 +29,14 @@
                     <td>{{ $s->stock_name }}</td>
                     <td>{{ number_format( $s->stock_quantity, 0, '', '.' ) }}</td>
                     <td>{{ $s->unit_name }}</td>
-                    <td>{{ $s->stock_status }}</td>
+                    <td>
+                        <span
+                            class="stock-status fw-bold"
+                            data-stock-status="{{ $s->stock_status }}"
+                        >
+                            {{ $s->stock_status }}
+                        </span>
+                    </td>
                     <td>{{ date('d M Y H:i:s', strtotime( $s->stock_created_at )) }}</td>
                     <td>
                         <a class="btn btn-success btn-sm" href="{{ route('admin_stocks_edit_add_quantity_get', ['id' => $s->stock_id]) }}">

@@ -9687,6 +9687,7 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _orders_orders__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./orders/orders */ "./resources/js/orders/orders.js");
 /* harmony import */ var _menus_main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./menus/main */ "./resources/js/menus/main.js");
+/* harmony import */ var _stocks_main__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stocks/main */ "./resources/js/stocks/main.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //Bootstrap css
 
 
@@ -9699,9 +9700,11 @@ __webpack_require__(/*! @fortawesome/fontawesome-free/js/all.js */ "./node_modul
 
 
 
+
 window.onload = function () {
   (0,_orders_orders__WEBPACK_IMPORTED_MODULE_0__.runOrders)();
   (0,_menus_main__WEBPACK_IMPORTED_MODULE_1__.runMenu)();
+  (0,_stocks_main__WEBPACK_IMPORTED_MODULE_2__.runStocks)();
 };
 
 /***/ }),
@@ -10229,6 +10232,61 @@ function runOrders() {
 
   (0,_admin_index__WEBPACK_IMPORTED_MODULE_2__.adminOrdersMain)();
   (0,_admin_show__WEBPACK_IMPORTED_MODULE_3__.adminShowOrder)();
+}
+
+/***/ }),
+
+/***/ "./resources/js/stocks/index.js":
+/*!**************************************!*\
+  !*** ./resources/js/stocks/index.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "setStockStatusClass": () => (/* binding */ setStockStatusClass)
+/* harmony export */ });
+function setStockStatusClass() {
+  var stockIndex = document.querySelector('#admin-stock-index');
+
+  if (stockIndex) {
+    var stockStatusElement = document.getElementsByClassName('stock-status');
+    var stockStatus = {
+      available: 'Available',
+      notAvailable: 'Not Available'
+    };
+    Array.prototype.forEach.call(stockStatusElement, function (el) {
+      switch (el.dataset.stockStatus) {
+        case stockStatus.available:
+          el.className += ' text-success';
+          break;
+
+        case stockStatus.notAvailable:
+          el.className += ' text-danger';
+          break;
+      }
+    });
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/js/stocks/main.js":
+/*!*************************************!*\
+  !*** ./resources/js/stocks/main.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "runStocks": () => (/* binding */ runStocks)
+/* harmony export */ });
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./resources/js/stocks/index.js");
+
+function runStocks() {
+  (0,_index__WEBPACK_IMPORTED_MODULE_0__.setStockStatusClass)();
 }
 
 /***/ }),
