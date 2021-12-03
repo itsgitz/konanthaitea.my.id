@@ -25,4 +25,5 @@ RUN apt-get update; \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer;
 
 # change permission
-RUN chown -R www-data:www-data vendor storage
+RUN chown -Rv www-data:www-data vendor storage; \
+        chmod 777 -Rv vendor storage;
