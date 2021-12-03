@@ -7,7 +7,7 @@
 
     @include ('shared.message')
     <div class="py-2">
-        <a class="btn btn-success btn-sm" href="{{ route('admin_export_excel_orders_get') }}">
+        <a class="btn btn-success btn-sm @if ($orders->isEmpty()) disabled @endif" href="{{ route('admin_export_excel_orders_get') }}">
             <i class="fas fa-file-excel"></i> Export ke Excel
         </a>
     </div>
