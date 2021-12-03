@@ -30,12 +30,17 @@ class LoginController extends Controller
 
 
                 return redirect()
-                    ->route('client_cart_get');
+                    ->intended(
+                        route('client_cart_get')
+                    );
             }
 
             $r->session()->regenerate();
 
-            return redirect()->intended('/');
+            return redirect()
+                ->intended(
+                    route('client_home')
+                );
         }
 
         return back()->withErrors([
