@@ -3,8 +3,7 @@
 @section ('title', 'Tentang aplikasi ini')
 
 @section ('content')
-<div class="py-3">
-    <div class="py-3"></div>
+<div class="about">
     <div class="d-flex justify-content-center">
         <div class="card p-3 w-100">
             <div class="card-body">
@@ -32,5 +31,7 @@
             </div>
         </div>
     </div>
+
+    <div class="py-3"></div>
 </div>
 @endsection
