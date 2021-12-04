@@ -77,7 +77,7 @@
 
             {{-- About --}}
             <li class="nav-item">
-                <a class="nav-link fw-light text-secondary" href="{{ route('client_about') }}">About</a>
+                <a class="nav-link fw-light text-secondary" href="{{ route('client_about') }}">Tentang</a>
             </li>
             {{-- About --}}
           </ul>

@@ -7,7 +7,7 @@
     <div class="d-flex justify-content-center">
         <div class="card p-3 w-100">
             <div class="card-body">
-                <h4 class="card-title">About Konan Thai Tea</h4>
+                <h4 class="card-title">Tentang Konan Thai Tea</h4>
                 <p class="card-text">Kedai Konan Thai Tea merupakan salah satu unit usaha mandiri yang bergerak pada bisnis penjualan Thai Tea, sampai dengan saat ini Kedai Konan Thai Tea masih menjalankan bisnisnya di Jl. Budi No. 5 Sukaraja, Cicendo, Bandung.</p>
                 <h4 class="card-title">Visi Konan Thai Tea</h4>
                 <p class="card-text">Menjadi local brand produk Thai Tea yang mempunyai cita rasa Thai Tea terbaik se-Indonesia dan mendunia.</p>
