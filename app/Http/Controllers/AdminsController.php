@@ -151,6 +151,8 @@ class AdminsController extends Controller
     {
         Auth::guard('admin')->logout();
 
+        $r->session()->regenerateToken();
+
         return redirect()
             ->route('admin_login_get');
     }

@@ -51,7 +51,8 @@ class LoginController extends Controller
 
     public function logout(Request $r)
     {
-        Auth::logout();
+        Auth::guard('web')->logout();
+        $r->session()->regenerateToken();
 
         return redirect()
             ->route('client_home');
