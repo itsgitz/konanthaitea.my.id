@@ -9,5 +9,8 @@ echo "[*] Waiting for database connection ..."
 sleep 10
 php artisan migrate
 
+echo "[*] Create storage link ..."
+php artisan storage:link
+
 echo "[*] Run Laravel web server ..."
 php artisan serve
