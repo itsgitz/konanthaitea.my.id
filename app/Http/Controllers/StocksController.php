@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MenuStock;
 use App\Models\RestockHistory;
 use App\Models\Stock;
 use App\Models\StockUnit;
@@ -14,6 +15,8 @@ class StocksController extends Controller
     const ADD_STOCK_MESSAGE = 'Berhasil menambah stock baru';
     const EDIT_STOCK_MESSAGE = 'Berhasil mengubah rincian stock';
     const ADD_STOCK_QUANTITY_MESSAGE = 'Berhasil menambah jumlah stock (restock)';
+    const DELETE_STOCK_MESSAGE = 'Berhasil menghapus stock';
+    const DELETE_ERROR_STOCK_MESSAGE = 'Tidak bisa menghapus stock karena saat ini sedang terpakai oleh menu';
 
     //
     public function index(Request $r)
@@ -242,6 +245,21 @@ class StocksController extends Controller
 
     public function delete($id)
     {
+        $menuStocks = MenuStock::where('stock_id', $id)->get();
 
+        //Check if this stock is not used by menu
+        if ( $menuStocks->isEmpty() ) {
+            //Delete stock if stock is not used
+            $stock = Stock::find($id);
+            $stock->delete();
+
+            return redirect()
+                ->route('admin_stocks_get')
+                ->with('admin_delete_stock_message', self::DELETE_STOCK_MESSAGE);
+        } else {
+            return redirect()
+                ->route('admin_stocks_get')
+                ->with('admin_error_delete_stock_message', self::DELETE_ERROR_STOCK_MESSAGE);
+        }
     }
 }

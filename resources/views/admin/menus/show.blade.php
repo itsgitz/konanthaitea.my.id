@@ -99,7 +99,7 @@
 
     {{-- EDIT MODAL --}}
     <div id="edit-modal" class="modal fade" tabindex="-1" aria-labelledby="edit-modal-label" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 id="edit-modal-label" class="modal-title">
@@ -123,7 +123,7 @@
 
     {{-- REMOVE MODAL --}}
     <div id="remove-modal" class="modal fade" tabindex="-1" aria-labelledby="remove-modal-label" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 id="remove-modal-label" class="modal-title">

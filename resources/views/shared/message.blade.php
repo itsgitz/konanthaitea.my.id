@@ -303,6 +303,36 @@
     @endif
     {{-- EDIT STOCK MESSAGE --}}
 
+    {{-- DELETE STOCK MESSAGE --}}
+    @if (session('admin_delete_stock_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_delete_stock_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- DELETE STOCK MESSAGE --}}
+
+    {{-- DELETE ERROR STOCK MESSAGE --}}
+    @if (session('admin_error_delete_stock_message'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('admin_error_delete_stock_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- DELETE ERROR STOCK MESSAGE --}}
+
     {{-- ADMIN LOGIN MESSAGE --}}
     @if (session('admin_login_message'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
