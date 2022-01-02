@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use App\Models\MenuStock;
 use App\Models\RestockHistory;
 use App\Models\Stock;
@@ -219,8 +220,23 @@ class StocksController extends Controller
 
         //Only update quantity
         //current quantity + add quantity
-        $stock->quantity = $stock->quantity + $r->add_quantity;
+        $stock->quantity    = $stock->quantity + $r->add_quantity;
+        $stock->status      = 'Available';
         $stock->save();
+
+
+        //Update menu status to available if menu_quantity is not 0
+        $menuStocks         = MenuStock::where('stock_id', $id)->get();
+
+        foreach ($menuStocks as $ms) {
+            $menu = Menu::find($ms->menu_id);
+
+            if ( $menu->quantity > 0 ) {
+                $menu->status = 'Available';
+            }
+
+            $menu->save();
+        }
 
         $stockId = $stock->id;
 

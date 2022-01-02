@@ -9,15 +9,16 @@
     @if (!$menu->isEmpty())
     <div class="row gy-3">
         @foreach ($menu as $m)
-        <div class="col-md-4 card-group">
-            <div class="card shadow @if ($m->status == 'Sold Out') sold-out @endif">
+        <div class="col-md-2">
+            <div class="shadow @if ($m->status == 'Sold Out') sold-out @endif">
                 <div class="p-3 text-center">
-                    <img class="card-img-top" src="{{ $m->image }}" alt="{{ $m->name }}" height="350px">
+                    <img class="card-img-top" src="{{ $m->image }}" alt="{{ $m->name }}">
                 </div>
                 <div class="card-body">
                     <h1 class="card-title">{{ $m->name }}</h1>
                     <p class="card-text">Rp. {{ number_format( $m->price, 2, ',', '.' ) }}</p>
                     <p class="card-text">{{ $m->status }}</p>
+                    <p class="cart-text">Tersedia {{ $m->quantity }} unit</p>
                     <div class="order-link">
                         @if (Auth::check())
                         <form action="{{ route('client_cart_post') }}" method="post">
@@ -25,7 +26,7 @@
                             <input type="hidden" name="menu_id" value="{{ $m->id }}">
                             <input type="hidden" name="menu_price" value="{{ $m->price }}">
                             <input
-                                class="btn btn-outline-primary rounded-pill"
+                                class="btn btn-outline-primary rounded-pill fw-bold"
                                 type="submit"
                                 value="Tambah"
                                 @if ($m->status == 'Sold Out')
@@ -55,9 +56,9 @@
         @endforeach
     </div>
     @else
-    <div class="menu-empty py-3">
+    <div class="menu-empty py-3 shadow">
         <div class="d-flex justify-content-center py-1">
-            <h2 class="display-5">Tidak ada menu yang tersedia</h2>
+            <h2 class="display-5">Belum ada menu yang tersedia</h2>
         </div>
         <div class="d-flex justify-content-center py-1">
             <p>Mohon untuk menunggu beberapa saat lagi ...</p>

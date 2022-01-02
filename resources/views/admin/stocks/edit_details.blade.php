@@ -36,7 +36,13 @@
         </div>
         <div class="mb-3 col-md-4">
             <label class="form-label" for="status">Ubah Status</label>
-            <select id="status" class="form-select" name="status" required>
+            <select
+                id="status"
+                class="form-select"
+                name="status"
+                required
+                @if ($stock->stock_status == 'Not Available') disabled @endif
+            >
             @foreach ($availableStatus as $as)
                 <option
                     value="{{ $as }}"

@@ -1,5 +1,5 @@
 <div class="app-admin-navigation py-2">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-top border-bottom">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-top border-bottom shadow-sm">
       <div class="container">
         <a class="navbar-brand" href="{{ route('admin_home') }}">Admin Area</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

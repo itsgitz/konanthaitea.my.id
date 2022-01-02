@@ -3,7 +3,7 @@
 @section ('title', 'Tentang aplikasi ini')
 
 @section ('content')
-<div class="about">
+<div class="about fw-light">
     <div class="d-flex justify-content-center">
         <div class="card p-3 w-100">
             <div class="card-body">

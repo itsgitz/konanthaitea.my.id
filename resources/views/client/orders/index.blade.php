@@ -6,7 +6,7 @@
     @if (!empty($orders))
         @foreach ($orders as $o)
         <div class="py-1"></div>
-        <div class="card rounded shadow-sm">
+        <div class="rounded shadow">
             <div class="card-body">
                 <div class="d-inline card-text px-3">
                     <i class="fa fa-shopping-bag text-success"></i>

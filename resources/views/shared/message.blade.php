@@ -347,5 +347,64 @@
     </div>
     @endif
     {{-- ADMIN LOGIN MESSAGE --}}
+
+    {{-- DELETE STOCK UNIT MESSAGE --}}
+    @if (session('admin_delete_stock_unit_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_delete_stock_unit_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- DELETE STOCK UNIT MESSAGE --}}
+
+    {{-- DELETE ERROR STOCK UNIT MESSAGE --}}
+    @if (session('admin_delete_error_stock_unit_message'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('admin_delete_error_stock_unit_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- DELETE ERROR STOCK MESSAGE --}}
+
+    @error ('edit_stock_unit_name')
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ $message }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @enderror
+
+
+    {{-- UPDATE STOCK UNIT MESSAGE --}}
+    @if (session('admin_edit_stock_unit_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_edit_stock_unit_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- UPDATE STOCK UNIT MESSAGE --}}
 </div>
 <div class="py-1"></div>

@@ -3,7 +3,7 @@
 
 <div class="app-client-navigation">
     <div class="py-1"></div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-top border-bottom">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-top border-bottom shadow-sm">
       <div class="container">
         <a class="navbar-brand text-primary fs-2" href="/"><i class="fas fa-prescription-bottle"></i> Minuman Tile</a>
         <button

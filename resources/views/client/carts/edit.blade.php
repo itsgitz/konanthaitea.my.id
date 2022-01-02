@@ -28,8 +28,15 @@
                         </div>
                     @enderror
                 </div>
-                <a class="btn btn-danger" href="{{ route('client_cart_get') }}">Batal</a>
-                <input class="btn btn-success" type="submit" value="Simpan">
+
+                <div class="mb-3 col-md-4">
+                    <div class="alert alert-success fw-light">
+                        <input type="hidden" name="menu_quantity" value="{{ $cart->menu_quantity }}">
+                        Saat ini tersedia {{ $cart->menu_quantity }} unit
+                    </div>
+                </div>
+                <a class="btn btn-sm btn-danger" href="{{ route('client_cart_get') }}">Batal</a>
+                <input class="btn btn-sm btn-success" type="submit" value="Simpan">
             </form>
         </div>
     </div>

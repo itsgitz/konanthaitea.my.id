@@ -31,7 +31,7 @@ class CartController extends Controller
             'totalAmount'   => $totalAmount,
         ]);
     }
- 
+
     public function store(Request $r)
     {
         if (!Auth::check()) {
@@ -44,7 +44,7 @@ class CartController extends Controller
         }
 
         $this->saveCart($r);
- 
+
         return redirect()
             ->route('client_cart_get')
             ->with('cart_add_message', self::CART_ADD_MESSAGE);
@@ -69,6 +69,7 @@ class CartController extends Controller
             ->select(
                 'carts.id',
                 'menus.name AS menu_name',
+                'menus.quantity AS menu_quantity',
                 'carts.quantity AS cart_quantity',
                 'menus.price AS menu_price',
             )
@@ -87,10 +88,11 @@ class CartController extends Controller
     {
         $r->validate(
             [
-                'cart_quantity'  => ['required', 'numeric', 'not_in:0'],
+                'cart_quantity'  => ['required', 'numeric', 'not_in:0', "max:{$r->menu_quantity}"],
             ],
             [
-                'cart_quantity.not_in' => 'Jumlah minuman tidak boleh kosong atau nol',
+                'cart_quantity.not_in'  => 'Jumlah minuman tidak boleh kosong atau nol',
+                'cart_quantity.max'     => "Maaf, saat ini hanya tersedia {$r->menu_quantity} unit {$r->menu_name}"
             ],
         );
 
@@ -125,6 +127,7 @@ class CartController extends Controller
                 'carts.id AS cart_id',
                 'menus.id AS menu_id',
                 'menus.name AS menu_name',
+                'menus.quantity AS menu_quantity',
                 'carts.quantity AS cart_quantity',
                 'menus.price AS menu_price',
                 'carts.subtotal_amount AS cart_subtotal_amount'
@@ -173,7 +176,7 @@ class CartController extends Controller
 
                 //If item is exist on cart, only update the quantity
                 if ( $this->isOnCartExist($menuId) ) {
-                    
+
                     //Get current data for get the current quantity
                     $currentData = Cart::where([
                         'client_id' => Auth::id(),
@@ -183,7 +186,7 @@ class CartController extends Controller
 
                     //Get menu price
                     $menu = Menu::find($menuId);
- 
+
                     $quantity       = $currentData->quantity + 1;
                     $subtotalAmount = $menu->price * $quantity;
 

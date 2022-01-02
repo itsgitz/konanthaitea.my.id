@@ -91,7 +91,13 @@
                                 <div class="mb-3">
                                     <h5 class="card-title">{{ $order->delivery_method }}</h5>
                                     <div class="py-1"></div>
-                                    <select class="form-select fw-light" name="order_delivery_status">
+                                    <select
+                                        class="form-select fw-light"
+                                        name="order_delivery_status"
+                                        @if ($outOfStock)
+                                        disabled
+                                        @endif
+                                    >
                                         <option value="">Status Pengiriman</option>
                                         @foreach ($deliveryStatus as $status)
                                         <option
@@ -108,11 +114,31 @@
                                     </div>
                                     @enderror
                                 </div>
-                                <input class="btn btn-primary btn-sm" type="submit" value="Simpan">
+                                <input
+                                    class="btn btn-primary btn-sm"
+                                    type="submit"
+                                    value="Simpan"
+                                    @if ($outOfStock)
+                                        disabled
+                                    @endif
+                                >
                             </form>
                         </div>
                     </div>
                 </div>
+
+                <div class="py-3"></div>
+
+                @if ($outOfStock)
+                <div class="card">
+                    <div class="card-body">
+                        <div class="alert alert-danger">
+                            Maaf, untuk saat ini transaksi tidak bisa dilanjutkan karena ada beberapa stock yang tidak tersedia,
+                            <a href="{{ route('admin_stocks_get') }}">periksa stock</a>.
+                        </div>
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
     </div>

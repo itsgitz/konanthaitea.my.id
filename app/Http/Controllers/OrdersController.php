@@ -36,6 +36,16 @@ class OrdersController extends Controller
         'delivery'  => 'Delivery',
     ];
 
+    const STOCK_STATUS = [
+        'available'         => 'Available',
+        'not_available'     => 'Not Available'
+    ];
+
+    const MENU_STATUS = [
+        'available'     => 'Available',
+        'sold_out'      => 'Sold Out'
+    ];
+
     const FINISH_CART_STATUS    = 'Finish';
     const ORDER_FINISH_MESSAGE  = 'Pesanan anda sedang diproses, harap menunggu status selanjutnya';
 
@@ -89,6 +99,14 @@ class OrdersController extends Controller
         $deliveryStatusOptions  = $this->setDeliveryStatusOptions($order);
         $paymentStatusOptions   = $this->setPaymentStatusOptions($order);
 
+        $outOfStock = false;
+
+        foreach ($cartOrders as $co) {
+            if ( $co->stock_status == self::STOCK_STATUS['not_available'] ) {
+                $outOfStock = true;
+            }
+        }
+
 
 
         return view('admin.orders.show', [
@@ -96,6 +114,7 @@ class OrdersController extends Controller
             'cartOrders'        => $cartOrders,
             'deliveryStatus'    => $deliveryStatusOptions,
             'paymentStatus'     => $paymentStatusOptions,
+            'outOfStock'        => $outOfStock
         ]);
     }
 
@@ -232,7 +251,6 @@ class OrdersController extends Controller
             //Menu process, reduce quantity on menus table
             $menu = Menu::find($c['menu_id']);
             $menu->quantity = ( $menu->quantity - $c['cart_quantity'] );
-            $menu->save();
 
             //Menu Stocks process, reduce quantity on menu_stocks table
             $menuStocks = MenuStock::where('menu_id', $c['menu_id'])->get();
@@ -245,9 +263,17 @@ class OrdersController extends Controller
                 $reduceQuantity = ( $c['cart_quantity'] * $ms->quantity );
                 $currentQuantity = ( $stock->quantity - $reduceQuantity );
 
+                if ( $currentQuantity == 0 || $currentQuantity < 0 ) {
+                    $stock->status = self::STOCK_STATUS['not_available'];
+                    $menu->status = self::MENU_STATUS['sold_out'];
+                }
+
                 $stock->quantity = $currentQuantity;
                 $stock->save();
             }
+
+            $menu->save();
+
         }
     }
 
@@ -310,6 +336,9 @@ class OrdersController extends Controller
             ->join('orders', 'cart_orders.order_id', '=', 'orders.id')
             ->join('carts', 'cart_orders.cart_id', '=', 'carts.id')
             ->join('menus', 'carts.menu_id', '=', 'menus.id')
+            ->join('menu_stocks', 'menus.id', '=', 'menu_stocks.menu_id')
+            ->join('stocks', 'menu_stocks.stock_id', '=', 'stocks.id')
+            ->join('stock_units', 'stocks.stock_units_id', '=', 'stock_units.id')
             ->join('clients', 'carts.client_id', '=', 'clients.id')
             ->where('orders.id', '=', $id)
             ->select(
@@ -318,6 +347,10 @@ class OrdersController extends Controller
                 'carts.quantity AS cart_quantity',
                 'carts.subtotal_amount AS cart_subtotal_amount',
                 'clients.name AS client_name',
+                'stocks.name AS stock_name',
+                'stocks.quantity AS stock_quantity',
+                'stocks.status AS stock_status',
+                'stock_units.name AS stock_unit_name'
             )
             ->get();
 

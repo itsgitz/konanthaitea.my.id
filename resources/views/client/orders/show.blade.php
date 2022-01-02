@@ -3,8 +3,8 @@
 
 @section ('content')
 <div id="client-show-order" class="py-3">
-    <div class="card">
-        <div class="card-body">
+    <div>
+        <div class="card-body shadow">
             <h6 class="card-title display-6">
                 <i class="fa fa-shopping-bag text-success"></i>
                 &middot;
@@ -62,7 +62,7 @@
         </div>
     </div>
 
-    <div class="py-3">
+    <div class="py-5">
         <a class="btn btn-primary btn-sm" href="{{ route('client_orders_get') }}">Kembali</a>
     </div>
 </div>

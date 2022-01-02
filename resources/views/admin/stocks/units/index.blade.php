@@ -35,6 +35,9 @@
                             class="btn btn-warning btn-sm"
                             data-bs-toggle="modal"
                             data-bs-target="#edit-unit-modal"
+                            data-stock-unit-name="{{ $su->name }}"
+                            data-update-stock-unit-link="{{ route('admin_stock_units_edit_put', ['id' => $su->id]) }}"
+                            onclick="editStockUnit(this)"
                         >
                             <i class="fas fa-pencil-alt"></i> Edit
                         </button>
@@ -44,6 +47,9 @@
                             class="btn btn-danger btn-sm"
                             data-bs-toggle="modal"
                             data-bs-target="#remove-unit-modal"
+                            data-stock-unit-name="{{ $su->name }}"
+                            data-delete-stock-unit-link="{{ route('admin_stock_units_delete_get', [ 'id' => $su->id ]) }}"
+                            onclick="removeStockUnit(this)"
                         >
                             <i class="fas fa-trash-alt"></i> Hapus
                         </button>
@@ -62,18 +68,24 @@
     <div id="edit-unit-modal" class="modal fade fw-light" tabindex="-1" aria-labelledby="edit-unit-modal-label">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 id="edit-unit-modal-label" class="modal-title">Edit Unit</h5>
-                    <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <span id="stock-name" class="fw-bold"></span>
-                    (<span id="stock-unit" class="fw-bold"></span>)?
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-danger btn-sm" data-bs-dismiss="modal">Batal</button>
-                    <a id="edit-stock-button" class="btn btn-primary btn-sm" href="">Simpan</a>
-                </div>
+                <form id="form-update" action="" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-header">
+                        <h5 id="edit-unit-modal-label" class="modal-title">Edit Unit</h5>
+                        <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label" for="name">Nama</label>
+                            <input class="form-control" id="stock-unit-name" type="text" name="edit_stock_unit_name" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Batal</button>
+                        <input id="edit-stock-unit-button" class="btn btn-primary btn-sm" type="submit" value="Simpan">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -88,12 +100,11 @@
                     <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <span id="stock-name" class="fw-bold"></span>
-                    (<span id="stock-unit" class="fw-bold"></span>)?
+                    Apakah anda yakin akan menghapus <span id="stock-unit-name" class="fw-bold"></span>?
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary btn-sm" data-bs-dismiss="modal">Batal</button>
-                    <a id="edit-stock-button" class="btn btn-danger btn-sm" href="">Hapus</a>
+                    <a id="remove-stock-unit-button" class="btn btn-danger btn-sm" href="">Hapus</a>
                 </div>
             </div>
         </div>
@@ -102,24 +113,24 @@
 
     {{-- Edit Stock Script --}}
     <script>
-        /* function getStocks(el) { */
-        /*     let stockName = el.dataset.stockName, */
-        /*         stockUnit = el.dataset.stockUnit, */
-        /*         stockLink = el.dataset.removeStockLink; */
-        /*         stockNameEl = document.querySelector('#stock-name'), */
-        /*         stockUnitEl = document.querySelector('#stock-unit'), */
-        /*         removeStockButton = document.querySelector('#remove-stock-button'); */
-
-        /*     stockNameEl.innerHTML = stockName; */
-        /*     stockUnitEl.innerHTML = stockUnit; */
-        /*     removeStockButton.setAttribute('href', stockLink); */
-        /* } */
         function editStockUnit(el) {
+            let stockUnitName = el.dataset.stockUnitName;
+            let updateStockUnitLink = el.dataset.updateStockUnitLink;
+            let stockUnitNameEl = document.querySelector('#stock-unit-name');
+            let formUpdateEl = document.querySelector('#form-update');
 
+            stockUnitNameEl.value = stockUnitName;
+            formUpdateEl.action = updateStockUnitLink;
         }
 
         function removeStockUnit(el) {
+            let deleteStockUnitLink = el.dataset.deleteStockUnitLink;
+            let stockUnitName = el.dataset.stockUnitName;
+            let stockUnitEl = document.querySelector('#stock-unit-name');
+            let removeStockUnitButton = document.querySelector('#remove-stock-unit-button');
 
+            stockUnitEl.innerHTML = stockUnitName;
+            removeStockUnitButton.href = deleteStockUnitLink;
         }
     </script>
     {{-- Edit Stock Script --}}

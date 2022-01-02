@@ -11,7 +11,7 @@
     <div class="row gy-3">
         <div class="col-md">
             <a class="text-decoration-none" href="{{ route('client_home') }}" target="__blank">
-                <div class="card btn btn-outline-success">
+                <div class="card btn btn-outline-success shadow-sm">
                     <div class="card-body">
                         <div class="card-text d-flex justify-content-center">
                             <i class="fas fa-shopping-cart display-3"></i>
@@ -25,7 +25,7 @@
         </div>
         <div class="col-md">
             <a class="text-decoration-none" href="{{ route('admin_orders_get') }}">
-                <div class="card btn btn-outline-primary">
+                <div class="card btn btn-outline-primary shadow-sm">
                     <div class="card-body">
                         <div class="card-text d-flex justify-content-center">
                             <i class="fas fa-clipboard-list display-3"></i>
@@ -39,7 +39,7 @@
         </div>
        <div class="col-md">
             <a class="text-decoration-none" href="{{ route('admin_stocks_get') }}">
-                <div class="card btn btn-outline-warning">
+                <div class="card btn btn-outline-warning shadow-sm">
                     <div class="card-body">
                         <div class="card-text d-flex justify-content-center">
                             <i class="fas fa-tags display-3"></i>
@@ -53,7 +53,7 @@
         </div>
         <div class="col-md">
             <a class="text-decoration-none" href="{{ route('admin_menu_get') }}">
-                <div class="card btn btn-outline-danger">
+                <div class="card btn btn-outline-danger shadow-sm">
                     <div class="card-body">
                         <div class="card-text d-flex justify-content-center">
                             <i class="fas fa-wine-bottle display-3"></i>
@@ -67,7 +67,7 @@
         </div>
         <div class="col-md">
             <a class="text-decoration-none" href="{{ route('admin_clients_get') }}">
-                <div class="card btn btn-outline-secondary">
+                <div class="card btn btn-outline-secondary shadow-sm">
                     <div class="card-body">
                         <div class="card-text d-flex justify-content-center">
                             <i class="fas fa-users display-3"></i>
@@ -81,7 +81,7 @@
         </div>
         <div class="col-md">
             <a class="text-decoration-none" href="{{ route('admin_accounts_get') }}">
-                <div class="card btn btn-outline-dark">
+                <div class="card btn btn-outline-dark shadow-sm">
                     <div class="card-body">
                         <div class="card-text d-flex justify-content-center">
                             <i class="fas fas fa-user-shield display-3"></i>
