@@ -58,7 +58,16 @@
                         </a>
                     </td>
                     <td>
-                        <button class="btn btn-danger btn-sm">
+                        <button
+                            type="button"
+                            class="btn btn-danger btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#remove-menu-modal"
+                            data-menu-name="{{ $m->name }}"
+                            data-menu-image="{{ $m->image }}"
+                            data-remove-menu-link="{{ route('admin_menu_delete_get', [ 'id' => $m->id ]) }}"
+                            onclick="removeMenu(this)"
+                        >
                             <i class="fas fa-trash-alt"></i> Hapus
                         </button>
                     </td>
@@ -100,6 +109,27 @@
     </div>
     {{-- SHOW IMAGE --}}
 
+    {{-- Delete Menu Modal --}}
+    <div id="remove-menu-modal" class="modal fade fw-light" tabindex="-1" aria-labelledby="remove-menu-modal-label">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="remove-menu-modal-label" class="modal-title">Hapus Menu</h5>
+                    <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Apakah anda yakin akan menghapus <span id="remove-menu-name" class="fw-bold"></span>?
+                    <img id="remove-menu-image" class="img-fluid" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-sm" data-bs-dismiss="modal">Batal</button>
+                    <a id="remove-menu-button" class="btn btn-danger btn-sm">Hapus</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Delete Menu Modal --}}
+
     <script>
         function showImage(el) {
             let menuNameEl = document.querySelector('#menu-name');
@@ -112,6 +142,19 @@
             menuNameEl.innerHTML = menuName;
             menuPriceEl.innerHTML = menuPrice;
             menuImageEl.src = menuImage;
+        }
+
+        function removeMenu(el) {
+            let menuName = el.dataset.menuName;
+            let menuImage = el.dataset.menuImage;
+            let removeMenuLink = el.dataset.removeMenuLink;
+            let menuNameEl = document.querySelector('#remove-menu-name');
+            let menuImageEl = document.querySelector('#remove-menu-image');
+            let removeMenuButton = document.querySelector('#remove-menu-button');
+
+            menuNameEl.innerHTML = menuName;
+            menuImageEl.src = menuImage;
+            removeMenuButton.href = removeMenuLink;
         }
     </script>
 </div>

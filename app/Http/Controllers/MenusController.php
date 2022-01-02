@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Menu;
@@ -14,6 +15,7 @@ class MenusController extends Controller
     const STOCK_EMPTY_ERROR_MESSAGE     = 'Jumlah / kuantitas item pada resep tidak boleh kosong';
     const ADD_MENU_MESSAGE              = 'Berhasil menambah menu';
     const EDIT_MENU                     = 'Berhasil mengubah rincian menu';
+    const DELETE_MENU                   = 'Berhasil menghapus menu';
     const STATUS_AVAILABLE              = 'Available';
     const STATUS_SOLD_OUT               = 'Sold Out';
 
@@ -261,6 +263,42 @@ class MenusController extends Controller
     public function delete(Request $r, $id)
     {
 
+        $carts = Cart::where([
+            'menu_id'   => $id,
+            'status'    => 'On Cart'
+        ])->get();
+
+
+        if ( $carts->isNotEmpty() ) {
+            return redirect()
+                ->route('admin_menu_get')
+                ->with(
+                    'admin_error_delete_menu_message',
+                    'Gagal menghapus menu karena ada daftar transaksi yang belum selesai atau sedang ada dalam keranjang untuk menu ini.'
+                );
+        }
+
+        $menu = Menu::find($id);
+
+        if ( $menu->status == self::STATUS_AVAILABLE ) {
+            return redirect()
+                ->route('admin_menu_get')
+                ->with(
+                    'admin_error_delete_menu_message',
+                    'Gagal menghapus menu karena status menu saat ini adalah Available.
+                    Ubah terlebih dahulu menjadi Sold Out untuk melanjutkan proses penghapusan.'
+                );
+        }
+
+        // If sold_out, we can delete the menu
+        $menu->delete();
+
+        // Delete recipe or menu_stocks
+        MenuStock::where('menu_id', $id)->delete();
+
+        return redirect()
+            ->route('admin_menu_get')
+            ->with('admin_delete_menu_message', 'Berhasil');
     }
 
     private function checkRecipes(Request $r)

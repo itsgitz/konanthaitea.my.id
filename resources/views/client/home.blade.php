@@ -10,7 +10,7 @@
     <div class="row gy-3">
         @foreach ($menu as $m)
         <div class="col-md-2">
-            <div class="shadow @if ($m->status == 'Sold Out') sold-out @endif">
+            <div class="shadow @if ($m->status == 'Sold Out') sold-out @endif h-100">
                 <div class="p-3 text-center">
                     <img class="card-img-top" src="{{ $m->image }}" alt="{{ $m->name }}">
                 </div>

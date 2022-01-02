@@ -406,5 +406,38 @@
     </div>
     @endif
     {{-- UPDATE STOCK UNIT MESSAGE --}}
+
+
+    {{-- DELETE ERROR MENU MESSAGE --}}
+    @if (session('admin_error_delete_menu_message'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('admin_error_delete_menu_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- DELETE ERROR MENU MESSAGE --}}
+
+
+    {{-- DELETE MENU MESSAGE --}}
+    @if (session('admin_delete_menu_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_delete_menu_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- DELETE MENU MESSAGE --}}
+
 </div>
 <div class="py-1"></div>
