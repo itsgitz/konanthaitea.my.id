@@ -12,5 +12,8 @@ php artisan migrate
 echo "[*] Create storage link ..."
 php artisan storage:link
 
+echo "[*] Seed database ..."
+./script/local/seed.sh
+
 echo "[*] Run Laravel web server ..."
 php artisan serve
