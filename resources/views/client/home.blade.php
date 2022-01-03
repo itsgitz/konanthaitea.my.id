@@ -26,9 +26,9 @@
                             <input type="hidden" name="menu_id" value="{{ $m->id }}">
                             <input type="hidden" name="menu_price" value="{{ $m->price }}">
                             <input
-                                class="btn btn-outline-primary rounded-pill fw-bold"
+                                class="btn btn-outline-primary rounded-pill px-4 fw-bold"
                                 type="submit"
-                                value="Tambah"
+                                value="Beli"
                                 @if ($m->status == 'Sold Out')
                                 disabled
                                 @endif
@@ -36,7 +36,7 @@
                         </form>
                         @else
                         <button
-                            class="btn btn-outline-primary rounded-pill"
+                            class="btn btn-outline-primary rounded-pill px-4 fw-bold"
                             data-bs-toggle="modal"
                             data-bs-target="#redirect-modal"
                             data-menu-id="{{ $m->id }}"
@@ -46,7 +46,7 @@
                             disabled
                             @endif
                         >
-                            Tambah
+                            Beli
                         </button>
                         @endif
                     </div>
