@@ -56,7 +56,7 @@
         @endforeach
     </div>
     @else
-    <div class="menu-empty py-3 shadow">
+    <div class="menu-empty py-3 px-3 shadow">
         <div class="d-flex justify-content-center py-1">
             <h2 class="display-5">Belum ada menu yang tersedia</h2>
         </div>

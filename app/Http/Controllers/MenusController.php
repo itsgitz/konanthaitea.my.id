@@ -290,6 +290,9 @@ class MenusController extends Controller
                 );
         }
 
+        // Delete menu image
+        Storage::delete($menu->image);
+
         // If sold_out, we can delete the menu
         $menu->delete();
 
