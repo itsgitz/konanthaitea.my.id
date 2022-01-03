@@ -7,7 +7,6 @@
       <div class="container">
         {{-- Brand / Logo --}}
         <a class="navbar-brand text-primary" href="/">
-            {{-- <img class="img-fluid" src="{{ mix ('img/logo_gerobak_lingkaran.png') }}" alt="Konan Thai Tea - Logo" width="70"> --}}
             <img class="img-fluid" src="{{ mix ('img/logo_2x2.png') }}" alt="Konan Thai Tea - Logo" width="70">
         </a>
         {{-- Brand / Logo --}}
