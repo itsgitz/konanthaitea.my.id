@@ -1,4 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/img/banner_atas.png": "/img/banner_atas.png",
+    "/img/banner_atas_1.png": "/img/banner_atas_1.png",
+    "/img/logo_2x2.png": "/img/logo_2x2.png",
+    "/img/logo_cup_1@2x.png": "/img/logo_cup_1@2x.png",
+    "/img/logo_gerobak_lingkaran.png": "/img/logo_gerobak_lingkaran.png"
 }

@@ -28,7 +28,7 @@
                             <input
                                 class="btn btn-outline-primary rounded-pill px-4 fw-bold"
                                 type="submit"
-                                value="Beli"
+                                value="Tambah"
                                 @if ($m->status == 'Sold Out')
                                 disabled
                                 @endif
@@ -46,7 +46,7 @@
                             disabled
                             @endif
                         >
-                            Beli
+                            Tambah
                         </button>
                         @endif
                     </div>

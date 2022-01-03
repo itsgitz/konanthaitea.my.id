@@ -5,7 +5,12 @@
     <div class="py-1"></div>
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-top border-bottom shadow-sm">
       <div class="container">
-        <a class="navbar-brand text-primary fs-2" href="/"><i class="fas fa-prescription-bottle"></i> Minuman Tile</a>
+        {{-- Brand / Logo --}}
+        <a class="navbar-brand text-primary" href="/">
+            {{-- <img class="img-fluid" src="{{ mix ('img/logo_gerobak_lingkaran.png') }}" alt="Konan Thai Tea - Logo" width="70"> --}}
+            <img class="img-fluid" src="{{ mix ('img/logo_2x2.png') }}" alt="Konan Thai Tea - Logo" width="70">
+        </a>
+        {{-- Brand / Logo --}}
         <button
             class="navbar-toggler"
             type="button"
