@@ -1,7 +1,9 @@
 <div class="app-admin-navigation py-2">
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-top border-bottom shadow-sm">
       <div class="container">
-        <a class="navbar-brand" href="{{ route('admin_home') }}">Admin Area</a>
+        <a class="navbar-brand" href="{{ route('admin_home') }}">
+            <img class="img-fluid" src="{{ mix ('img/logo_2x2.png') }}" alt="Konan Thai Tea - Logo" width="70">
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>

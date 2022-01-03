@@ -17,11 +17,11 @@
                 <div class="d-flex justify-content-center">
                     <a class="btn text-primary" href="{{ route('client_home') }}">
                         <h3>
-                           <i class="fas fa-prescription-bottle"></i> Minuman Tile
+                            <img class="img-fluid" src="{{ mix ('img/logo_2x2.png') }}" alt="Konan Thai Tea - Logo" width="150">
                         </h3>
                     </a>
                 </div>
-                <div class="py-3"></div>
+                <div class="py-4"></div>
 
                 <form action="{{ route('client_login_post') }}" method="post">
                      @csrf
