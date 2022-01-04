@@ -40,6 +40,7 @@
                         data-admin-name="{{ $a->name }}"
                         data-remove-admin-link="{{ route('admin_accounts_delete_get', ['id' => $a->id]) }}"
                         onclick="getAdmin(this)"
+                        @if ($a->id == 1) disabled @endif
                     >
                         <i class="fas fa-trash-alt"></i> Hapus
                     </button>
