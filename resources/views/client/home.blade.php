@@ -15,7 +15,7 @@
                     <img class="card-img-top" src="{{ $m->image }}" alt="{{ $m->name }}">
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title">{{ $m->name }}</h1>
+                    <h4 class="card-title">{{ $m->name }}</h1>
                     <p class="card-text">Rp. {{ number_format( $m->price, 2, ',', '.' ) }}</p>
                     <p class="card-text">{{ $m->status }}</p>
                     <p class="cart-text">Tersedia {{ $m->quantity }} unit</p>

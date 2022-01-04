@@ -41,7 +41,7 @@
                 class="form-select"
                 name="status"
                 required
-                @if ($stock->stock_status == 'Not Available') disabled @endif
+                @if ($stock->stock_status == 'Not Available' && $stock->stock_quantity < 0) disabled @endif
             >
             @foreach ($availableStatus as $as)
                 <option
