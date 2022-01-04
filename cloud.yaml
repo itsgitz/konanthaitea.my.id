@@ -18,6 +18,8 @@ services:
       context: .
     container_name: minuman-tile.itsgitz.com-web-prod
     restart: always
+    env_file:
+      - .env
     volumes:
       - ./:/var/www/minuman-tile.itsgitz.com/
     networks:
