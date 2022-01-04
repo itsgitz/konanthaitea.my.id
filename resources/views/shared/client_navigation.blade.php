@@ -25,7 +25,7 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             {{-- Cart --}}
             <li class="nav-item">
-                <a class="nav-link fw-light text-secondary position-relative" href="{{ route('client_cart_get') }}">
+                <a class="nav-link fw-bold text-secondary position-relative" href="{{ route('client_cart_get') }}">
                     <span class="pe-2"><i class="fas fa-shopping-cart"></i></span>
                     @if (Auth::check())
                         @if (!empty($cart->getOnCartCount()))
@@ -41,7 +41,7 @@
             {{-- User --}}
             @if (Auth::check())
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle fw-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-user-circle"></i> {{ Auth::user()->name }}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDrodown">
@@ -66,13 +66,13 @@
             @else
 
             <li class="nav-item">
-                <a class="nav-link fw-light text-secondary" href="{{ route('client_register_get') }}">
+                <a class="nav-link fw-bold text-secondary" href="{{ route('client_register_get') }}">
                     Daftar
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link fw-light text-secondary" href="{{ route('client_login_get') }}">
+                <a class="nav-link fw-bold text-secondary" href="{{ route('client_login_get') }}">
                     Masuk
                 </a>
             </li>
@@ -81,7 +81,7 @@
 
             {{-- About --}}
             <li class="nav-item">
-                <a class="nav-link fw-light text-secondary" href="{{ route('client_about') }}">Tentang</a>
+                <a class="nav-link fw-bold text-secondary" href="{{ route('client_about') }}">Tentang</a>
             </li>
             {{-- About --}}
           </ul>
