@@ -101,12 +101,13 @@ class OrdersController extends Controller
 
         $outOfStock = false;
 
-        foreach ($cartOrders as $co) {
+        /*foreach ($cartOrders as $co) {
             if ( $co->stock_status == self::STOCK_STATUS['not_available'] ) {
                 $outOfStock = true;
             }
         }
 
+	dd($cartOrders); die();*/
 
 
         return view('admin.orders.show', [
@@ -336,9 +337,9 @@ class OrdersController extends Controller
             ->join('orders', 'cart_orders.order_id', '=', 'orders.id')
             ->join('carts', 'cart_orders.cart_id', '=', 'carts.id')
             ->join('menus', 'carts.menu_id', '=', 'menus.id')
-            ->join('menu_stocks', 'menus.id', '=', 'menu_stocks.menu_id')
-            ->join('stocks', 'menu_stocks.stock_id', '=', 'stocks.id')
-            ->join('stock_units', 'stocks.stock_units_id', '=', 'stock_units.id')
+            //->join('menu_stocks', 'menus.id', '=', 'menu_stocks.menu_id')
+            //->join('stocks', 'menu_stocks.stock_id', '=', 'stocks.id')
+            //->join('stock_units', 'stocks.stock_units_id', '=', 'stock_units.id')
             ->join('clients', 'carts.client_id', '=', 'clients.id')
             ->where('orders.id', '=', $id)
             ->select(
@@ -347,10 +348,10 @@ class OrdersController extends Controller
                 'carts.quantity AS cart_quantity',
                 'carts.subtotal_amount AS cart_subtotal_amount',
                 'clients.name AS client_name',
-                'stocks.name AS stock_name',
-                'stocks.quantity AS stock_quantity',
-                'stocks.status AS stock_status',
-                'stock_units.name AS stock_unit_name'
+                //'stocks.name AS stock_name',
+                //'stocks.quantity AS stock_quantity',
+                //'stocks.status AS stock_status',
+                //'stock_units.name AS stock_unit_name'
             )
             ->get();
 
