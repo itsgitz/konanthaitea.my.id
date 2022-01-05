@@ -97,7 +97,7 @@
             <div class="py-2">
                 Harga: <span class="fw-bold" id="menu-price"></span>
             </div>
-            <div class="py-2">
+            <div class="py-2 text-center">
                 <img class="img-fluid" id="menu-image" alt="">
             </div>
           </div>
