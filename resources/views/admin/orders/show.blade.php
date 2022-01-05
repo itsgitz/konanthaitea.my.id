@@ -135,6 +135,14 @@
                         <div class="alert alert-danger">
                             Maaf, untuk saat ini transaksi tidak bisa dilanjutkan karena ada beberapa stock yang tidak tersedia,
                             <a href="{{ route('admin_stocks_get') }}">periksa stock</a>.
+
+                            <ul>
+                                @foreach ($emptyStocks as $es)
+                                <li>
+                                    {{ $es->stock_name }} ({{ $es->stock_quantity }} {{ $es->unit_name }})
+                                </li>
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
                 </div>
