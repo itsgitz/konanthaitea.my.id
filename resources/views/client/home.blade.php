@@ -12,7 +12,7 @@
         <div class="col-md-2">
             <div class="shadow @if ($m->status == 'Sold Out') sold-out @endif h-100">
                 <div class="p-3 text-center">
-                    <img class="card-img-top" src="{{ $m->image }}" alt="{{ $m->name }}">
+                    <img class="card-img-top" src="{{ $m->image }}" alt="{{ $m->name }}" style="max-width: 150px; max-height: 200px;">
                 </div>
                 <div class="card-body">
                     <h4 class="card-title">{{ $m->name }}</h1>
