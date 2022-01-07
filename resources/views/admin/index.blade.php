@@ -9,6 +9,7 @@
 
     <div class="py-2"></div>
     <div class="row gy-3">
+        <!--
         <div class="col-md">
             <a class="text-decoration-none" href="{{ route('client_home') }}" target="__blank">
                 <div class="card btn btn-outline-success shadow-sm">
@@ -23,6 +24,7 @@
                 </div>
             </a>
         </div>
+        -->
         <div class="col-md">
             <a class="text-decoration-none" href="{{ route('admin_orders_get') }}">
                 <div class="card btn btn-outline-primary shadow-sm">
