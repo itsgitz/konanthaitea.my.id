@@ -38,6 +38,12 @@
             </li>
             {{-- Cart --}}
 
+           <li class="nav-item">
+                <a class="nav-link fw-bold text-secondary" href="{{ route('client_home') }}">
+                    Menu
+                </a>
+            </li>
+
             {{-- User --}}
             @if (Auth::check())
             <li class="nav-item dropdown">

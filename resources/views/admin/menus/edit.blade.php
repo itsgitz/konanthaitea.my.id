@@ -59,7 +59,8 @@
                 <button id="add-menu-quantity-button" class="btn btn-sm btn-secondary" type="button">
                     <i class="fas fa-plus-circle"></i> Tambah
                 </button>
-                <button id="reduce-menu-quantity-button" class="btn btn-sm btn-secondary" type="button">
+
+                <button id="reduce-menu-quantity-button" class="btn btn-sm btn-secondary @if($menu->quantity == 0) d-none @endif" type="button">
                     <i class="fas fa-minus-circle"></i> Kurangi
                 </button>
                 <div class="py-2"></div>
@@ -103,16 +104,53 @@
         </div>
         <div class="mb-3 col-md-4">
             <label class="form-label" for="status">Status</label>
-            <select class="form-select" name="status" id="status" required>
-                @foreach ($status as $s)
-                <option
-                    value="{{ $s['value'] }}"
-                    @if ($s['selected']) selected @endif
-                >
-                    {{ $s['value'] }}
-                </option>
-                @endforeach
+
+            @if ($outOfStock)
+            <select class="form-select" name="status" id="status" disabled>
+               <option value="{{ $menu->status }}">{{ $menu->status }}</option>
             </select>
+            <input type="hidden" name="status" value="{{ $menu->status }}">
+
+            <div class="py-2"></div>
+            <div class="alert alert-danger">
+                Tidak bisa mengubah status karena ada stock yang tidak tersedia,
+                <a href="{{ route('admin_stocks_get') }}">periksa stock</a>.
+                <ul>
+                    @foreach ($emptyStocks as $es)
+                    <li>
+                        @if ($es->stock_quantity < 0)
+                        {{ $es->stock_name }} (kurang {{ number_format( trim($es->stock_quantity, '-'), 0, '', '.' ) }} {{ $es->unit_name }})
+                        @elseif ($es->stock_quantity == 0)
+                        {{ $es->stock_name }} (kosong)
+                        @endif
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+            @else
+                @if ($menu->quantity == 0)
+                <select class="form-select" name="status" id="status" disabled>
+                    <option value="{{ $menu->status }}">{{ $menu->status }}</option>
+                </select>
+                <input type="hidden" name="status" value="{{ $menu->status }}">
+
+                <div class="py-2"></div>
+                <div class="alert alert-danger">
+                    Tidak bisa mengubah status menjadi <b>Available</b>. Mohon untuk menambah jumlah menu terlebih dahulu.
+                </div>
+                @else
+                <select class="form-select" name="status" id="status" required>
+                    @foreach ($status as $s)
+                    <option
+                        value="{{ $s['value'] }}"
+                        @if ($s['selected']) selected @endif
+                    >
+                        {{ $s['value'] }}
+                    </option>
+                    @endforeach
+                </select>
+                @endif
+            @endif
         </div>
         <div class="mb-3 col-md-4">
             <a class="btn btn-danger btn-sm" href="{{ route('admin_menu_get') }}">Kembali</a>

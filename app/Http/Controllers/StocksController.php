@@ -202,6 +202,13 @@ class StocksController extends Controller
     //Restock function (edit)
     public function updateAddQuantity(Request $r, $id)
     {
+        /* $menu = DB::table('menu_stocks') */
+        /*     ->join('menus', 'menu_stocks.menu_id', '=', 'menus.id') */
+        /*     ->join('stocks', 'menu_stocks.stock_id', '=', 'stocks.id') */
+        /*     ->get(); */
+
+        /* die(); */
+
         $r->validate(
             [
                 'add_quantity'      => ['required', 'numeric', 'min:1'],
@@ -220,23 +227,14 @@ class StocksController extends Controller
 
         //Only update quantity
         //current quantity + add quantity
-        $stock->quantity    = $stock->quantity + $r->add_quantity;
-        $stock->status      = 'Available';
-        $stock->save();
+        $addedQuantity      = $stock->quantity + $r->add_quantity;
+        $stock->quantity    = $addedQuantity;
 
-
-        //Update menu status to available if menu_quantity is not 0
-        $menuStocks         = MenuStock::where('stock_id', $id)->get();
-
-        foreach ($menuStocks as $ms) {
-            $menu = Menu::find($ms->menu_id);
-
-            if ( $menu->quantity > 0 ) {
-                $menu->status = 'Available';
-            }
-
-            $menu->save();
+        if ( $addedQuantity > 0 ) {
+            $stock->status      = 'Available';
         }
+
+        $stock->save();
 
         $stockId = $stock->id;
 

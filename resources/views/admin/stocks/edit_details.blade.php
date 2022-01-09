@@ -54,6 +54,9 @@
                 </option>
             @endforeach
             </select>
+            @if ($stock->stock_status == 'Not Available' && $stock->stock_quantity <= 0)
+            <input type="hidden" name="status" value="{{ $stock->stock_status }}">
+            @endif
         </div>
 
         <a class="btn btn-danger btn-sm" href="{{ route('admin_stocks_get') }}">Kembali</a>

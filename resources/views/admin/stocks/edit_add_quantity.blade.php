@@ -12,7 +12,17 @@
         @method('PUT')
         <div class="mb-3 col-md-4">
             <label class="form-label" for="current-quantity">Jumlah <strong>{{ $stock->stock_name }}</strong> saat ini ({{ $stock->unit_name }})</label>
-            <input id="current-quantity" class="form-control" type="number" value="{{ number_format( $stock->stock_quantity, 0, '', '.' ) }}" disabled>
+            <input
+                id="current-quantity"
+                class="form-control"
+                type="text"
+                @if ($stock->stock_quantity < 0)
+                value="Kurang {{ number_format( trim($stock->stock_quantity, '-'), 0, '', '.' ) }}"
+                @else
+                value="{{ number_format( $stock->stock_quantity, 0, '', '.' ) }}"
+                @endif
+                disabled
+            >
         </div>
         <div class="mb-3 col-md-4">
             <label class="form-label" for="add-quantity">Tambah Jumlah</label>

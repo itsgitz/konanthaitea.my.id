@@ -9897,7 +9897,8 @@ function adminOrdersMain() {
 function setOrderPaymentStatusClass(statusEl) {
   var paymentStatus = {
     unpaid: 'Unpaid',
-    paid: 'Paid'
+    paid: 'Paid',
+    canceled: 'Canceled'
   };
   Array.prototype.forEach.call(statusEl, function (el) {
     switch (el.dataset.orderPaymentStatus) {
@@ -9907,6 +9908,10 @@ function setOrderPaymentStatusClass(statusEl) {
 
       case paymentStatus.paid:
         el.className += ' bg-success';
+        break;
+
+      case paymentStatus.canceled:
+        el.className += ' bg-danger';
         break;
     }
   });
@@ -9920,7 +9925,8 @@ function setOrderDeliveryStatusClass(statusEl) {
     ready: 'Ready',
     delivery: 'Delivery',
     finish: 'Finish',
-    failed: 'Failed'
+    failed: 'Failed',
+    canceled: 'Canceled'
   };
   Array.prototype.forEach.call(statusEl, function (el) {
     switch (el.dataset.orderDeliveryStatus) {
@@ -9950,6 +9956,11 @@ function setOrderDeliveryStatusClass(statusEl) {
 
       case deliveryStatus.failed:
         el.className += ' bg-danger';
+        break;
+
+      case deliveryStatus.canceled:
+        el.className += ' bg-danger';
+        break;
     }
   });
 }
@@ -9981,7 +9992,8 @@ function adminShowOrder() {
 function setOrderPaymentStatusClass(statusEl) {
   var paymentStatus = {
     unpaid: 'Unpaid',
-    paid: 'Paid'
+    paid: 'Paid',
+    canceled: 'Canceled'
   };
 
   switch (statusEl.dataset.orderPaymentStatus) {
@@ -9991,6 +10003,10 @@ function setOrderPaymentStatusClass(statusEl) {
 
     case paymentStatus.paid:
       statusEl.classList.add('bg-success');
+      break;
+
+    case paymentStatus.canceled:
+      statusEl.classList.add('bg-danger');
       break;
   }
 }
@@ -10003,7 +10019,8 @@ function setOrderDeliveryStatusClass(statusEl) {
     ready: 'Ready',
     delivery: 'Delivery',
     finish: 'Finish',
-    failed: 'Failed'
+    failed: 'Failed',
+    canceled: 'Canceled'
   };
 
   switch (statusEl.dataset.orderDeliveryStatus) {
@@ -10032,6 +10049,10 @@ function setOrderDeliveryStatusClass(statusEl) {
       break;
 
     case deliveryStatus.failed:
+      statusEl.classList.add('bg-danger');
+      break;
+
+    case deliveryStatus.canceled:
       statusEl.classList.add('bg-danger');
       break;
   }
@@ -10064,7 +10085,8 @@ function clientOrdersMain() {
 function setOrderPaymentStatusClass(statusEl) {
   var paymentStatus = {
     unpaid: 'Unpaid',
-    paid: 'Paid'
+    paid: 'Paid',
+    canceled: 'Canceled'
   };
   Array.prototype.forEach.call(statusEl, function (el) {
     switch (el.dataset.paymentStatus) {
@@ -10074,6 +10096,10 @@ function setOrderPaymentStatusClass(statusEl) {
 
       case paymentStatus.paid:
         el.className += ' bg-success';
+        break;
+
+      case paymentStatus.canceled:
+        el.className += ' bg-danger';
         break;
     }
   });
@@ -10087,7 +10113,8 @@ function setOrderDeliveryStatusClass(statusEl) {
     ready: 'Ready',
     delivery: 'Delivery',
     finish: 'Finish',
-    failed: 'Failed'
+    failed: 'Failed',
+    canceled: 'Canceled'
   };
   Array.prototype.forEach.call(statusEl, function (el) {
     switch (el.dataset.deliveryStatus) {
@@ -10117,6 +10144,11 @@ function setOrderDeliveryStatusClass(statusEl) {
 
       case deliveryStatus.failed:
         el.className += ' bg-danger';
+        break;
+
+      case deliveryStatus.canceled:
+        el.className += ' bg-danger';
+        break;
     }
   });
 }
@@ -10148,7 +10180,8 @@ function clientShowOrder() {
 function setOrderPaymentStatusClass(statusEl) {
   var paymentStatus = {
     unpaid: 'Unpaid',
-    paid: 'Paid'
+    paid: 'Paid',
+    canceled: 'Canceled'
   };
 
   switch (statusEl.dataset.paymentStatus) {
@@ -10158,6 +10191,10 @@ function setOrderPaymentStatusClass(statusEl) {
 
     case paymentStatus.paid:
       statusEl.classList.add('bg-success');
+      break;
+
+    case paymentStatus.canceled:
+      statusEl.classList.add('bg-danger');
       break;
   }
 }
@@ -10170,7 +10207,8 @@ function setOrderDeliveryStatusClass(statusEl) {
     ready: 'Ready',
     delivery: 'Delivery',
     finish: 'Finish',
-    failed: 'Failed'
+    failed: 'Failed',
+    canceled: 'Canceled'
   };
 
   switch (statusEl.dataset.deliveryStatus) {
@@ -10199,6 +10237,10 @@ function setOrderDeliveryStatusClass(statusEl) {
       break;
 
     case deliveryStatus.failed:
+      statusEl.classList.add('bg-danger');
+      break;
+
+    case deliveryStatus.canceled:
       statusEl.classList.add('bg-danger');
       break;
   }

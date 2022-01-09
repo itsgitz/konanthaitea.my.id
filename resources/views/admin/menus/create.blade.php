@@ -45,13 +45,6 @@
                             @enderror
                         </div>
                         <div class="mb-3 col-md-8">
-                            <label class="form-label" for="status">Status</label>
-                            <select id="status" class="form-select" name="status" required>
-                                <option value="Available">Available</option>
-                                <option value="Sold Out">Sold Out</option>
-                            </select>
-                        </div>
-                        <div class="mb-3 col-md-8">
                             <label class="form-label" for="file">Upload Gambar Menu</label>
                             <input id="file" class="form-control" type="file" name="menu_image" required>
                             @error ('menu_image')

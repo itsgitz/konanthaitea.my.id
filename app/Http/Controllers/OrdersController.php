@@ -19,6 +19,7 @@ class OrdersController extends Controller
     const PAYMENT_STATUS    = [
         'paid'      => 'Paid',
         'unpaid'    => 'Unpaid',
+        'canceled'  => 'Canceled'
     ];
 
     const DELIVERY_STATUS   = [
@@ -29,6 +30,7 @@ class OrdersController extends Controller
         'delivery'      => 'Delivery',
         'finish'        => 'Finish',
         'failed'        => 'Failed',
+        'canceled'      => 'Canceled'
     ];
 
     const DELIVERY_METHOD = [
@@ -388,6 +390,11 @@ class OrdersController extends Controller
             'selected' => ( ( $order->payment_status == self::PAYMENT_STATUS['unpaid'] ) ? true : false ),
         ];
 
+        $options['canceled'] = [
+            'value' => self::PAYMENT_STATUS['canceled'],
+            'selected' => ( ( $order->payment_status == self::PAYMENT_STATUS['canceled'] ) ? true : false ),
+        ];
+
 
         return $options;
     }
@@ -409,6 +416,11 @@ class OrdersController extends Controller
         $options['on_progress']   = [
             'value'     => self::DELIVERY_STATUS['on_progress'],
             'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['on_progress'] ) ? true : false ),
+        ];
+
+        $options['canceled']   = [
+            'value'     => self::DELIVERY_STATUS['canceled'],
+            'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['canceled'] ) ? true : false ),
         ];
 
 

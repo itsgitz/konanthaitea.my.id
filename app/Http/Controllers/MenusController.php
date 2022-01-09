@@ -136,7 +136,7 @@ class MenusController extends Controller
         $menu->name     = $r->name;
         $menu->price    = $r->price;
         $menu->quantity = $r->quantity;
-        $menu->status   = $r->status;
+        $menu->status   = 'Available';
 
         //Upload image
         $image          = $r->file('menu_image')->store('public/menus');
@@ -162,6 +162,26 @@ class MenusController extends Controller
 
     public function edit($id)
     {
+        $emptyStocks = DB::table('menu_stocks')
+            ->join('menus', 'menu_stocks.menu_id', '=', 'menus.id')
+            ->join('stocks', 'menu_stocks.stock_id', '=', 'stocks.id')
+            ->join('stock_units', 'stocks.stock_units_id', '=', 'stock_units.id')
+            ->where('menu_stocks.menu_id', '=', $id)
+            ->where('stocks.status', '=', 'Not Available')
+            ->select(
+                'stocks.name AS stock_name',
+                'stocks.quantity AS stock_quantity',
+                'stocks.status AS stock_status',
+                'stock_units.name AS unit_name'
+            )
+            ->get();
+
+        $outOfStock = false;
+
+        if ( $emptyStocks->count() >= 1 ) {
+            $outOfStock = true;
+        }
+
         $menu = Menu::find($id);
         $selectedStatus[self::STATUS_AVAILABLE] = [
             'value'     => self::STATUS_AVAILABLE,
@@ -184,8 +204,10 @@ class MenusController extends Controller
 
 
         return view('admin.menus.edit', [
-            'menu'      => $menu,
-            'status'    => $selectedStatus,
+            'menu'          => $menu,
+            'status'        => $selectedStatus,
+            'emptyStocks'   => $emptyStocks,
+            'outOfStock'    => $outOfStock,
         ]);
     }
 
@@ -245,7 +267,12 @@ class MenusController extends Controller
         //Update new data
         $menu->name     = $r->name;
         $menu->price    = $r->price;
-        $menu->status   = $r->status;
+
+        if ( isset($r->edit_add) ) {
+            $menu->status   = 'Available';
+        } else {
+            $menu->status   = $r->status;
+        }
 
         //If new quantity is not changed
         if ($newQuantity) {

@@ -14,6 +14,7 @@ function setOrderPaymentStatusClass(statusEl) {
   const paymentStatus = {
     unpaid: 'Unpaid',
     paid: 'Paid',
+    canceled: 'Canceled'
   };
 
   Array.prototype.forEach.call(statusEl, function(el) {
@@ -24,6 +25,10 @@ function setOrderPaymentStatusClass(statusEl) {
 
       case paymentStatus.paid:
         el.className += ' bg-success';
+        break;
+
+      case paymentStatus.canceled:
+        el.className += ' bg-danger';
         break;
     }
   });
@@ -38,6 +43,7 @@ function setOrderDeliveryStatusClass(statusEl) {
     delivery: 'Delivery',
     finish: 'Finish',
     failed: 'Failed',
+    canceled: 'Canceled',
   }
 
   Array.prototype.forEach.call(statusEl, function(el) {
@@ -68,6 +74,11 @@ function setOrderDeliveryStatusClass(statusEl) {
 
       case deliveryStatus.failed:
         el.className += ' bg-danger';
+        break;
+
+      case deliveryStatus.canceled:
+        el.className += ' bg-danger';
+        break;
     }
   });
 

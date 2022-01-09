@@ -14,7 +14,8 @@ function setOrderPaymentStatusClass(statusEl) {
   const paymentStatus = {
     unpaid: 'Unpaid',
     paid: 'Paid',
-  } 
+    canceled: 'Canceled'
+  }
 
   switch (statusEl.dataset.paymentStatus) {
     case paymentStatus.unpaid:
@@ -23,6 +24,10 @@ function setOrderPaymentStatusClass(statusEl) {
 
     case paymentStatus.paid:
       statusEl.classList.add('bg-success');
+      break;
+
+    case paymentStatus.canceled:
+      statusEl.classList.add('bg-danger');
       break;
   }
 }
@@ -36,6 +41,7 @@ function setOrderDeliveryStatusClass(statusEl) {
     delivery: 'Delivery',
     finish: 'Finish',
     failed: 'Failed',
+    canceled: 'Canceled',
   }
 
   switch (statusEl.dataset.deliveryStatus) {
@@ -64,6 +70,10 @@ function setOrderDeliveryStatusClass(statusEl) {
       break;
 
     case deliveryStatus.failed:
+      statusEl.classList.add('bg-danger');
+      break;
+
+    case deliveryStatus.canceled:
       statusEl.classList.add('bg-danger');
       break;
   }

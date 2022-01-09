@@ -91,12 +91,20 @@
                                 <div class="mb-3">
                                     <h5 class="card-title">{{ $order->delivery_method }}</h5>
                                     <div class="py-1"></div>
+
+                                    @if ($outOfStock)
                                     <select
                                         class="form-select fw-light"
                                         name="order_delivery_status"
-                                        @if ($outOfStock)
-                                        disabled
-                                        @endif
+                                    >
+                                        <option value="">Status Pengiriman</option>
+                                        <option value="Waiting" @if($order->delivery_status == 'Waiting') selected @endif>Waiting</option>
+                                        <option value="Canceled" @if($order->delivery_status == 'Canceled') selected @endif>Canceled</option>
+                                    </select>
+                                    @else
+                                    <select
+                                        class="form-select fw-light"
+                                        name="order_delivery_status"
                                     >
                                         <option value="">Status Pengiriman</option>
                                         @foreach ($deliveryStatus as $status)
@@ -108,6 +116,8 @@
                                         >{{ $status['value'] }}</option>
                                         @endforeach
                                     </select>
+                                    @endif
+
                                     @error ('order_delivery_status')
                                     <div>
                                         <span class="text-danger fw-light"><small>{{ $message }}</small></span>
@@ -118,9 +128,6 @@
                                     class="btn btn-primary btn-sm"
                                     type="submit"
                                     value="Simpan"
-                                    @if ($outOfStock)
-                                        disabled
-                                    @endif
                                 >
                             </form>
                         </div>
@@ -138,9 +145,15 @@
 
                             <ul>
                                 @foreach ($emptyStocks as $es)
+                                @if ($es->stock_quantity < 0)
                                 <li>
-                                    {{ $es->stock_name }} ({{ $es->stock_quantity }} {{ $es->unit_name }})
+                                    {{ $es->stock_name }} (kurang {{ number_format( trim($es->stock_quantity, '-'), 0, '', '.' ) }} {{ $es->unit_name }})
                                 </li>
+                                @elseif ($es->stock_quantity == 0)
+                                <li>
+                                    {{ $es->stock_name }} (kosong)
+                                </li>
+                                @endif
                                 @endforeach
                             </ul>
                         </div>

@@ -8,7 +8,6 @@
     @include ('shared.message')
     <div class="pt-2 pb-3">
         <a class="btn btn-primary btn-sm" href="{{ route('admin_stocks_add_get') }}">Tambah Jenis Stock</a>
-        <a class="btn btn-primary btn-sm" href="{{ route('admin_stock_units_get') }}">Tambah Satuan Unit</a>
         <a class="btn btn-primary btn-sm" href="{{ route('admin_stocks_histories_get') }}">Riwayat Isi Ulang</a>
     </div>
 
@@ -27,7 +26,11 @@
                 @foreach ($stocks as $s)
                 <tr>
                     <td>{{ $s->stock_name }}</td>
+                    @if ($s->stock_quantity < 0)
+                    <td>Kurang {{ number_format( trim($s->stock_quantity, '-'), 0, '', '.' ) }}</td>
+                    @else
                     <td>{{ number_format( $s->stock_quantity, 0, '', '.' ) }}</td>
+                    @endif
                     <td>{{ $s->unit_name }}</td>
                     <td>
                         <span
