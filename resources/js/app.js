@@ -10,9 +10,11 @@ require('@fortawesome/fontawesome-free/js/all.js');
 import { runOrders } from './orders/orders';
 import { runMenu } from './menus/main';
 import { runStocks } from './stocks/main';
+import { runCarts } from './carts/main';
 
 window.onload = function() {
   runOrders();
   runMenu();
   runStocks();
+  runCarts();
 }

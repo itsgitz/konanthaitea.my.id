@@ -55,6 +55,22 @@
                                 {{ $order->payment_status }}
                             </div>
                         </div>
+                        @if ($order->address)
+                        <div class="card-text py-2">
+                            <h5 class="card-title">Alamat Penerima</h5>
+                            <div id="order-address" class="fw-light">
+                                {{ $order->address }}
+                            </div>
+                        </div>
+                        <div class="card-text py-2">
+                            <h5 class="card-title">Ongkos Kirim</h5>
+                            <div class="fw-light">Rp. {{ number_format( 11000, 2, ',', '.' ) }}</div>
+                        </div>
+                        @endif
+                        <div class="card-text py-2">
+                            <h5 class="card-title">Total Harga</h5>
+                            <div class="fw-light">Rp. {{ number_format( $totalPrice, 2, ',', '.' ) }}</div>
+                        </div>
                         <div class="card-text py-2">
                             <h5 class="card-title">Total Bayar</h5>
                             <div class="fw-bold">Rp. {{ number_format( $order->total_amount, 2, ',', '.' ) }}</div>
@@ -65,101 +81,116 @@
             <div class="col-md">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Perbaharui / Proses Data</h5>
-                        <div class="card-text">
-                            <form action="{{ route('admin_orders_process', ['id' => $order->id]) }}" method="post" autocomplete="off">
-                                @csrf
-                                @method('PUT')
-                                <div class="mb-3">
-                                    <select class="form-select fw-light" name="order_payment_status">
-                                        <option value="">Status Pembayaran</option>
-                                        @foreach ($paymentStatus as $status)
-                                        <option
-                                            value="{{ $status['value'] }}"
-                                            @if ($status['selected'])
-                                            selected
-                                            @endif
-                                        >{{ $status['value'] }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error ('order_payment_status')
-                                    <div>
-                                        <span class="text-danger fw-light"><small>{{ $message }}</small></span>
-                                    </div>
-                                    @enderror
+                        @switch($order->delivery_status)
+                            @case("Finish")
+                            @case("Ready")
+                                <div class="alert alert-success">
+                                    Transaksi telah selesai untuk order ini <strong>(Order #{{ $order->id }})</strong>
                                 </div>
-                                <div class="mb-3">
-                                    <h5 class="card-title">{{ $order->delivery_method }}</h5>
-                                    <div class="py-1"></div>
-
-                                    @if ($outOfStock)
-                                    <select
-                                        class="form-select fw-light"
-                                        name="order_delivery_status"
-                                    >
-                                        <option value="">Status Pengiriman</option>
-                                        <option value="Waiting" @if($order->delivery_status == 'Waiting') selected @endif>Waiting</option>
-                                        <option value="Canceled" @if($order->delivery_status == 'Canceled') selected @endif>Canceled</option>
-                                    </select>
-                                    @else
-                                    <select
-                                        class="form-select fw-light"
-                                        name="order_delivery_status"
-                                    >
-                                        <option value="">Status Pengiriman</option>
-                                        @foreach ($deliveryStatus as $status)
-                                        <option
-                                            value="{{ $status['value'] }}"
-                                            @if ($status['selected'])
-                                            selected
-                                            @endif
-                                        >{{ $status['value'] }}</option>
-                                        @endforeach
-                                    </select>
-                                    @endif
-
-                                    @error ('order_delivery_status')
-                                    <div>
-                                        <span class="text-danger fw-light"><small>{{ $message }}</small></span>
-                                    </div>
-                                    @enderror
+                                @break
+                            @case("Canceled")
+                                <div class="alert alert-danger">
+                                    Transaksi telah dibatalkan untuk order ini <strong>(Order #{{ $order->id }})</strong>
                                 </div>
-                                <input
-                                    class="btn btn-primary btn-sm"
-                                    type="submit"
-                                    value="Simpan"
-                                >
-                            </form>
-                        </div>
+                                @break
+                            @default
+                                <h5 class="card-title">Perbaharui / Proses Data</h5>
+                                <div class="card-text">
+                                    <form action="{{ route('admin_orders_process', ['id' => $order->id]) }}" method="post" autocomplete="off">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="mb-3">
+                                            <select class="form-select fw-light" name="order_payment_status">
+                                                <option value="">Status Pembayaran</option>
+                                                @foreach ($paymentStatus as $status)
+                                                <option
+                                                    value="{{ $status['value'] }}"
+                                                    @if ($status['selected'])
+                                                    selected
+                                                    @endif
+                                                >{{ $status['value'] }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error ('order_payment_status')
+                                            <div>
+                                                <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <h5 class="card-title">{{ $order->delivery_method }}</h5>
+                                            <div class="py-1"></div>
+
+                                            @if ($outOfStock)
+                                            <select
+                                                class="form-select fw-light"
+                                                name="order_delivery_status"
+                                            >
+                                                <option value="">Status Pengiriman</option>
+                                                <option value="Waiting" @if($order->delivery_status == 'Waiting') selected @endif>Waiting</option>
+                                                <option value="Canceled" @if($order->delivery_status == 'Canceled') selected @endif>Canceled</option>
+                                            </select>
+                                            @else
+                                            <select
+                                                class="form-select fw-light"
+                                                name="order_delivery_status"
+                                            >
+                                                <option value="">Status Pengiriman</option>
+                                                @foreach ($deliveryStatus as $status)
+                                                <option
+                                                    value="{{ $status['value'] }}"
+                                                    @if ($status['selected'])
+                                                    selected
+                                                    @endif
+                                                >{{ $status['value'] }}</option>
+                                                @endforeach
+                                            </select>
+                                            @endif
+
+                                            @error ('order_delivery_status')
+                                            <div>
+                                                <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        <input
+                                            class="btn btn-primary btn-sm"
+                                            type="submit"
+                                            value="Simpan"
+                                        >
+                                    </form>
+                                </div>
+
+                                <div class="py-3"></div>
+                                @if ($outOfStock)
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="alert alert-danger">
+                                            Maaf, untuk saat ini transaksi tidak bisa dilanjutkan karena ada beberapa stock yang tidak tersedia,
+                                            <a href="{{ route('admin_stocks_get') }}">periksa stock</a>.
+
+                                            <ul>
+                                                @foreach ($emptyStocks as $es)
+                                                @if ($es->stock_quantity < 0)
+                                                <li>
+                                                    {{ $es->stock_name }} (kurang {{ number_format( trim($es->stock_quantity, '-'), 0, '', '.' ) }} {{ $es->unit_name }})
+                                                </li>
+                                                @elseif ($es->stock_quantity == 0)
+                                                <li>
+                                                    {{ $es->stock_name }} (kosong)
+                                                </li>
+                                                @endif
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                        @endswitch
                     </div>
                 </div>
 
                 <div class="py-3"></div>
-
-                @if ($outOfStock)
-                <div class="card">
-                    <div class="card-body">
-                        <div class="alert alert-danger">
-                            Maaf, untuk saat ini transaksi tidak bisa dilanjutkan karena ada beberapa stock yang tidak tersedia,
-                            <a href="{{ route('admin_stocks_get') }}">periksa stock</a>.
-
-                            <ul>
-                                @foreach ($emptyStocks as $es)
-                                @if ($es->stock_quantity < 0)
-                                <li>
-                                    {{ $es->stock_name }} (kurang {{ number_format( trim($es->stock_quantity, '-'), 0, '', '.' ) }} {{ $es->unit_name }})
-                                </li>
-                                @elseif ($es->stock_quantity == 0)
-                                <li>
-                                    {{ $es->stock_name }} (kosong)
-                                </li>
-                                @endif
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                @endif
             </div>
         </div>
     </div>

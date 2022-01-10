@@ -9688,6 +9688,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _orders_orders__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./orders/orders */ "./resources/js/orders/orders.js");
 /* harmony import */ var _menus_main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./menus/main */ "./resources/js/menus/main.js");
 /* harmony import */ var _stocks_main__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stocks/main */ "./resources/js/stocks/main.js");
+/* harmony import */ var _carts_main__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./carts/main */ "./resources/js/carts/main.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //Bootstrap css
 
 
@@ -9701,10 +9702,12 @@ __webpack_require__(/*! @fortawesome/fontawesome-free/js/all.js */ "./node_modul
 
 
 
+
 window.onload = function () {
   (0,_orders_orders__WEBPACK_IMPORTED_MODULE_0__.runOrders)();
   (0,_menus_main__WEBPACK_IMPORTED_MODULE_1__.runMenu)();
   (0,_stocks_main__WEBPACK_IMPORTED_MODULE_2__.runStocks)();
+  (0,_carts_main__WEBPACK_IMPORTED_MODULE_3__.runCarts)();
 };
 
 /***/ }),
@@ -9737,6 +9740,105 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/carts/index.js":
+/*!*************************************!*\
+  !*** ./resources/js/carts/index.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "delivery": () => (/* binding */ delivery)
+/* harmony export */ });
+function delivery() {
+  var cartDeliveryElement = document.querySelector('#cart-delivery');
+
+  if (cartDeliveryElement) {
+    // Total order
+    var totalOrderElement = document.querySelector('#total-order'); // Address alert message
+
+    var addressAlertElement = document.querySelector('#address-alert');
+
+    if (addressAlertElement) {
+      cartDeliveryElement.value = 'Delivery';
+    } // Total price
+
+
+    var selectedValue = cartDeliveryElement.options[cartDeliveryElement.selectedIndex].value;
+    var cartAddressBoxElement = document.querySelector('#cart-address-box');
+    var cartAddressElement = document.querySelector('#cart-address');
+    var totalPriceElement = document.querySelector('#total-price');
+    var hiddenTotalPriceElement = document.querySelector('#hidden-total-price');
+    var hiddentTotalOrderElement = document.querySelector('#hidden-total-order'); // Delivery fee
+
+    var deliveryFeeBoxElement = document.querySelector('#delivery-fee-box');
+    var deliveryElement = document.querySelector('#delivery-fee');
+    var deliveryFeeNum = 11000;
+    totalOrderElement.innerHTML = "Rp. ".concat(convertToMoney(hiddentTotalOrderElement.value), ",00"); // Onload
+
+    if (selectedValue == 'Delivery') {
+      cartAddressBoxElement.classList.remove('d-none');
+      cartAddressElement.disabled = false;
+      deliveryFeeBoxElement.classList.remove('d-none');
+      deliveryElement.innerHTML = "Rp. ".concat(convertToMoney(deliveryFeeNum), ",00");
+      totalPriceElement.innerHTML = "Rp. ".concat(convertToMoney(hiddentTotalOrderElement.value, deliveryFeeNum), ",00");
+    } else {
+      cartAddressBoxElement.classList.add('d-none');
+      cartAddressElement.disabled = true;
+      hiddenTotalPriceElement.value = hiddentTotalOrderElement.value;
+      totalPriceElement.innerHTML = "Rp. ".concat(convertToMoney(hiddentTotalOrderElement.value), ",00");
+    } // On change or selected
+
+
+    cartDeliveryElement.addEventListener('change', function () {
+      if (this.value == 'Delivery') {
+        cartAddressBoxElement.classList.remove('d-none');
+        cartAddressElement.disabled = false;
+        deliveryFeeBoxElement.classList.remove('d-none');
+        deliveryElement.innerHTML = "Rp. ".concat(convertToMoney(deliveryFeeNum), ",00");
+        totalPriceElement.innerHTML = "Rp. ".concat(convertToMoney(hiddentTotalOrderElement.value, deliveryFeeNum), ",00");
+        hiddenTotalPriceElement.value = parseInt(hiddentTotalOrderElement.value) + parseInt(deliveryFeeNum);
+      } else {
+        cartAddressBoxElement.classList.add('d-none');
+        cartAddressElement.disabled = true;
+        deliveryFeeBoxElement.classList.add('d-none');
+        hiddenTotalPriceElement.value = hiddentTotalOrderElement.value;
+        totalPriceElement.innerHTML = "Rp. ".concat(convertToMoney(hiddentTotalOrderElement.value), ",00");
+      }
+    });
+  }
+}
+
+function convertToMoney(num) {
+  var fee = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var rupiah = Intl.NumberFormat('id-ID');
+  var totalWithFee = parseInt(num) + parseInt(fee);
+  var totalPriceMoneyFormat = rupiah.format(totalWithFee);
+  return totalPriceMoneyFormat;
+}
+
+/***/ }),
+
+/***/ "./resources/js/carts/main.js":
+/*!************************************!*\
+  !*** ./resources/js/carts/main.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "runCarts": () => (/* binding */ runCarts)
+/* harmony export */ });
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./resources/js/carts/index.js");
+
+function runCarts() {
+  (0,_index__WEBPACK_IMPORTED_MODULE_0__.delivery)();
+}
 
 /***/ }),
 

@@ -100,6 +100,7 @@ class OrdersController extends Controller
         $cartOrders             = $this->getCartOrders($id);
         $deliveryStatusOptions  = $this->setDeliveryStatusOptions($order);
         $paymentStatusOptions   = $this->setPaymentStatusOptions($order);
+        $totalPrice             = $this->getTotalPriceFromSubtotalPrice($cartOrders);
 
         $outOfStock = false;
 
@@ -117,6 +118,7 @@ class OrdersController extends Controller
             'paymentStatus'     => $paymentStatusOptions,
             'outOfStock'        => $outOfStock,
             'emptyStocks'       => $emptyStocks,
+            'totalPrice'        => $totalPrice
         ]);
     }
 
@@ -184,12 +186,14 @@ class OrdersController extends Controller
     //Client per order details
     public function clientShow(Request $r, $id)
     {
-        $order  = Order::findOrFail($id);
-        $carts  = $this->getCartOrders($id);
+        $order      = Order::findOrFail($id);
+        $carts      = $this->getCartOrders($id);
+        $totalPrice = $this->getTotalPriceFromSubtotalPrice($carts);
 
         return view('client.orders.show', [
-            'order' => $order,
-            'carts' => $carts
+            'order'         => $order,
+            'carts'         => $carts,
+            'totalPrice'    => $totalPrice
         ]);
     }
 
@@ -206,6 +210,18 @@ class OrdersController extends Controller
                 'cart_payment_method.required'  => 'Mohon untuk memilih method pembayaran'
             ],
         );
+
+        if ( $r->cart_delivery_method == 'Delivery' ) {
+            $r->validate(
+                [
+                    'address' => ['required', 'min:10'],
+                ],
+                [
+                    'address.required'  => 'Mohon untuk memasukan alamat anda',
+                    'address.min'       => 'Alamat minimal harus 10 karakter'
+                ]
+            );
+        }
 
 
         //Get order(id) after created an order
@@ -227,6 +243,11 @@ class OrdersController extends Controller
         $order->payment_method  = $r->cart_payment_method;
         $order->delivery_method   = $r->cart_delivery_method;
         $order->delivery_status = self::DELIVERY_STATUS['waiting'];
+
+        if ( isset($r->address) ) {
+            $order->address = $r->address;
+        }
+
         $order->save();
 
         return $order->id;
@@ -346,6 +367,7 @@ class OrdersController extends Controller
                 'carts.quantity AS cart_quantity',
                 'carts.subtotal_amount AS cart_subtotal_amount',
                 'clients.name AS client_name',
+                'orders.address AS address',
             )
             ->get();
 
@@ -455,5 +477,16 @@ class OrdersController extends Controller
 
 
         return $options;
+    }
+
+    private function getTotalPriceFromSubtotalPrice($carts)
+    {
+        $totalPrice = 0;
+
+        foreach ($carts as $c) {
+            $totalPrice += $c->cart_subtotal_amount;
+        }
+
+        return $totalPrice;
     }
 }

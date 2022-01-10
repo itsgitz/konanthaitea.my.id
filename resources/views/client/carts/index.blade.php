@@ -100,10 +100,33 @@
                             </div>
 
                             <div class="py-2"></div>
-                            <div class="card-text">
+                            <div id="cart-address-box" class="card-text d-none">
+                                <div class="mb-3">
+                                    <label class="form-label fw-light" for="address">Alamat</label>
+                                    <textarea id="cart-address" class="form-control fw-light" name="address" cols="30" rows="5"></textarea>
+                                    @error ('address')
+                                    <div id="address-alert">
+                                        <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div id="total-order-box" class="card-text">
                                 <h5 class="card-title">Total Harga</h5>
-                                <input type="hidden" name="cart_total_amount" value="{{ $totalAmount }}">
-                                <span class="card-text fw-bold">Rp. {{ number_format( $totalAmount, 2, ',', '.' ) }}</span>
+                                <span id="total-order" class="card-text fw-light"></span>
+                                <input id="hidden-total-order" type="hidden" value="{{ $totalAmount }}" disabled>
+                            </div>
+                            <div class="py-2"></div>
+                            <div id="delivery-fee-box" class="card-text d-none">
+                                <h5 class="card-title">Ongkos Kirim</h5>
+                                <span id="delivery-fee" class="card-text fw-light"></span>
+                            </div>
+                            <div class="py-2"></div>
+                            <div class="card-text">
+                                <h5 class="card-title">Total Bayar</h5>
+                                <input id="hidden-total-price" type="hidden" name="cart_total_amount" value="{{ $totalAmount }}">
+                                <span id="total-price" class="card-text fw-bold"></span>
                             </div>
                             <div class="py-3"></div>
                             <div class="card-text">

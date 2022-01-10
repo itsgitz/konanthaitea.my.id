@@ -53,6 +53,21 @@
                             {{ $order->payment_status }}
                         </div>
                     </div>
+                    @if ($order->address)
+                    <div class="card-text py-2">
+                        <h5 class="card-title">Alamat Penerima</h5>
+                        <div class="fw-light">{{ $order->address }}</div>
+                    </div>
+                    <div class="card-text py-2">
+                        <h5 class="card-title">Ongkos Kirim</h5>
+                        <div class="fw-light">Rp. {{ number_format( 11000, 2, ',', '.' ) }}</div>
+                    </div>
+                    @endif
+
+                    <div class="card-text py-2">
+                        <h5 class="card-title">Total Harga</h5>
+                        <span class="fw-light">Rp. {{ number_format( $totalPrice, 2, ',', '.' ) }}</span>
+                    </div>
                     <div class="card-text py-2">
                         <h5 class="card-title">Total Bayar</h5>
                         <strong>Rp. {{ number_format( $order->total_amount, 2, ',', '.' ) }}</strong>

@@ -47,9 +47,16 @@
                 <div class="py-1"></div>
                 {{-- Ordered Carts --}}
 
+                {{-- Delivery Method --}}
+                <div class="card-text border-top p-3">
+                    <h5 class="card-title">Metode Pengiriman</h5>
+                    <div class="card-text fw-light">{{ $o['delivery_method'] }}</div>
+                </div>
+                {{-- Delivery Method --}}
+
                 {{-- Total Amount --}}
                 <div class="card-text border-top p-3">
-                    <h5 class="card-title">Total Harga</h5>
+                    <h5 class="card-title">Total Bayar</h5>
                     <div class="card-text fw-light">Rp. {{ number_format( $o['total_amount'], 2, ',', '.' ) }}</div>
                 </div>
                 {{-- Total Amount --}}
