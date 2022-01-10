@@ -10,6 +10,7 @@
             <th scope="col"><b>Total Harga</b></th>
             <th scope="col"><b>Keterangan Items</b></th>
             <th scope="col"><b>Alamat</b></th>
+            <th scope="col"><b>Nomor HP/Telepon</b></th>
             <th scope="col"><b>Dibuat Tanggal</b></th>
         </tr>
     </thead>
@@ -33,6 +34,7 @@
                 @endforeach
             </td>
             <td>{{ $o->address }}</td>
+            <td>{{ $o->phone_number }}</td>
             <td>{{ date('d M Y H:i:s', strtotime( $o->order_created_at )) }}</td>
         </tr>
     </tbody>

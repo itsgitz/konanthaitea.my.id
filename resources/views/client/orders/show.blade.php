@@ -59,6 +59,10 @@
                         <div class="fw-light">{{ $order->address }}</div>
                     </div>
                     <div class="card-text py-2">
+                        <h5 class="card-title">Nomor HP/Telepon</h5>
+                        <div class="fw-light">{{ $order->phone_number ?? '-' }}</div>
+                    </div>
+                    <div class="card-text py-2">
                         <h5 class="card-title">Ongkos Kirim</h5>
                         <div class="fw-light">Rp. {{ number_format( 11000, 2, ',', '.' ) }}</div>
                     </div>

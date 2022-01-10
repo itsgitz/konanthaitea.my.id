@@ -7,7 +7,9 @@ export function delivery() {
 
     // Address alert message
     let addressAlertElement = document.querySelector('#address-alert');
-    if (addressAlertElement) {
+    let phoneAlertElement = document.querySelector('#phone-alert');
+
+    if (addressAlertElement || phoneAlertElement) {
       cartDeliveryElement.value = 'Delivery';
     }
 
@@ -15,6 +17,7 @@ export function delivery() {
     let selectedValue = cartDeliveryElement.options[cartDeliveryElement.selectedIndex].value;
     let cartAddressBoxElement = document.querySelector('#cart-address-box');
     let cartAddressElement = document.querySelector('#cart-address');
+    let cartPhoneElement = document.querySelector('#cart-phone');
     let totalPriceElement = document.querySelector('#total-price');
     let hiddenTotalPriceElement = document.querySelector('#hidden-total-price')
     let hiddentTotalOrderElement = document.querySelector('#hidden-total-order');
@@ -30,6 +33,7 @@ export function delivery() {
     if (selectedValue == 'Delivery') {
       cartAddressBoxElement.classList.remove('d-none');
       cartAddressElement.disabled = false;
+      cartPhoneElement.disabled = false;
       deliveryFeeBoxElement.classList.remove('d-none');
 
       deliveryElement.innerHTML = `Rp. ${convertToMoney(deliveryFeeNum)},00`;
@@ -37,6 +41,7 @@ export function delivery() {
     } else {
       cartAddressBoxElement.classList.add('d-none');
       cartAddressElement.disabled = true;
+      cartPhoneElement.disabled = true;
       hiddenTotalPriceElement.value = hiddentTotalOrderElement.value;
       totalPriceElement.innerHTML = `Rp. ${convertToMoney(hiddentTotalOrderElement.value)},00`;
     }
@@ -46,6 +51,7 @@ export function delivery() {
       if (this.value == 'Delivery') {
         cartAddressBoxElement.classList.remove('d-none');
         cartAddressElement.disabled = false;
+        cartPhoneElement.disabled = false;
         deliveryFeeBoxElement.classList.remove('d-none');
         deliveryElement.innerHTML = `Rp. ${convertToMoney(deliveryFeeNum)},00`;
         totalPriceElement.innerHTML = `Rp. ${convertToMoney(hiddentTotalOrderElement.value, deliveryFeeNum)},00`
@@ -53,6 +59,7 @@ export function delivery() {
       } else {
         cartAddressBoxElement.classList.add('d-none');
         cartAddressElement.disabled = true;
+        cartPhoneElement.disabled = true;
         deliveryFeeBoxElement.classList.add('d-none');
 
         hiddenTotalPriceElement.value = hiddentTotalOrderElement.value;

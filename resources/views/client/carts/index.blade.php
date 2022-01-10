@@ -110,7 +110,18 @@
                                     </div>
                                     @enderror
                                 </div>
+
+                                <div>
+                                   <label class="form-label fw-light" for="phone">Nomor HP/Telepon</label>
+                                   <input id="cart-phone" class="form-control fw-light" name="phone" type="text">
+                                </div>
+                                @error ('phone')
+                                <div id="phone-alert">
+                                    <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                                </div>
+                                @enderror
                             </div>
+                            <div class="py-2"></div>
 
                             <div id="total-order-box" class="card-text">
                                 <h5 class="card-title">Total Harga</h5>

@@ -59,6 +59,7 @@ class OrdersController extends Controller
             ->where(function($query) {
                 $query->where('delivery_status', '<>', self::DELIVERY_STATUS['finish'])
                     ->where('delivery_status', '<>', self::DELIVERY_STATUS['ready'])
+                    ->where('delivery_status', '<>', self::DELIVERY_STATUS['canceled'])
                     ->orWhere('payment_status', self::PAYMENT_STATUS['unpaid']);
             })
             ->get()->count();
@@ -245,11 +246,15 @@ class OrdersController extends Controller
         if ( $r->cart_delivery_method == 'Delivery' ) {
             $r->validate(
                 [
-                    'address' => ['required', 'min:10'],
+                    'address'   => ['required', 'min:10'],
+                    'phone'     => ['required', 'min:9', 'max:16']
                 ],
                 [
                     'address.required'  => 'Mohon untuk memasukan alamat anda',
-                    'address.min'       => 'Alamat minimal harus 10 karakter'
+                    'address.min'       => 'Alamat minimal harus 10 karakter',
+                    'phone.required'    => 'Mohon untuk memasukan nomor HP atau telepon anda',
+                    'phone.min'         => 'Nomor HP atau telepon minimal harus 9 karakter',
+                    'phone.max'         => 'Nomor HP atau telepon maximal harus 16 karakter'
                 ]
             );
         }
@@ -277,6 +282,10 @@ class OrdersController extends Controller
 
         if ( isset($r->address) ) {
             $order->address = $r->address;
+        }
+
+        if ( isset($r->phone) ) {
+            $order->phone_number = $r->phone;
         }
 
         $order->save();
@@ -399,6 +408,7 @@ class OrdersController extends Controller
                 'carts.subtotal_amount AS cart_subtotal_amount',
                 'clients.name AS client_name',
                 'orders.address AS address',
+                'orders.phone_number AS phone_number'
             )
             ->get();
 

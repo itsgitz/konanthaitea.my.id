@@ -47,7 +47,8 @@ class OrdersExport implements FromView, ShouldAutoSize, WithStyles
                 'orders.delivery_status AS order_delivery_status',
                 'orders.total_amount AS order_total_amount',
                 'orders.created_at AS order_created_at',
-                'orders.address AS address'
+                'orders.address AS address',
+                'orders.phone_number AS phone_number'
             )
             ->distinct()
             ->orderBy('orders.created_at', 'DESC')
