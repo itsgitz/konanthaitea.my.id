@@ -135,10 +135,41 @@ class OrdersController extends Controller
             ]
         );
 
+
         $order = Order::find($id);
         $order->payment_status  = $r->order_payment_status;
         $order->delivery_status = $r->order_delivery_status;
         $order->save();
+
+        // If order canceled
+        if ( $r->order_delivery_status == 'Canceled' ) {
+            $getRecipes = DB::table('cart_orders')
+                ->join('carts', 'cart_orders.cart_id', '=', 'carts.id')
+                ->join('menus', 'carts.menu_id', '=', 'menus.id')
+                ->join('menu_stocks', 'menus.id', '=', 'menu_stocks.menu_id')
+                ->join('stocks', 'menu_stocks.stock_id', 'stocks.id')
+                ->where('cart_orders.order_id', '=', $id)
+                ->select(
+                    'menus.name AS menu_name',
+                    'stocks.id AS stock_id',
+                    'stocks.name AS stock_name',
+                    'menu_stocks.quantity AS recipe_quantity',
+                )
+                ->get();
+
+            // rollback quantity on stocks table
+            foreach ($getRecipes as $recipe) {
+                $canceledStock = Stock::find($recipe->stock_id);
+
+                $canceledStock->quantity = ($canceledStock->quantity + $recipe->recipe_quantity);
+
+                if ($canceledStock->quantity > 0) {
+                    $canceledStock->status = 'Available';
+                }
+
+                $canceledStock->save();
+            }
+        }
 
         return redirect()
             ->route('admin_orders_show_get', [ 'id' => $id ])
