@@ -105,6 +105,7 @@
                                                     class="form-control"
                                                     type="number"
                                                     name="recipes[{{ $loop->index }}][quantity]"
+                                                    min="1"
                                                     placeholder="Jumlah {{ $s->stock_name }}"
                                                 >
                                             </div>
