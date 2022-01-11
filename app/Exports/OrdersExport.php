@@ -13,8 +13,6 @@ class OrdersExport implements FromView, ShouldAutoSize, WithStyles
 {
     public function styles(Worksheet $sheet)
     {
-        //$sheet->getDefaultRowDimension()->setRowHeight(30);
-
         return [
             'A:J' => [
                 'alignment' => [

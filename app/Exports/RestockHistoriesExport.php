@@ -6,9 +6,23 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class RestockHistoriesExport implements FromView, ShouldAutoSize
+class RestockHistoriesExport implements FromView, ShouldAutoSize, WithStyles
 {
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            'A:J' => [
+                'alignment' => [
+                    'vertical'  => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                    'horzontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER
+                ],
+                'wrapText' => true
+            ]
+        ];
+    }
     /**
     * @return \Illuminate\Support\Collection
     */
