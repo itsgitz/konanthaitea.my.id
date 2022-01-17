@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: system-ui,-apple-system, 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
         .content {
             padding-left: 0;
