@@ -8,6 +8,7 @@
     @include ('shared.message')
     <div class="pt-2 pb-3">
         <a class="btn btn-primary btn-sm" href="{{ route('admin_stocks_add_get') }}">Tambah Jenis Stock</a>
+        <a class="btn btn-primary btn-sm" href="{{ route('admin_stocks_request_get') }}">Isi Ulang Stock</a>
         <a class="btn btn-primary btn-sm" href="{{ route('admin_stocks_histories_get') }}">Riwayat Isi Ulang</a>
     </div>
 
@@ -25,13 +26,13 @@
             @if ($stocks->isNotEmpty())
                 @foreach ($stocks as $s)
                 <tr>
-                    <td>{{ $s->stock_name }}</td>
+                    <td class="fw-light">{{ $s->stock_name }}</td>
                     @if ($s->stock_quantity < 0)
-                    <td>Kurang {{ number_format( trim($s->stock_quantity, '-'), 0, '', '.' ) }}</td>
+                    <td class="fw-light">Kurang {{ number_format( trim($s->stock_quantity, '-'), 0, '', '.' ) }}</td>
                     @else
                     <td>{{ number_format( $s->stock_quantity, 0, '', '.' ) }}</td>
                     @endif
-                    <td>{{ $s->unit_name }}</td>
+                    <td class="fw-light">{{ $s->unit_name }}</td>
                     <td>
                         <span
                             class="stock-status fw-bold"
@@ -40,11 +41,11 @@
                             {{ $s->stock_status }}
                         </span>
                     </td>
-                    <td>{{ date('d M Y H:i:s', strtotime( $s->stock_created_at )) }}</td>
+                    <td class="fw-light">{{ date('d M Y H:i:s', strtotime( $s->stock_created_at )) }}</td>
                     <td>
-                        <a class="btn btn-success btn-sm" href="{{ route('admin_stocks_edit_add_quantity_get', ['id' => $s->stock_id]) }}">
+                        <!--<a class="btn btn-success btn-sm" href="{{ route('admin_stocks_edit_add_quantity_get', ['id' => $s->stock_id]) }}">
                             <i class="fas fa-plus-circle"></i> Tambah
-                        </a>
+                        </a>-->
                     </td>
                     <td>
                         <a class="btn btn-warning btn-sm" href="{{ route('admin_stocks_edit_get', ['id' => $s->stock_id]) }}">

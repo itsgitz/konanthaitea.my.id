@@ -73,11 +73,14 @@
         <div id="signature" class="float-end">
             <div>Bandung, {{ date('d-m-Y') }}</div>
             <div class="break"></div>
-            <div class="break"></div>
-            <div class="break"></div>
-            <div class="break"></div>
-            <div class="break"></div>
             <div>Administrasi</div>
+            <div class="break"></div>
+            <div class="break"></div>
+            <div class="break"></div>
+            <div class="break"></div>
+            <div class="break"></div>
+            <div class="break"></div>
+            <div class="name-line"></div>
         </div>
     </div>
 </div>

@@ -42,7 +42,14 @@ class OrdersController extends Controller
 
     const STOCK_STATUS = [
         'available'         => 'Available',
-        'not_available'     => 'Not Available'
+        'not_available'     => 'Not Available',
+        'limited'           => 'Limited'
+    ];
+
+    const STOCK_ID = [
+        'Mililiter' => 1,
+        'Gram'      => 2,
+        'Buah'      => 3,
     ];
 
     const MENU_STATUS = [
@@ -369,6 +376,21 @@ class OrdersController extends Controller
                 //Current quantity = Reduce quantity - current quantity
                 $reduceQuantity = ( $c['cart_quantity'] * $ms->quantity );
                 $currentQuantity = ( $stock->quantity - $reduceQuantity );
+
+                switch ($stock->stock_units_id) {
+                case self::STOCK_ID['Mililiter']:
+                case self::STOCK_ID['Gram']:
+                    if ( $currentQuantity <= 100) {
+                        $stock->status = self::STOCK_STATUS['limited'];
+                    }
+                    break;
+
+                case self::STOCK_ID['Buah']:
+                    if ( $currentQuantity <= 10 ) {
+                        $stock->status = self::STOCK_STATUS['limited'];
+                    }
+                    break;
+                }
 
                 if ( $currentQuantity == 0 || $currentQuantity < 0 ) {
                     $stock->status = self::STOCK_STATUS['not_available'];

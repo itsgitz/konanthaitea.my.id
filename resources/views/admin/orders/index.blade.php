@@ -12,7 +12,7 @@
             <i class="fas fa-file-excel"></i> Export ke Excel
         </a>
         -->
-        <button id="export-pdf-button" type="button" class="btn btn-danger btn-sm @if ($orders->isEmpty()) disabled @endif">
+        <button id="export-pdf-button" type="button" class="btn btn-primary btn-sm @if ($orders->isEmpty()) disabled @endif">
             <i class="fas fas fa-file-pdf"></i> Export ke PDF
         </button>
 
@@ -24,14 +24,14 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="input-group">
-                            <label class="col-form-label input-group-text" for="date-from">Dari Tanggal</label>
+                            <label class="col-form-label input-group-text fw-light" for="date-from">Dari Tanggal</label>
                             <input id="date-from" name="from" class="form-control form-control-sm" type="text" required>
                             <span class="input-group-text"><i class="far fa-calendar-alt d-inline"></i></span>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <label class="col-form-label input-group-text" for="date-from">Sampai Tanggal</label>
+                            <label class="col-form-label input-group-text fw-light" for="date-from">Sampai Tanggal</label>
                             <input id="date-to" name="to" class="form-control form-control-sm" type="text" required>
                             <span class="input-group-text"><i class="far fa-calendar-alt d-inline"></i></span>
                         </div>
@@ -69,15 +69,15 @@
                         {{ $o->order_payment_status }}
                     </span>
                 </td>
-                <td>{{ $o->order_payment_method }}</td>
+                <td class="fw-light">{{ $o->order_payment_method }}</td>
                 <td>
                     <span class="order-delivery-status badge" data-order-delivery-status="{{ $o->order_delivery_status }}">
                         {{ $o->order_delivery_status }}
                     </span>
                 </td>
-                <td>{{ $o->order_delivery_method }}</td>
+                <td class="fw-light">{{ $o->order_delivery_method }}</td>
                 <td class="fw-light">Rp. {{ number_format( $o->order_total_amount, 2, ',', '.' ) }}</td>
-                <td>{{ date('d M Y H:i:s', strtotime( $o->order_created_at )) }}</td>
+                <td class="fw-light">{{ date('d M Y H:i:s', strtotime( $o->order_created_at )) }}</td>
                 <td>
                     <a class="btn btn-primary btn-sm" href="{{ route('admin_orders_show_get', [ 'id' => $o->order_id ]) }}">Proses</a>
                 </td>
