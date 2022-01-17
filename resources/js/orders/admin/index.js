@@ -20,10 +20,9 @@ export function myDatePicker() {
     'Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'
   ];
 
-  let dateFrom = document.querySelector('#date-form');
-  let dateTo = document.querySelector('#date-to');
+  let ordersMain = document.querySelector('#admin-orders-main');
 
-  if (dateFrom && dateTo) {
+  if (ordersMain) {
     const start = datePicker('#date-from', {
       id: 1,
       showAllDates: true,
