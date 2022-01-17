@@ -210,7 +210,11 @@ class OrdersController extends Controller
         }
 
         view()->share('orders', $orders);
-        $pdf = PDF::loadView('admin.exports.orders_pdf', $orders);
+        $pdf = PDF::loadView('admin.exports.orders_pdf', [
+            'orders'    => $orders,
+            'from'      => $r->from,
+            'to'        => $r->to,
+        ]);
 
         $fileName = 'orders-' . date('d-m-Y') . '.pdf';
 

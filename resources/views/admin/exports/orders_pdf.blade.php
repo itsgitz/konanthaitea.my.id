@@ -7,7 +7,7 @@
         <tr>
             <td>Periode Transaksi</td>
             <td>:</td>
-            <td></td>
+            <td>{{ $from }} sampai {{ $to }}</td>
         </tr>
         <tr>
             <td>Tanggal Cetak</td>
