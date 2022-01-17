@@ -95,7 +95,7 @@ class StocksController extends Controller
                 ->with('admin_stocks_request_error_message', 'Minimal harus mengisi salah satu stock');
         }
 
-        $requestId = 'rs-' . date('dmY');
+        $requestId = 'rs-' . date('dmYHisu');
 
         foreach ($r->stocks as $stock) {
             if (isset($stock['request_quantity'])) {
@@ -104,6 +104,7 @@ class StocksController extends Controller
                 $requestStock->stock_id             = $stock['stock_id'];
                 $requestStock->request_quantity     = $stock['request_quantity'];
                 $requestStock->processed_quantity   = 0;
+                $requestStock->status               = 'Not Accepted';
                 $requestStock->save();
             }
         }
@@ -122,6 +123,115 @@ class StocksController extends Controller
         return view('admin.stocks.requests.request_process_index', [
             'requestStocks' => $requestStocks
         ]);
+    }
+
+    public function requestStocksAccept($id)
+    {
+        DB::table('request_stocks')
+            ->where('request_id', '=', $id)
+            ->update([
+                'status' => 'Accepted'
+            ]);
+
+        return redirect()
+            ->route('admin_stocks_request_process_get')
+            ->with('admin_stocks_request_accept_message', 'Berhasil menyetujui permohonan');
+    }
+
+    public function requestStocksProcessInput($id)
+    {
+        //$requestStock = RequestStock::where('request_id', $id)->get();
+        $requestStock = DB::table('request_stocks')
+            ->join('stocks', 'request_stocks.stock_id', '=', 'stocks.id')
+            ->join('stock_units', 'stocks.stock_units_id', '=', 'stock_units.id')
+            ->select(
+                'stocks.id AS stock_id',
+                'stocks.name AS stock_name',
+                'stock_units.name AS unit_name',
+                'request_stocks.id AS request_stock_id',
+                'request_stocks.request_id AS request_id',
+                'request_stocks.request_quantity AS request_quantity'
+            )
+            ->where('request_stocks.request_id', '=', $id)
+            ->get();
+
+        return view('admin.stocks.requests.request_process_input', [
+            'requestStock' => $requestStock,
+            'id' => $id
+        ]);
+    }
+
+    public function requestStocksProcessInputStore($id, Request $r)
+    {
+        $r->validate(
+            [
+                'upload_invoice'    => ['required', 'image'],
+            ],
+            [
+                'required'  => 'Data tidak boleh kosong',
+                'image'     => 'File harus gambar',
+            ]
+        );
+
+        foreach ($r->request_stock as $req) {
+            //Update `stocks` table
+            $stock = Stock::find($req['stock_id']);
+
+            //Only update quantity
+            //current quantity + add quantity
+            $addedQuantity      = $stock->quantity + $req['processed_quantity'];
+            $stock->quantity    = $addedQuantity;
+
+            if ( $addedQuantity > 0 ) {
+                switch ($stock->stock_units_id) {
+                case self::STOCK_ID['Mililiter']:
+                case self::STOCK_ID['Gram']:
+                    if ( $addedQuantity <= 100 ) {
+                        $stock->status = self::STOCK_STATUS['limited'];
+                    } else {
+                        $stock->status = self::STOCK_STATUS['available'];
+                    }
+                    break;
+
+                case self::STOCK_ID['Buah']:
+                    if ( $addedQuantity <= 10 ) {
+                        $stock->status = self::STOCK_STATUS['limited'];
+                    } else {
+                        $stock->status = self::STOCK_STATUS['available'];
+                    }
+                    break;
+                }
+            }
+
+            $stock->save();
+
+            $stockId = $stock->id;
+
+            //Add data to `restock_histories` table
+            $restock = new RestockHistory;
+            $restock->stock_id          = $stockId;
+            $restock->stock_units_id    = $stock->stock_units_id;
+            $restock->name              = $stock->name;
+            $restock->quantity          = $req['processed_quantity'];
+            $restock->total_price       = $req['price'];
+
+            //Upload invoice
+            $image = $r->file('upload_invoice')->store('public/invoices');
+            $restock->invoice_image = Storage::url($image);
+
+            $restock->save();
+
+            // Update request_stock
+            $requestStock = RequestStock::find($req['request_stock_id']);
+            $requestStock->processed_quantity   = $req['processed_quantity'];
+            $requestStock->description          = $req['description'];
+            $requestStock->status               = 'Finish';
+            $requestStock->save();
+        }
+
+        return redirect()
+            ->route('admin_stocks_get')
+            ->with('admin_edit_stock_message', self::ADD_STOCK_QUANTITY_MESSAGE);
     }
 
     public function requestStocksExport($id)
@@ -151,7 +261,6 @@ class StocksController extends Controller
             ->get();
 
 
-        //view()->share('stocks', $stocks);
         $pdf = PDF::loadView('admin.exports.request_stocks_pdf', [
             'id'            => $id,
             'currentStocks'  => $currentStocks,

@@ -6,8 +6,6 @@
     <h5>Riwayat Isi Ulang Stock (Restock)</h5>
 
     @include ('shared.message')
-
-    @include ('shared.message')
     <div class="py-2">
         <a
             class="btn btn-success btn-sm @if ($histories->isEmpty()) disabled @endif"

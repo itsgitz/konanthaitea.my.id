@@ -43,9 +43,9 @@
                     </td>
                     <td class="fw-light">{{ date('d M Y H:i:s', strtotime( $s->stock_created_at )) }}</td>
                     <td>
-                        <a class="btn btn-success btn-sm" href="{{ route('admin_stocks_edit_add_quantity_get', ['id' => $s->stock_id]) }}">
+                        <!--<a class="btn btn-success btn-sm" href="{{ route('admin_stocks_edit_add_quantity_get', ['id' => $s->stock_id]) }}">
                             <i class="fas fa-plus-circle"></i> Tambah
-                        </a>
+                        </a>-->
                     </td>
                     <td>
                         <a class="btn btn-warning btn-sm" href="{{ route('admin_stocks_edit_get', ['id' => $s->stock_id]) }}">

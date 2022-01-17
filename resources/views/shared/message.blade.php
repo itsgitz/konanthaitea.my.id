@@ -468,7 +468,7 @@
         </button>
     </div>
     @endif
-    {{-- REQUEST STOCKS ERROR MESSAGE --}}
+    {{-- REQUEST STOCKS MESSAGE --}}
 
 
     {{-- REQUEST STOCKS ERROR MESSAGE --}}
@@ -485,5 +485,20 @@
     </div>
     @endif
     {{-- REQUEST STOCKS ERROR MESSAGE --}}
+
+    {{-- REQUEST STOCKS ACCEPT MESSAGE --}}
+    @if (session('admin_stocks_request_accept_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('admin_stocks_request_accept_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- REQUEST STOCKS ACCEPT MESSAGE --}}
 </div>
 <div class="py-1"></div>

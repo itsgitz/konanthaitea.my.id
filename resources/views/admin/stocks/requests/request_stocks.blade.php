@@ -49,7 +49,7 @@
 
         <div class="pt-2 pb-3">
             <button type="submit" class="btn btn-secondary btn-sm">
-                <i class="fab fa-opencart"></i> Request Pengadaan
+                <i class="fab fa-opencart"></i> Submit Request Pengadaan
             </button>
         </div>
     </form>
