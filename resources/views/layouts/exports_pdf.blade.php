@@ -66,6 +66,7 @@
             </div>
         </div>
         <div class="break"></div>
+        <hr />
         <div class="break"></div>
         <div class="break"></div>
         @yield ('content')
