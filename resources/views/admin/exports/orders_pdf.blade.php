@@ -3,6 +3,19 @@
 
 @section ('content')
 <div id="admin-orders-main" class="py-3">
+    <table>
+        <tr>
+            <td>Periode Transaksi</td>
+            <td>:</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Tanggal Cetak</td>
+            <td>:</td>
+            <td>{{ date('d-m-Y') }}</td>
+        </tr>
+    </table>
+    <div class="break"></div>
     <div id="content">
         <table class="table table-hover">
             <tr>
@@ -52,6 +65,20 @@
                 </tr>
             @endif
         </table>
+        <div class="break"></div>
+        <div class="break"></div>
+        <div class="break"></div>
+        <div class="break"></div>
+
+        <div id="signature" class="float-end">
+            <div>Bandung, {{ date('d-m-Y') }}</div>
+            <div class="break"></div>
+            <div class="break"></div>
+            <div class="break"></div>
+            <div class="break"></div>
+            <div class="break"></div>
+            <div>Administrasi</div>
+        </div>
     </div>
 </div>
 @endsection

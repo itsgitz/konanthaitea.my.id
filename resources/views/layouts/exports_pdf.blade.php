@@ -16,6 +16,9 @@
         .float-start {
             float: left;
         }
+        .float-end {
+            float: right;
+        }
         .float-none {
             float: none;
         }
