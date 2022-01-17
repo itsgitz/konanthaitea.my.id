@@ -34,6 +34,18 @@ Route::get('/admin/stocks/delete/{id}', [\App\Http\Controllers\StocksController:
     ->middleware('auth.admin')
     ->name('admin_stocks_delete_get');
 
+Route::get('/admin/stocks/request_stocks', [\App\Http\Controllers\StocksController::class, 'requestStocks'])
+    ->middleware('auth.admin')
+    ->name('admin_stocks_request_get');
+
+Route::post('/admin/stocks/request_stocks', [\App\Http\Controllers\StocksController::class, 'requestStocksInput'])
+    ->middleware('auth.admin')
+    ->name('admin_stocks_request_post');
+
+Route::get('/admin/stocks/request_stocks/process', [\App\Http\Controllers\StocksController::class, 'requestStocksProcess'])
+    ->middleware('auth.admin')
+    ->name('admin_stocks_request_process_get');
+
 //Stock Unit
 Route::get('/admin/stocks/unit/add', [\App\Http\Controllers\StockUnitsController::class, 'index'])
     ->middleware('auth.admin')

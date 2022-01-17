@@ -9,6 +9,9 @@
             font-family: system-ui,-apple-system, 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 0.7rem;
         }
+        .body-request-stock {
+            font-size: 0.8rem;
+        }
         .content {
             padding-left: 0;
             padding-right: 0;
@@ -46,11 +49,15 @@
           background-color: #636e72;
           color: white;
         }
+        .name-line {
+            padding: 3px;
+            border-bottom: solid 1px;
+            width: 150px;
+        }
     </style>
 </head>
 <body>
     <div class="content">
-        <div class="break"></div>
         <div id="cop">
             <div class="float-start cop-img">
                 <img class="img-fluid" src="{{ public_path('img/logo_2x2.png') }}" alt="Konan Thai Tea - Logo" width="100">
@@ -67,7 +74,6 @@
         </div>
         <div class="break"></div>
         <hr />
-        <div class="break"></div>
         <div class="break"></div>
         @yield ('content')
     </div>
