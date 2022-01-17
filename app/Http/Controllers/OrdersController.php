@@ -13,6 +13,8 @@ use App\Models\Menu;
 use App\Models\Stock;
 use App\Models\MenuStock;
 
+use PDF;
+
 
 class OrdersController extends Controller
 {
@@ -175,6 +177,36 @@ class OrdersController extends Controller
         return redirect()
             ->route('admin_orders_show_get', [ 'id' => $id ])
             ->with('admin_orders_process_message', self::ADMIN_ORDER_PROCESS_MESSAGE . ' #' . $id);
+    }
+
+    public function adminIndexExportToPdf()
+    {
+        $orders = DB::table('cart_orders')
+            ->join('orders', 'cart_orders.order_id', '=', 'orders.id')
+            ->join('carts', 'cart_orders.cart_id', '=', 'carts.id')
+            ->join('menus', 'carts.menu_id', '=', 'menus.id')
+            ->join('clients', 'carts.client_id', '=', 'clients.id')
+            ->select(
+                'orders.id AS order_id',
+                'clients.id AS client_id',
+                'clients.name AS client_name',
+                'orders.payment_status AS order_payment_status',
+                'orders.payment_method AS order_payment_method',
+                'orders.delivery_method AS order_delivery_method',
+                'orders.delivery_status AS order_delivery_status',
+                'orders.total_amount AS order_total_amount',
+                'orders.created_at AS order_created_at'
+            )
+            ->distinct()
+            ->orderBy('orders.created_at', 'DESC')
+            ->get();
+
+        view()->share('orders', $orders);
+        $pdf = PDF::loadView('admin.exports.orders_pdf', $orders);
+
+        $fileName = 'orders-' . date('d-m-Y') . '.pdf';
+
+        return $pdf->download($fileName);
     }
 
     //
