@@ -1,24 +1,11 @@
-@extends ('layouts.admin')
+@extends ('layouts.exports_pdf')
 @section ('title', 'Daftar Transaksi (Order List)')
 
 @section ('content')
 <div id="admin-orders-main" class="py-3">
-    <h5>Daftar Transaksi (Order List)</h5>
-
-    @include ('shared.message')
-    <div class="py-2">
-        <!--
-        <a class="btn btn-success btn-sm @if ($orders->isEmpty()) disabled @endif" href="{{ route('admin_export_excel_orders_get') }}">
-            <i class="fas fa-file-excel"></i> Export ke Excel
-        </a>
-        -->
-        <a class="btn btn-danger btn-sm @if ($orders->isEmpty()) disabled @endif" href="{{ route('admin_export_pdf_orders_get') }}">
-            <i class="fas fas fa-file-pdf"></i> Export ke PDF
-        </a>
-    </div>
-    <div class="table-responsive">
+    <div id="content">
         <table class="table table-hover">
-            <thead>
+            <tr>
                 <th scope="col">Order ID</th>
                 <th scope="col">Customer</th>
                 <th scope="col">Status Pembayaran</th>
@@ -27,8 +14,8 @@
                 <th scope="col">Metode Pengiriman</th>
                 <th scope="col">Total Harga</th>
                 <th scope="col">Dibuat Tanggal</th>
-                <th scope="col">#</th>
-            </thead>
+                <th scope="col">Keterangan</th>
+            </tr>
 
             @if ($orders->isNotEmpty())
             @foreach ($orders as $o)
@@ -50,7 +37,12 @@
                 <td class="fw-light">Rp. {{ number_format( $o->order_total_amount, 2, ',', '.' ) }}</td>
                 <td>{{ date('d M Y H:i:s', strtotime( $o->order_created_at )) }}</td>
                 <td>
-                    <a class="btn btn-primary btn-sm" href="{{ route('admin_orders_show_get', [ 'id' => $o->order_id ]) }}">Proses</a>
+                    @php
+                        $items = App\Exports\OrdersExport::getCartItems($o->order_id)
+                    @endphp
+                    @foreach ($items as $i)
+                        {{ $i->menu_name }} {{ $i->cart_quantity }} x {{ $i->cart_subtotal_amount }}@if (!$loop->last),@endif &nbsp;
+                    @endforeach
                 </td>
             </tr>
             @endforeach

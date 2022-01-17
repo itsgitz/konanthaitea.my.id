@@ -30,4 +30,3 @@ Route::get('/admin/orders/{id}', [\App\Http\Controllers\OrdersController::class,
 Route::put('/admin/orders/process/{id}', [\App\Http\Controllers\OrdersController::class, 'adminProcess'])
     ->middleware('auth.admin')
     ->name('admin_orders_process');
-

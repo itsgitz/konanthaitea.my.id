@@ -23,3 +23,4 @@ require __DIR__ . '/stocks.php';
 require __DIR__ . '/history.php';
 require __DIR__ . '/menu_stocks.php';
 require __DIR__ . '/exports_excel.php';
+require __DIR__ . '/exports_pdf.php';
