@@ -12,9 +12,32 @@
             <i class="fas fa-file-excel"></i> Export ke Excel
         </a>
         -->
-        <a class="btn btn-danger btn-sm @if ($orders->isEmpty()) disabled @endif" href="{{ route('admin_export_pdf_orders_get') }}">
+        <button id="export-pdf-button" type="button" class="btn btn-danger btn-sm @if ($orders->isEmpty()) disabled @endif">
             <i class="fas fas fa-file-pdf"></i> Export ke PDF
-        </a>
+        </button>
+
+        {{-- Datepicker --}}
+        <form action="{{ route('admin_export_pdf_orders_post') }}" method="post">
+            @csrf
+            <div class="py-2"></div>
+            <div id="datepicker-box" class="p-3 bg-light shadow rounded fw-light d-none">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="col-form-label" for="date-from">Dari</label>
+                        <input id="date-from" name="from" class="form-control form-control-sm" type="text" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="col-form-label" for="date-from">Sampai</label>
+                        <input id="date-to" name="to" class="form-control form-control-sm" type="text" required>
+                    </div>
+                </div>
+                <div class="py-2"></div>
+                <input class="btn btn-sm btn-secondary shadow" type="submit" value="Export">
+            </div>
+            <div class="py-2"></div>
+        </form>
+        {{-- Datepicker --}}
+
     </div>
     <div class="table-responsive">
         <table class="table table-hover">

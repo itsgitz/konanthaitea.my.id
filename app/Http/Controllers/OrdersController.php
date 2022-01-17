@@ -54,6 +54,7 @@ class OrdersController extends Controller
     const ORDER_FINISH_MESSAGE  = 'Pesanan anda sedang diproses, harap menunggu status selanjutnya';
 
     const ADMIN_ORDER_PROCESS_MESSAGE = 'Berhasil memproses order';
+    const ADMIN_ORDER_EXPORT_BY_DATE_ERROR = 'Data tidak ditemukan';
 
     public function getOnProgressOrderCount()
     {
@@ -179,7 +180,7 @@ class OrdersController extends Controller
             ->with('admin_orders_process_message', self::ADMIN_ORDER_PROCESS_MESSAGE . ' #' . $id);
     }
 
-    public function adminIndexExportToPdf()
+    public function adminIndexExportToPdf(Request $r)
     {
         $orders = DB::table('cart_orders')
             ->join('orders', 'cart_orders.order_id', '=', 'orders.id')
@@ -197,9 +198,16 @@ class OrdersController extends Controller
                 'orders.total_amount AS order_total_amount',
                 'orders.created_at AS order_created_at'
             )
+            ->whereBetween('orders.created_at', [$r->from, $r->to])
             ->distinct()
             ->orderBy('orders.created_at', 'DESC')
             ->get();
+
+        if ($orders->isEmpty()) {
+            return redirect()
+                ->route('admin_orders_get')
+                ->with('admin_order_export_by_date_error', self::ADMIN_ORDER_EXPORT_BY_DATE_ERROR);
+        }
 
         view()->share('orders', $orders);
         $pdf = PDF::loadView('admin.exports.orders_pdf', $orders);
