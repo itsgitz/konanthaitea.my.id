@@ -66,6 +66,8 @@
             </div>
         </div>
         <div class="break"></div>
+        <div class="break"></div>
+        <div class="break"></div>
         @yield ('content')
     </div>
 </body>
