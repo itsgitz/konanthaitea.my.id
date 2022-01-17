@@ -64,6 +64,8 @@ export function myDatePicker() {
 
         if (date.getMonth() < 10) {
           customMonth = '0' + parseInt(date.getMonth() + 1);
+        } else {
+          customMonth = parseInt(date.getMonth() + 1);
         }
 
         if (date.getDate() < 10) {
