@@ -172,10 +172,28 @@ class OrdersController extends Controller
             foreach ($getRecipes as $recipe) {
                 $canceledStock = Stock::find($recipe->stock_id);
 
-                $canceledStock->quantity = ($canceledStock->quantity + $recipe->recipe_quantity);
+                $canceledQuantity = ($canceledStock->quantity + $recipe->recipe_quantity);
+                $canceledStock->quantity = $canceledQuantity;
 
                 if ($canceledStock->quantity > 0) {
-                    $canceledStock->status = 'Available';
+                    switch ($canceledStock->stock_units_id) {
+                    case self::STOCK_ID['Mililiter']:
+                    case self::STOCK_ID['Gram']:
+                        if ( $canceledQuantity <= 1000 ) {
+                            $canceledStock->status = self::STOCK_STATUS['limited'];
+                        } else {
+                            $canceledStock->status = self::STOCK_STATUS['available'];
+                        }
+                        break;
+
+                    case self::STOCK_ID['Buah']:
+                        if ( $canceledQuantity <= 50 ) {
+                            $canceledStock->status = self::STOCK_STATUS['limited'];
+                        } else {
+                            $canceledStock->status = self::STOCK_STATUS['available'];
+                        }
+                        break;
+                    }
                 }
 
                 $canceledStock->save();
