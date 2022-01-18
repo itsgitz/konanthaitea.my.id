@@ -33,7 +33,7 @@
             @foreach ($requestStocks as $s)
             <tr>
                 <td>{{ $s->stock_name }}</td>
-                <td>{{ $s->request_quantity }}</td>
+                <td>{{ number_format( $s->request_quantity, 0, '', '.' ) }}</td>
                 <td>{{ $s->unit_name }}</td>
             </tr>
             @endforeach
@@ -58,7 +58,7 @@
             @foreach ($currentStocks as $s)
             <tr>
                 <td>{{ $s->stock_name }}</td>
-                <td>{{ $s->stock_quantity }}</td>
+                <td>{{ number_format( $s->stock_quantity, 0, '', '.' ) }} </td>
                 <td>{{ $s->unit_name }}</td>
                 <td>{{ $s->stock_status }}</td>
             </tr>
