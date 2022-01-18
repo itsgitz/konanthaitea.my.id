@@ -153,7 +153,14 @@ class OrdersController extends Controller
         $order->save();
 
         // If order canceled
-        if ( $r->order_delivery_status == 'Canceled' ) {
+        if ( $r->order_delivery_status == 'Canceled' || $r->order_payment_status == 'Canceled' ) {
+
+            if ( $r->order_payment_status == 'Canceled' ) {
+                $canceledOrder = Order::find($id);
+                $canceledOrder->delivery_status = 'Canceled';
+                $canceledOrder->save();
+            }
+
             $getRecipes = DB::table('cart_orders')
                 ->join('carts', 'cart_orders.cart_id', '=', 'carts.id')
                 ->join('menus', 'carts.menu_id', '=', 'menus.id')
