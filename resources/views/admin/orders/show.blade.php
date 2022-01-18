@@ -190,6 +190,7 @@
                                 @endif
                                 @break
                             @case("Canceled")
+                            @case("Failed")
                                 <div class="alert alert-danger">
                                     Transaksi telah dibatalkan untuk order ini <strong>(Order #{{ $order->id }})</strong>
                                 </div>

@@ -157,7 +157,12 @@ class OrdersController extends Controller
 
             if ( $r->order_payment_status == 'Canceled' ) {
                 $canceledOrder = Order::find($id);
-                $canceledOrder->delivery_status = 'Canceled';
+
+                if ( $canceledOrder->delivery_method == 'Delivery' ) {
+                    $canceledOrder->delivery_status = 'Failed';
+                } else {
+                    $canceledOrder->delivery_status = 'Canceled';
+                }
                 $canceledOrder->save();
             }
 
