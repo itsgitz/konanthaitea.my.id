@@ -48,6 +48,7 @@ class StocksController extends Controller
                 'stock_units.name AS unit_name',
                 'stocks.created_at AS stock_created_at'
             )
+            ->orderBy('stocks.quantity', 'asc')
             ->get();
 
 
@@ -72,6 +73,7 @@ class StocksController extends Controller
                 'stocks.status AS stock_status',
                 'stock_units.name AS unit_name',
             )
+            ->orderBy('stocks.quantity', 'asc')
             ->get();
 
         return view('admin.stocks.requests.request_stocks', [
@@ -186,7 +188,7 @@ class StocksController extends Controller
                 switch ($stock->stock_units_id) {
                 case self::STOCK_ID['Mililiter']:
                 case self::STOCK_ID['Gram']:
-                    if ( $addedQuantity <= 100 ) {
+                    if ( $addedQuantity <= 1000 ) {
                         $stock->status = self::STOCK_STATUS['limited'];
                     } else {
                         $stock->status = self::STOCK_STATUS['available'];
@@ -194,7 +196,7 @@ class StocksController extends Controller
                     break;
 
                 case self::STOCK_ID['Buah']:
-                    if ( $addedQuantity <= 10 ) {
+                    if ( $addedQuantity <= 50 ) {
                         $stock->status = self::STOCK_STATUS['limited'];
                     } else {
                         $stock->status = self::STOCK_STATUS['available'];
@@ -314,7 +316,7 @@ class StocksController extends Controller
         switch ($r->unit) {
         case self::STOCK_ID['Mililiter']:
         case self::STOCK_ID['Gram']:
-            if ( $r->quantity <= 100 ) {
+            if ( $r->quantity <= 1000 ) {
                 $stock->status = self::STOCK_STATUS['limited'];
             } else {
                 $stock->status = self::STOCK_STATUS['available'];
@@ -322,7 +324,7 @@ class StocksController extends Controller
             break;
 
         case self::STOCK_ID['Buah']:
-            if ( $r->quantity <= 10 ) {
+            if ( $r->quantity <= 50 ) {
                 $stock->status = self::STOCK_STATUS['limited'];
             } else {
                 $stock->status = self::STOCK_STATUS['available'];
@@ -481,7 +483,7 @@ class StocksController extends Controller
             switch ($stock->stock_units_id) {
             case self::STOCK_ID['Mililiter']:
             case self::STOCK_ID['Gram']:
-                if ( $addedQuantity <= 100 ) {
+                if ( $addedQuantity <= 1000 ) {
                     $stock->status = self::STOCK_STATUS['limited'];
                 } else {
                     $stock->status = self::STOCK_STATUS['available'];
@@ -489,7 +491,7 @@ class StocksController extends Controller
                 break;
 
             case self::STOCK_ID['Buah']:
-                if ( $addedQuantity <= 10 ) {
+                if ( $addedQuantity <= 50 ) {
                     $stock->status = self::STOCK_STATUS['limited'];
                 } else {
                     $stock->status = self::STOCK_STATUS['available'];
