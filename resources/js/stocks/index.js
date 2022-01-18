@@ -7,6 +7,7 @@ export function setStockStatusClass() {
     const stockStatus = {
       available: 'Available',
       notAvailable: 'Not Available',
+      limited: 'Limited',
     };
 
 
@@ -18,6 +19,9 @@ export function setStockStatusClass() {
         case stockStatus.notAvailable:
           el.className += ' text-danger';
           break;
+
+        case stockStatus.limited:
+          el.className += ' text-warning';
       }
     })
   }
