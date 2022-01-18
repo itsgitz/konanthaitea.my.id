@@ -34,7 +34,15 @@
                         <td>{{ $s->stock_name }}</td>
                         <td>{{ $s->stock_quantity }}</td>
                         <td>{{ $s->unit_name }}</td>
-                        <td>{{ $s->stock_status }}</td>
+                        <td>
+                            @if ($s->stock_status == 'Available')
+                            <span class="text-success fw-bold">{{ $s->stock_status }}</span>
+                            @elseif ($s->stock_status == 'Limited')
+                            <span class="text-warning fw-bold">{{ $s->stock_status }}</span>
+                            @else
+                            <span class="text-danger fw-bold">{{ $s->stock_status }}</span>
+                            @endif
+                        </td>
                         <td>
                             <div class="mb-3 col-md-4">
                                 <input type="hidden" name="stocks[{{ $loop->index }}][stock_id]" value="{{ $s->stock_id }}">
