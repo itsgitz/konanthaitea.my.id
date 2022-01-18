@@ -27,9 +27,15 @@
                         <span class="fw-bold @if ($rs->status == 'Not Accepted') text-danger @else text-success @endif">{{ $rs->status }}</span>
                     </td>
                     <td>
+                    @if ($rs->status == 'Finish')
+                        <a class="btn btn-sm btn-success disabled" href="{{ route('admin_export_pdf_request_stock_get', ['id' => $rs->request_id]) }}">
+                            <i class="fas fa-file-pdf"></i> Download Surat Pengajuan
+                        </a>
+                    @else
                         <a class="btn btn-sm btn-success" href="{{ route('admin_export_pdf_request_stock_get', ['id' => $rs->request_id]) }}">
                             <i class="fas fa-file-pdf"></i> Download Surat Pengajuan
                         </a>
+                    @endif
                     </td>
                     <td>
                     @if ($rs->status == 'Accepted')
