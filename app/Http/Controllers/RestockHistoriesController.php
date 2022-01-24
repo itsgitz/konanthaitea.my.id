@@ -71,8 +71,8 @@ class RestockHistoriesController extends Controller
                 'request_id'    => $h->request_id,
                 'items'         => $restock,
                 'total_pay'     => $totalPay,
-                'invoice_image'         => $restock[0]->invoice_image,
-                'created_at'    => $restock[0]->created_at
+                'invoice_image'         => $restock[0]->invoice_image ?? '',
+                'created_at'    => $restock[0]->created_at ?? ''
             ]);
         }
 
