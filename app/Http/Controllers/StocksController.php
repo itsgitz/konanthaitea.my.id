@@ -213,6 +213,7 @@ class StocksController extends Controller
             $restock = new RestockHistory;
             $restock->stock_id          = $stockId;
             $restock->stock_units_id    = $stock->stock_units_id;
+            $restock->request_id        = $id;
             $restock->name              = $stock->name;
             $restock->quantity          = $req['processed_quantity'];
             $restock->total_price       = $req['price'];
@@ -227,6 +228,7 @@ class StocksController extends Controller
             $requestStock = RequestStock::find($req['request_stock_id']);
             $requestStock->processed_quantity   = $req['processed_quantity'];
             $requestStock->description          = $req['description'];
+            $requestStock->price                = $req['price'];
             $requestStock->status               = 'Finish';
             $requestStock->save();
         }
