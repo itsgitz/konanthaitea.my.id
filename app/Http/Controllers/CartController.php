@@ -16,6 +16,91 @@ class CartController extends Controller
     const CART_DELETE_MESSAGE   = 'Berhasil menghapus item dari keranjang';
     const CART_UPDATE_MESSAGE   = 'Berhasil mengubah item di keranjang';
 
+    private function generateDeliveryFee()
+    {
+        $fee = [];
+
+        array_push($fee, [
+            'kecamatan' => 'Cimahi Selatan',
+            'kelurahan' => [
+                [
+                    'name' => 'Cibeber',
+                    'fee' => 18000,
+                ],
+                [
+                    'name' => 'Cibeureum',
+                    'fee' => 11000,
+                ],
+                [
+                    'name' => 'Leuwihgajah',
+                    'fee' => 13000,
+                ],
+                [
+                    'name' => 'Melong',
+                    'fee' => 13000
+                ],
+                [
+                    'name' => 'Utama',
+                    'fee' => 11000
+                ]
+            ]
+        ]);
+
+        array_push($fee, [
+            'kecamatan' => 'Cimahi Tengah',
+            'kelurahan' => [
+                [
+                    'name' => 'Baros',
+                    'fee' => 12000,
+                ],
+                [
+                    'name' => 'Cigugur Tengah',
+                    'fee' => 11000,
+                ],
+                [
+                    'name' => 'Cimahi',
+                    'fee' => 12000,
+                ],
+                [
+                    'name' => 'Karangmekar',
+                    'fee' => 11000
+                ],
+                [
+                    'name' => 'Padasuka',
+                    'fee' => 13000
+                ],
+                [
+                    'name' => 'Setiamanah',
+                    'fee' => 11000
+                ]
+            ]
+        ]);
+
+        array_push($fee, [
+            'kecamatan' => 'Cimahi Utara',
+            'kelurahan' => [
+                [
+                    'name' => 'Cibabat',
+                    'fee' => 11000,
+                ],
+                [
+                    'name' => 'Cipageran',
+                    'fee' => 17000,
+                ],
+                [
+                    'name' => 'Citeureup',
+                    'fee' => 14000,
+                ],
+                [
+                    'name' => 'Pasirkaliki',
+                    'fee' => 11000
+                ],
+            ]
+        ]);
+
+        return $fee;
+    }
+
     //
     public function index(Request $r)
     {
@@ -27,6 +112,7 @@ class CartController extends Controller
         return view('client.carts.index', [
             'carts'         => $carts,
             'totalAmount'   => $totalAmount,
+            'fees'          => $this->generateDeliveryFee(),
         ]);
     }
 
