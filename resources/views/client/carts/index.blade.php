@@ -102,7 +102,23 @@
                             <div class="py-2"></div>
                             <div id="cart-address-box" class="card-text d-none">
                                 <div class="mb-3">
-                                    <label class="form-label fw-light" for="address">Alamat</label>
+                                    <select id="kecamatanKelurahan" class="form-select fw-light" name="region_value" required>
+                                        <option value="" selected>Pilih Kecamatan / Kelurahan</option>
+                                        @foreach ($fees as $k => $fee)
+                                            @foreach ($fee['kelurahan'] as $f)
+                                                @php $regionName = $fee['kecamatan'] . ' / ' . $f['name']; @endphp
+                                                <option value="{{ $f['fee'] }}|{{ $regionName }}">{{ $regionName }}</option>
+                                            @endforeach
+                                        @endforeach
+                                    </select>
+                                    @error ('region')
+                                    <div id="address-alert">
+                                        <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-light" for="address">Alamat Lengkap</label>
                                     <textarea id="cart-address" class="form-control fw-light" name="address" cols="30" rows="5"></textarea>
                                     @error ('address')
                                     <div id="address-alert">

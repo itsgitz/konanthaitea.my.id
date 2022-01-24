@@ -14,6 +14,7 @@
         <table class="table table-hover">
             <thead>
                 <th scope="col">Nama</th>
+                <th scope="col">Kode Produk</th>
                 <th scope="col">Harga</th>
                 <th scope="col">Status</th>
                 <th scope="col">Jumlah</th>
@@ -24,15 +25,16 @@
             @if ($menus->isNotEmpty())
                 @foreach ($menus as $m)
                 <tr>
-                    <td>{{ $m->name }}</td>
-                    <td>Rp. {{ number_format( $m->price, 2, ',', '.' ) }}</td>
+                    <td class="fw-light">{{ $m->name }}</td>
+                    <td class="fw-light">{{ $m->product_id }}</td>
+                    <td class="fw-light">Rp. {{ number_format( $m->price, 2, ',', '.' ) }}</td>
                     <td>
                         <span class="menu-status fw-bold" data-menu-status="{{ $m->status }}">
                             {{ $m->status }}
                         </span>
                     </td>
-                    <td>{{ $m->quantity }}</td>
-                    <td>{{ date('d M Y H:i:s', strtotime( $m->created_at )) }}</td>
+                    <td class="fw-light">{{ $m->quantity }}</td>
+                    <td class="fw-light">{{ date('d M Y H:i:s', strtotime( $m->created_at )) }}</td>
                     <td>
                         <a class="btn btn-success btn-sm" href="{{ route('admin_menu_show_get', [ 'id' => $m->id ]) }}">
                             <i class="fas fa-eye"></i> Lihat Resep

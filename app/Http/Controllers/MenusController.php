@@ -94,6 +94,25 @@ class MenusController extends Controller
         ]);
     }
 
+    private function setProductId($id, Request $r)
+    {
+        $productId = '';
+        $splitName = explode(' ', $r->name);
+        $code = [];
+
+        foreach ($splitName as $word) {
+            array_push($code, substr($word, 0, 1));
+        }
+
+        if ($id < 10) {
+            $id = '0' . $id;
+        }
+
+        $productId = (join('', $code)) . $id . date('Y');
+
+        return $productId;
+    }
+
     public function store(Request $r)
     {
         $recipes    = $this->checkRecipes($r);
@@ -144,6 +163,10 @@ class MenusController extends Controller
         $menu->save();
 
         $menuId = $menu->id;
+
+        // Generate and insert product_id
+        $menu->product_id = $this->setProductId($menuId, $r);
+        $menu->save();
 
         foreach ($r->recipes as $re) {
             if ( isset( $re['id'] ) ) {
@@ -328,7 +351,7 @@ class MenusController extends Controller
 
         return redirect()
             ->route('admin_menu_get')
-            ->with('admin_delete_menu_message', 'Berhasil');
+            ->with('admin_delete_menu_message', 'Berhasil menghapus menu');
     }
 
     private function checkRecipes(Request $r)

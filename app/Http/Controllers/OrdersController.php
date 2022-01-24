@@ -63,6 +63,7 @@ class OrdersController extends Controller
     const ADMIN_ORDER_PROCESS_MESSAGE = 'Berhasil memproses order';
     const ADMIN_ORDER_EXPORT_BY_DATE_ERROR = 'Data tidak ditemukan';
 
+
     public function getOnProgressOrderCount()
     {
         return Order::where('client_id', Auth::id())
@@ -70,6 +71,7 @@ class OrdersController extends Controller
                 $query->where('delivery_status', '<>', self::DELIVERY_STATUS['finish'])
                     ->where('delivery_status', '<>', self::DELIVERY_STATUS['ready'])
                     ->where('delivery_status', '<>', self::DELIVERY_STATUS['canceled'])
+                    ->where('delivery_status', '<>', self::DELIVERY_STATUS['failed'])
                     ->orWhere('payment_status', self::PAYMENT_STATUS['unpaid']);
             })
             ->get()->count();
@@ -94,6 +96,8 @@ class OrdersController extends Controller
                 'orders.delivery_method AS order_delivery_method',
                 'orders.delivery_status AS order_delivery_status',
                 'orders.total_amount AS order_total_amount',
+                'orders.fee AS fee',
+                'orders.region AS region',
                 'orders.created_at AS order_created_at'
             )
             ->distinct()
@@ -292,7 +296,7 @@ class OrdersController extends Controller
 
 
         return view('client.orders.index', [
-            'orders' => $orders
+            'orders'    => $orders,
         ]);
     }
 
@@ -328,14 +332,16 @@ class OrdersController extends Controller
             $r->validate(
                 [
                     'address'   => ['required', 'min:10'],
-                    'phone'     => ['required', 'min:9', 'max:16']
+                    'phone'     => ['required', 'min:9', 'max:16'],
+                    'region_value' => ['required']
                 ],
                 [
                     'address.required'  => 'Mohon untuk memasukan alamat anda',
                     'address.min'       => 'Alamat minimal harus 10 karakter',
                     'phone.required'    => 'Mohon untuk memasukan nomor HP atau telepon anda',
                     'phone.min'         => 'Nomor HP atau telepon minimal harus 9 karakter',
-                    'phone.max'         => 'Nomor HP atau telepon maximal harus 16 karakter'
+                    'phone.max'         => 'Nomor HP atau telepon maximal harus 16 karakter',
+                    'region_value.required' => 'Mohon untuk memilih Kecamatan / Kelurahan'
                 ]
             );
         }
@@ -368,6 +374,12 @@ class OrdersController extends Controller
         if ( isset($r->phone) ) {
             $order->phone_number = $r->phone;
         }
+
+        $regionFee = explode('|', $r->region_value)[0];
+        $regionName = explode('|', $r->region_value)[1];
+
+        $order->region = $regionName;
+        $order->fee = $regionFee;
 
         $order->save();
 

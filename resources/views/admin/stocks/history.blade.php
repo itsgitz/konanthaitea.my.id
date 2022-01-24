@@ -8,39 +8,59 @@
     @include ('shared.message')
     <div class="py-2">
         <a
-            class="btn btn-success btn-sm @if ($histories->isEmpty()) disabled @endif"
-            href="{{ route('admin_export_excel_restock_histories_get') }}"
+            class="btn btn-primary btn-sm @if (!isset($histories)) disabled @endif"
+            href="{{ route('admin_export_pdf_restock_histories_get') }}"
         >
-            <i class="fas fa-file-excel"></i> Export ke Excel
+            <i class="fas fa-file-pdf"></i> Export ke PDF
         </a>
     </div>
     <div class="table-responsive">
-        <table class="table table-hover">
+        <table class="table table-hover fw-light">
             <thead>
+                <th scope="col">ID Permohonan</th>
                 <th scope="col">Nama</th>
                 <th scope="col">Jumlah</th>
                 <th scope="col">Unit</th>
-                <th scope="col">Total Pembelian</th>
+                <th scope="col">Total Harga</th>
+                <th scope="col">Total Pembayaran</th>
                 <th scope="col">Ditambahkan Tanggal</th>
+                <th scope="col">Bukti Pembayaran</th>
                 <th scope="col">#</th>
             </thead>
 
-            @if ($histories->isNotEmpty())
+            @if (isset($histories))
                 @foreach ($histories as $h)
                 <tr>
-                    <td>{{ $h->stock_name }}</td>
-                    <td>{{ number_format( $h->stock_quantity, 0, '', '.' ) }}</td>
-                    <td>{{ $h->unit_name }}</td>
-                    <td>Rp. {{ number_format( $h->stock_total_price, 2, ',', '.' ) }}</td>
-                    <td>{{ date('d M Y H:i:s', strtotime( $h->stock_created_at )) }}</td>
+                    <td>{{ $h['request_id'] }}</td>
+                    <td>
+                        @foreach ($h['items'] as $item)
+                        <div>{{ $item->stock_name }}</div>
+                        @endforeach
+                    <td>
+                        @foreach ($h['items'] as $item)
+                        <div>{{ number_format( $item->stock_quantity, 0, '', '.' ) }}</div>
+                        @endforeach
+                    </td>
+                    <td>
+                        @foreach ($h['items'] as $item)
+                        <div>{{ $item->unit_name }}</div>
+                        @endforeach
+                    </td>
+                    <td>
+                        @foreach ($h['items'] as $item)
+                        <div>Rp. {{ number_format( $item->total_price, 2, ',', '.' ) }}</div>
+                        @endforeach
+                    </td>
+                    <td>Rp. {{ number_format( $h['total_pay'], 2, ',', '.' ) }}</td>
+                    <td>{{ date('d M Y H:i:s', strtotime( $h['created_at'] )) }}</td>
                     <td>
                         <button
                             class="btn btn-secondary btn-sm"
                             data-bs-toggle="modal"
                             data-bs-target="#show-invoice"
-                            data-history-stock-name="{{ $h->stock_name }}"
-                            data-history-stock-date="{{ date('d M Y H:i:s', strtotime( $h->stock_created_at )) }}"
-                            data-history-stock-invoice-image="{{ $h->invoice_image }}"
+                            data-history-stock-name="{{ $h['request_id'] }}"
+                            data-history-stock-date="{{ date('d M Y H:i:s', strtotime( $h['created_at'] )) }}"
+                            data-history-stock-invoice-image="{{ $h['invoice_image'] }}"
                             onclick="showInvoice(this)"
                         >
                             <i class="fas fa-file-image"></i> Bukti Pembelian
@@ -68,10 +88,10 @@
                 </div>
                 <div class="modal-body">
                     <div class="py-2">
-                        Nama: <span class="fw-bold" id="stock-name"></span>
+                        ID Permohonan: <span class="fw-bold" id="stock-name"></span>
                     </div>
                     <div class="py-2">
-                        Dikirim tanggal: <span id="stock-date" class="fw-bold"></span>
+                        Dibuat Tanggal: <span id="stock-date" class="fw-bold"></span>
                     </div>
                     <div class="py-2 border-top">
                         <img id="invoice-image" class="img-fluid">

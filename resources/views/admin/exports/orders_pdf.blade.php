@@ -54,7 +54,7 @@
                         $items = App\Exports\OrdersExport::getCartItems($o->order_id)
                     @endphp
                     @foreach ($items as $i)
-                        {{ $i->menu_name }} {{ $i->cart_quantity }} x {{ $i->cart_subtotal_amount }}@if (!$loop->last),@endif &nbsp;
+                        {{ $i->menu_name }} {{ $i->cart_quantity }} x Rp. {{ $i->cart_subtotal_amount }}@if (!$loop->last),@endif &nbsp;
                     @endforeach
                 </td>
             </tr>
