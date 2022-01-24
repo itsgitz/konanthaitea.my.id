@@ -50,7 +50,7 @@
                     <td>{{ number_format( $h['total_pay'], 2, ',', '.' ) }}</td>
                     <td>{{ date('d M Y H:i:s', strtotime( $h['created_at'] )) }}</td>
                     <td>
-                        <img src="{{ public_path($h['invoice_image']) }}" alt="invoice" width="200">
+                        <img src="{{ public_path($h['invoice_image']) }}" alt="invoice" width="150">
                     </td>
                 </tr>
                 @endforeach
