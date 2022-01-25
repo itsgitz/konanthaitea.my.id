@@ -139,6 +139,17 @@
                             </div>
                             <div class="py-2"></div>
 
+                            <div id="norek" class="card-text">
+                                <div id="norek-bank" class="d-none">
+                                    <h5 class="card-title">Nomor Rekening</h5>
+                                    <span class="fw-light">BCA a.n Konan Thai Tea 604 2600600</span>
+                                </div>
+                                <div id="norek-va" class="d-none">
+                                    <h5 class="card-title">Nomor Virtual Account</h5>
+                                    <span class="fw-light">E-money 20090 081312312455</span>
+                                </div>
+                            </div>
+                            <div class="py-2"></div>
                             <div id="total-order-box" class="card-text">
                                 <h5 class="card-title">Total Harga</h5>
                                 <span id="total-order" class="card-text fw-light"></span>

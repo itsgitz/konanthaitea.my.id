@@ -37,6 +37,11 @@ export function delivery() {
 
     totalOrderElement.innerHTML = `Rp. ${convertToMoney(hiddentTotalOrderElement.value)},00`;
 
+    let paymentMethod = document.querySelector('#cart-payment-method');
+    let selectedPaymentMethod = paymentMethod.options[paymentMethod.selectedIndex].value;
+    let norekBank = document.querySelector('#norek-bank');
+    let norekVa = document.querySelector('#norek-va');
+
     // Onload
     if (selectedValue == 'Delivery') {
       cartAddressBoxElement.classList.remove('d-none');
@@ -47,6 +52,15 @@ export function delivery() {
 
       deliveryElement.innerHTML = `Rp. ${convertToMoney(regionFee)},00`;
       totalPriceElement.innerHTML = `Rp. ${convertToMoney(hiddentTotalOrderElement.value, regionFee)},00`;
+
+      if (selectedPaymentMethod == 'Bank Transfer') {
+        norekBank.classList.remove('d-none');
+        norekVa.classList.add('d-none');
+      } else {
+        norekBank.classList.add('d-none');
+        norekVa.classList.remove('d-none');
+      }
+
     } else {
       cartAddressBoxElement.classList.add('d-none');
       cartAddressElement.disabled = true;
@@ -54,6 +68,9 @@ export function delivery() {
       kecamatanKelurahanElement.disabled = true;
       hiddenTotalPriceElement.value = hiddentTotalOrderElement.value;
       totalPriceElement.innerHTML = `Rp. ${convertToMoney(hiddentTotalOrderElement.value)},00`;
+
+      norekBank.classList.add('d-none');
+      norekVa.classList.add('d-none');
     }
 
     // On change or selected
@@ -81,11 +98,21 @@ export function delivery() {
     })
 
     kecamatanKelurahanElement.addEventListener('change', function() {
-      let deliveryFeeNum = this.value.split('|')[0];
+      let deliveryFeeNum = this.value.split('|')[0] || 0;
 
       deliveryElement.innerHTML = `Rp. ${convertToMoney(deliveryFeeNum)},00`;
       totalPriceElement.innerHTML = `Rp. ${convertToMoney(hiddentTotalOrderElement.value, deliveryFeeNum)},00`
       hiddenTotalPriceElement.value = parseInt(hiddentTotalOrderElement.value) + parseInt(deliveryFeeNum);
+    });
+
+    paymentMethod.addEventListener('change', function() {
+      if (this.value == 'Bank Transfer') {
+        norekBank.classList.remove('d-none');
+        norekVa.classList.add('d-none');
+      } else {
+        norekBank.classList.add('d-none');
+        norekVa.classList.remove('d-none');
+      }
     });
   }
 }

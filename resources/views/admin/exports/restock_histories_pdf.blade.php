@@ -25,8 +25,8 @@
                 <th scope="col">Total Harga (Rp.)</th>
                 <th scope="col">Total Pembayaran (Rp.)</th>
                 <th scope="col">Ditambahkan Tanggal</th>
+                <th scope="col">Keterangan</th>
                 <th scope="col">Bukti Pembayaran</th>
-                <th scope="col">#</th>
             </tr>
 
             @if (isset($histories))
@@ -50,7 +50,12 @@
                     <td>{{ number_format( $h['total_pay'], 2, ',', '.' ) }}</td>
                     <td>{{ date('d M Y H:i:s', strtotime( $h['created_at'] )) }}</td>
                     <td>
-                        <img src="{{ public_path($h['invoice_image']) }}" alt="invoice" width="150">
+                        @foreach ($h['items'] as $item)
+                        <div>{{ $item->description }}</div>
+                        @endforeach
+                    </td>
+                    <td>
+                        <img src="{{ public_path($h['invoice_image']) }}" alt="invoice" width="100">
                     </td>
                 </tr>
                 @endforeach
@@ -61,6 +66,7 @@
             @endif
         </table>
 
+        <div class="break"></div>
         <div class="break"></div>
         <div class="break"></div>
         <div class="break"></div>

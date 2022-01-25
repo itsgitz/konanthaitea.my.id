@@ -375,13 +375,13 @@ class OrdersController extends Controller
             $order->phone_number = $r->phone;
         }
 
-	if ( isset($r->region_value) ) {
-		$regionFee = explode('|', $r->region_value)[0];
-        	$regionName = explode('|', $r->region_value)[1];
-		$order->region = $regionName;
-        	$order->fee = $regionFee;
-	} 
- 
+        if ( isset($r->region_value) ) {
+            $regionFee = explode('|', $r->region_value)[0];
+            $regionName = explode('|', $r->region_value)[1];
+            $order->region = $regionName;
+            $order->fee = $regionFee;
+        }
+
         $order->save();
 
         return $order->id;

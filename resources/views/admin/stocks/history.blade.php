@@ -24,8 +24,8 @@
                 <th scope="col">Total Harga</th>
                 <th scope="col">Total Pembayaran</th>
                 <th scope="col">Ditambahkan Tanggal</th>
+                <th scope="col">Keterangan</th>
                 <th scope="col">Bukti Pembayaran</th>
-                <th scope="col">#</th>
             </thead>
 
             @if (isset($histories))
@@ -53,6 +53,11 @@
                     </td>
                     <td>Rp. {{ number_format( $h['total_pay'], 2, ',', '.' ) }}</td>
                     <td>{{ date('d M Y H:i:s', strtotime( $h['created_at'] )) }}</td>
+                    <td>
+                        @foreach ($h['items'] as $item)
+                        <div>{{ $item->description }}</div>
+                        @endforeach
+                    </td>
                     <td>
                         <button
                             class="btn btn-secondary btn-sm"

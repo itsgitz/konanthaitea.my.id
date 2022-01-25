@@ -47,6 +47,7 @@ class RestockHistoriesController extends Controller
             $restock = DB::table('restock_histories')
                 ->join('stocks', 'restock_histories.stock_id', '=', 'stocks.id')
                 ->join('stock_units', 'stocks.stock_units_id', '=', 'stock_units.id')
+                ->join('request_stocks', 'restock_histories.request_id', '=', 'request_stocks.request_id')
                 ->select(
                     'restock_histories.request_id AS request_id',
                     'restock_histories.name AS stock_name',
@@ -54,7 +55,8 @@ class RestockHistoriesController extends Controller
                     'stock_units.name AS unit_name',
                     'restock_histories.invoice_image AS invoice_image',
                     'restock_histories.total_price AS total_price',
-                    'restock_histories.created_at AS created_at'
+                    'restock_histories.created_at AS created_at',
+                    'request_stocks.description AS description'
                 )
                 ->whereNotNull('restock_histories.request_id')
                 ->where('restock_histories.request_id', '=', $h->request_id)
@@ -71,7 +73,7 @@ class RestockHistoriesController extends Controller
                 'request_id'    => $h->request_id,
                 'items'         => $restock,
                 'total_pay'     => $totalPay,
-                'invoice_image'         => $restock[0]->invoice_image ?? '',
+                'invoice_image' => $restock[0]->invoice_image ?? '',
                 'created_at'    => $restock[0]->created_at ?? ''
             ]);
         }
