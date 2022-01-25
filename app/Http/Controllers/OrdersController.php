@@ -422,13 +422,13 @@ class OrdersController extends Controller
                 switch ($stock->stock_units_id) {
                 case self::STOCK_ID['Mililiter']:
                 case self::STOCK_ID['Gram']:
-                    if ( $currentQuantity <= 100) {
+                    if ( $currentQuantity <= 1000) {
                         $stock->status = self::STOCK_STATUS['limited'];
                     }
                     break;
 
                 case self::STOCK_ID['Buah']:
-                    if ( $currentQuantity <= 10 ) {
+                    if ( $currentQuantity <= 50 ) {
                         $stock->status = self::STOCK_STATUS['limited'];
                     }
                     break;
