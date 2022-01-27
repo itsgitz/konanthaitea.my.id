@@ -37,9 +37,11 @@ class RestockHistoriesController extends Controller
     private function generateData()
     {
         $historiesPerRequest = DB::table('request_stocks')
-            ->whereNotNull('request_stocks.request_id')
-            ->groupBy('request_stocks.request_id')
+            //->whereNotNull('request_stocks.request_id')
+            ->where('status', '=', 'Finish')
+            ->groupBy('request_id')
             ->get();
+
 
         $histories = [];
 
@@ -58,8 +60,9 @@ class RestockHistoriesController extends Controller
                     'restock_histories.created_at AS created_at',
                     'request_stocks.description AS description'
                 )
-                ->whereNotNull('restock_histories.request_id')
+                //->whereNotNull('restock_histories.request_id')
                 ->where('restock_histories.request_id', '=', $h->request_id)
+                ->groupBy('stocks.id')
                 ->get()
                 ->toArray();
 
