@@ -76,7 +76,8 @@
                         </div>
                         <div class="card-text py-2">
                             <h5 class="card-title">Ongkos Kirim</h5>
-                            <div class="fw-light">Rp. {{ number_format( $order->fee ?? 11000, 2, ',', '.' ) }}</div>
+                            {{-- <div class="fw-light">Rp. {{ number_format( $order->fee ?? 11000, 2, ',', '.' ) }}</div> --}}
+                            <div class="fw-light">Rp. {{ number_format( 0, 2, ',', '.' ) }}</div>
                         </div>
                         @endif
                         <div class="card-text py-2">

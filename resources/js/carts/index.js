@@ -25,7 +25,7 @@ export function delivery() {
     // Delivery fee
     let deliveryFeeBoxElement = document.querySelector('#delivery-fee-box');
     let deliveryElement = document.querySelector('#delivery-fee');
-    //let deliveryFeeNum = 11000;
+    let deliveryFeeNum = 0;
 
     let kecamatanKelurahanElement = document.querySelector('#kecamatanKelurahan');
     let selectedValueKecamatanKelurahan = kecamatanKelurahanElement.options[kecamatanKelurahanElement.selectedIndex].value;
@@ -50,8 +50,8 @@ export function delivery() {
       kecamatanKelurahanElement.disabled = false;
       deliveryFeeBoxElement.classList.remove('d-none');
 
-      deliveryElement.innerHTML = `Rp. ${convertToMoney(regionFee)},00`;
-      totalPriceElement.innerHTML = `Rp. ${convertToMoney(hiddentTotalOrderElement.value, regionFee)},00`;
+      deliveryElement.innerHTML = `Rp. ${convertToMoney(deliveryFeeNum)},00`;
+      totalPriceElement.innerHTML = `Rp. ${convertToMoney(hiddentTotalOrderElement.value, deliveryFeeNum)},00`;
 
       if (selectedPaymentMethod == 'Bank Transfer') {
         norekBank.classList.remove('d-none');
@@ -98,7 +98,7 @@ export function delivery() {
     })
 
     kecamatanKelurahanElement.addEventListener('change', function() {
-      let deliveryFeeNum = this.value.split('|')[0] || 0;
+      //let deliveryFeeNum = this.value.split('|')[0] || 0;
 
       deliveryElement.innerHTML = `Rp. ${convertToMoney(deliveryFeeNum)},00`;
       totalPriceElement.innerHTML = `Rp. ${convertToMoney(hiddentTotalOrderElement.value, deliveryFeeNum)},00`

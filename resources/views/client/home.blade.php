@@ -6,6 +6,9 @@
 @include ('shared.message')
 
 <div class="py-1">
+    <div class="alert alert-primary fw-light" style="font-size: 1.2rem;">
+        Promo gratis ongkir untuk wilayah Cimahi! <i class="far fa-money-bill-alt"></i>
+    </div>
     @if (!$menu->isEmpty())
     <div class="row gy-3">
         @foreach ($menu as $m)
