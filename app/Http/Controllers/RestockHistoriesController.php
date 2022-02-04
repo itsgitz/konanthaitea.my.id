@@ -40,6 +40,7 @@ class RestockHistoriesController extends Controller
             //->whereNotNull('request_stocks.request_id')
             ->where('status', '=', 'Finish')
             ->groupBy('request_id')
+            ->orderBy('created_at', 'desc')
             ->get();
 
 

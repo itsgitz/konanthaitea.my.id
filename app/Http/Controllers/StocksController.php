@@ -97,7 +97,22 @@ class StocksController extends Controller
                 ->with('admin_stocks_request_error_message', 'Minimal harus mengisi salah satu stock');
         }
 
-        $requestId = 'rs-' . date('dmYHisu');
+        $total = DB::table('request_stocks')
+            ->groupBy('request_id')
+            ->get()
+            ->count();
+
+        $total += 1;
+
+        $order = '';
+
+        if ($total < 10) {
+            $order = "0{$total}";
+        } else {
+            $order = $total;
+        }
+
+        $requestId = 'rs-' . date('dmYHi') . '-' . $order;
 
         foreach ($r->stocks as $stock) {
             if (isset($stock['request_quantity'])) {
@@ -120,6 +135,7 @@ class StocksController extends Controller
     {
         $requestStocks = DB::table('request_stocks')
             ->groupBy('request_id')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('admin.stocks.requests.request_process_index', [
