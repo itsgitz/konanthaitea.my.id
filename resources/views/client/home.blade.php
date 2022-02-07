@@ -10,7 +10,7 @@
         Promo gratis ongkir untuk wilayah Cimahi! <i class="far fa-money-bill-alt"></i>
     </div>
 
-    <div class="accordion" id="accordionExample">
+    <div class="accordion fw-light" id="accordionExample">
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -19,10 +19,10 @@
         </h2>
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-                        Login atau registrasi terlebih dahulu sebelum melakukan pemesanan. Tambahkan minuman yang anda inginkan dengan menekan tombol "Tambah".
-                        Setelah itu anda akan diarahkan ke halaman keranjang. Maka pilihlah methode pengiriman, yaitu Pickup atau Delivery, beserta metode pembayaranya, yaitu
-                        Bank transfer atau e-money. Jika anda memilih Delivery, maka isilah alamat dan nomor telepon anda. Setelah proses pemesanan selesai, maka anda akan diberika
-                        kontak kurir yang bisa dihubungi.
+            Login atau registrasi terlebih dahulu sebelum melakukan pemesanan. Tambahkan minuman yang anda inginkan dengan menekan tombol "Tambah".
+            Setelah itu anda akan diarahkan ke halaman keranjang. Maka pilihlah methode pengiriman, yaitu Pickup atau Delivery, beserta metode pembayaranya, yaitu
+            Bank transfer atau e-money. Jika anda memilih Delivery, maka isilah alamat dan nomor telepon anda. Setelah proses pemesanan selesai, maka anda akan diberika
+            kontak kurir yang bisa dihubungi.
           </div>
         </div>
       </div>
@@ -115,6 +115,17 @@
     </div>
     @endif
 
+    <div class="py-4"></div>
+
+    <div class="row fw-light">
+        <div class="col-md-3">
+            <b>Kontak</b>
+            <div>Email : konanbdg.id@gmail.com</div>
+            <div>Telepon : 085659122848</div>
+            <div>Instagram : @konan_id</div>
+        </div>
+    </div>
+
     {{-- Modal Redirect Login --}}
     <div id="redirect-modal" class="modal fade fw-light" tabindex="-1" aria-labelledby="redirect-modal-label">
         <div class="modal-dialog modal-dialog-centered">
@@ -190,5 +201,5 @@
     {{-- Modal Script --}}
 </div>
 
-<div class="py-5"></div>
+<div class="py-4"></div>
 @endsection
