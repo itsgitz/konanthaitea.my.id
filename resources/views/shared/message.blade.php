@@ -500,5 +500,20 @@
     </div>
     @endif
     {{-- REQUEST STOCKS ACCEPT MESSAGE --}}
+
+    {{-- CLIENT SETTING MESSAGE --}}
+    @if (session('client_setting_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('client_setting_message') }}
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+        >
+        </button>
+    </div>
+    @endif
+    {{-- CLIENT SETTING MESSAGE --}}
 </div>
 <div class="py-1"></div>

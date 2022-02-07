@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class ClientsController extends Controller
@@ -77,5 +78,26 @@ class ClientsController extends Controller
         return redirect()
             ->route('admin_clients_get')
             ->with('admin_delete_client_message', self::DELETE_CLIENT_MESSAGE);
+    }
+
+    public function setting(Request $r)
+    {
+        $client = Client::find(Auth::id());
+
+        return view('client.setting', [
+            'client' => $client
+        ]);
+    }
+
+    public function updateSetting(Request $r, $id)
+    {
+        $client = Client::find($id);
+        $client->phone_number   = $r->phone_number;
+        $client->address        = $r->address;
+        $client->save();
+
+        return redirect()
+            ->route('client_setting')
+            ->with('client_setting_message', 'Berhasil mengubah pengaturan alamat');
     }
 }

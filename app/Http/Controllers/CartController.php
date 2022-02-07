@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Cart;
+use App\Models\Client;
 use App\Models\Menu;
 
 class CartController extends Controller
@@ -22,6 +23,7 @@ class CartController extends Controller
 
         array_push($fee, [
             'kecamatan' => 'Cimahi Selatan',
+            'estimasi'  => 20,
             'kelurahan' => [
                 [
                     'name' => 'Cibeber',
@@ -48,6 +50,7 @@ class CartController extends Controller
 
         array_push($fee, [
             'kecamatan' => 'Cimahi Tengah',
+            'estimasi'  => 15,
             'kelurahan' => [
                 [
                     'name' => 'Baros',
@@ -78,6 +81,7 @@ class CartController extends Controller
 
         array_push($fee, [
             'kecamatan' => 'Cimahi Utara',
+            'estimasi'  => 18,
             'kelurahan' => [
                 [
                     'name' => 'Cibabat',
@@ -107,10 +111,12 @@ class CartController extends Controller
         $this->saveCart($r);
 
         $carts          = $this->getOnCart();
+        $client         = Client::find(Auth::id());
         $totalAmount    = $this->getTotalAmount($carts);
 
         return view('client.carts.index', [
             'carts'         => $carts,
+            'client'        => $client,
             'totalAmount'   => $totalAmount,
             'fees'          => $this->generateDeliveryFee(),
         ]);

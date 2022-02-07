@@ -11,6 +11,14 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])
 Route::get('/about', [\App\Http\Controllers\HomeController::class, 'about'])
     ->name('client_about');
 
+Route::get('/setting', [\App\Http\Controllers\ClientsController::class, 'setting'])
+    ->name('client_setting')
+    ->middleware('auth');
+
+Route::post('/setting/{id}', [\App\Http\Controllers\ClientsController::class, 'updateSetting'])
+    ->name('client_setting_post')
+    ->middleware('auth');
+
 //Client user management routes
 Route::get('/admin/clients', [\App\Http\Controllers\ClientsController::class, 'index'])
     ->middleware('auth.admin')

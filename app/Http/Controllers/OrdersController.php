@@ -362,9 +362,11 @@ class OrdersController extends Controller
 
     private function saveOrder(Request $r)
     {
+        $totalOrders = Order::all()->count();
+
         $order = new Order;
         $order->client_id       = Auth::id();
-        $order->total_amount    = $r->cart_total_amount;
+        $order->total_amount    = $r->cart_total_amount + $totalOrders;
         $order->payment_status  = self::PAYMENT_STATUS['unpaid'];
         $order->payment_method  = $r->cart_payment_method;
         $order->delivery_method   = $r->cart_delivery_method;
@@ -385,9 +387,20 @@ class OrdersController extends Controller
             $order->fee = $regionFee;
         }
 
+        $order->estimation_finish_at = $this->setEstimationFinish($r);
+
         $order->save();
 
+
         return $order->id;
+    }
+
+    private function setEstimationFinish(Request $r)
+    {
+        $tanggal = new \DateTime();
+        $tanggal->modify("+{$r->hidden_estimasi} minutes");
+
+        return $tanggal->format('Y-m-d H:i:s');
     }
 
     private function saveCartOrder(Request $r, $orderId)
@@ -520,10 +533,10 @@ class OrdersController extends Controller
                 'carts.subtotal_amount AS cart_subtotal_amount',
                 'clients.name AS client_name',
                 'orders.address AS address',
-                'orders.phone_number AS phone_number'
+                'orders.phone_number AS phone_number',
+                'orders.estimation_finish_at AS estimation'
             )
             ->get();
-
 
         return $cartOrders;
     }
@@ -604,6 +617,11 @@ class OrdersController extends Controller
                 $options['ready']         = [
                     'value'     => self::DELIVERY_STATUS['ready'],
                     'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['ready'] ) ? true : false ),
+                ];
+
+                $options['finish']         = [
+                    'value'     => self::DELIVERY_STATUS['finish'],
+                    'selected'  => ( ( $order->delivery_status == self::DELIVERY_STATUS['finish'] ) ? true : false ),
                 ];
 
                 break;

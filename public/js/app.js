@@ -9784,12 +9784,18 @@ function delivery() {
     var selectedValueKecamatanKelurahan = kecamatanKelurahanElement.options[kecamatanKelurahanElement.selectedIndex].value;
     var regionFee = selectedValueKecamatanKelurahan.split('|')[0];
     var regionName = selectedValueKecamatanKelurahan.split('|')[1];
+    var estimasi = selectedValueKecamatanKelurahan.split('|')[2];
+    var estimasiPickup = 10;
+    var hiddenEstimasi = document.querySelector('#hidden-estimasi');
     var hiddenRegionElement = document.querySelector('#regionName');
     totalOrderElement.innerHTML = "Rp. ".concat(convertToMoney(hiddentTotalOrderElement.value), ",00");
     var paymentMethod = document.querySelector('#cart-payment-method');
     var selectedPaymentMethod = paymentMethod.options[paymentMethod.selectedIndex].value;
     var norekBank = document.querySelector('#norek-bank');
-    var norekVa = document.querySelector('#norek-va'); // Onload
+    var norekVa = document.querySelector('#norek-va');
+    var defaultAddressElement = document.querySelector('#default-address');
+    var defaultAddress = defaultAddressElement.value.split('|')[0];
+    var defaultPhone = defaultAddressElement.value.split('|')[1]; // Onload
 
     if (selectedValue == 'Delivery') {
       cartAddressBoxElement.classList.remove('d-none');
@@ -9807,6 +9813,16 @@ function delivery() {
         norekBank.classList.add('d-none');
         norekVa.classList.remove('d-none');
       }
+
+      if (defaultAddressElement.checked) {
+        cartAddressElement.value = defaultAddress;
+        cartPhoneElement.value = defaultPhone;
+      } else {
+        cartAddressElement.value = '';
+        cartPhoneElement.value = '';
+      }
+
+      hiddenEstimasi.value = estimasi || estimasiPickup;
     } else {
       cartAddressBoxElement.classList.add('d-none');
       cartAddressElement.disabled = true;
@@ -9816,8 +9832,21 @@ function delivery() {
       totalPriceElement.innerHTML = "Rp. ".concat(convertToMoney(hiddentTotalOrderElement.value), ",00");
       norekBank.classList.add('d-none');
       norekVa.classList.add('d-none');
-    } // On change or selected
+      hiddenEstimasi.value = estimasiPickup;
+    }
 
+    defaultAddressElement.addEventListener('change', function () {
+      var defaultAddress = this.value.split('|')[0];
+      var defaultPhone = this.value.split('|')[1];
+
+      if (this.checked) {
+        cartAddressElement.value = defaultAddress;
+        cartPhoneElement.value = defaultPhone;
+      } else {
+        cartAddressElement.value = '';
+        cartPhoneElement.value = '';
+      }
+    }); // On change or selected
 
     cartDeliveryElement.addEventListener('change', function () {
       if (this.value == 'Delivery') {
@@ -9840,9 +9869,11 @@ function delivery() {
     });
     kecamatanKelurahanElement.addEventListener('change', function () {
       //let deliveryFeeNum = this.value.split('|')[0] || 0;
+      var estimasi = this.value.split('|')[2] || estimasiPickup;
       deliveryElement.innerHTML = "Rp. ".concat(convertToMoney(deliveryFeeNum), ",00");
       totalPriceElement.innerHTML = "Rp. ".concat(convertToMoney(hiddentTotalOrderElement.value, deliveryFeeNum), ",00");
       hiddenTotalPriceElement.value = parseInt(hiddentTotalOrderElement.value) + parseInt(deliveryFeeNum);
+      hiddenEstimasi.value = estimasi;
     });
     paymentMethod.addEventListener('change', function () {
       if (this.value == 'Bank Transfer') {

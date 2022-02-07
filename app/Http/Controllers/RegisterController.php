@@ -46,6 +46,8 @@ class RegisterController extends Controller
         $client->name       = $r->name;
         $client->email      = $r->email;
         $client->password   = Hash::make($r->password);
+        $client->phone_number   = $r->phone_number;
+        $client->address        = $r->address;
         $client->save();
 
         Auth::login($client);

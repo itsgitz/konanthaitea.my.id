@@ -74,12 +74,25 @@
                     @endif
 
                     <div class="card-text py-2">
+                        <h5 class="card-title">Dipesan tanggal</h5>
+                        <div class="fw-light">{{ $order->created_at }}</div>
+                    </div>
+
+                    <div class="card-text py-2">
+                        <h5 class="card-title">Estimasi Pesanan Selesai</h5>
+                        {{-- <div class="fw-light">{{ isset($order->estimation_finish_at) ? date('H:i:s', strtotime($order->estimation_finish_at)) : '-' }}</div> --}}
+                        <div class="fw-light">{{ $order->estimation_finish_at }}</div>
+                    </div>
+
+                    <div class="card-text py-2">
                         <h5 class="card-title">Total Harga</h5>
                         <span class="fw-light">Rp. {{ number_format( $totalPrice, 2, ',', '.' ) }}</span>
                     </div>
                     <div class="card-text py-2">
                         <h5 class="card-title">Total Bayar</h5>
                         <strong>Rp. {{ number_format( $order->total_amount, 2, ',', '.' ) }}</strong>
+                        <div class="py-2"></div>
+                        <div class="fw-light"><i>*Note: Mohon untuk membayar sesuai dengan nominal yang tertera pada <b>Total Bayar</b> sebagai validasi proses pembayaran</i></div>
                     </div>
                 </div>
             </div>

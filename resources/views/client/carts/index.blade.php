@@ -107,7 +107,7 @@
                                         @foreach ($fees as $k => $fee)
                                             @foreach ($fee['kelurahan'] as $f)
                                                 @php $regionName = $fee['kecamatan'] . ' / ' . $f['name']; @endphp
-                                                <option value="{{ $f['fee'] }}|{{ $regionName }}">{{ $regionName }}</option>
+                                                <option value="{{ $f['fee'] }}|{{ $regionName }}|{{ $fee['estimasi'] }}">{{ $regionName }}</option>
                                             @endforeach
                                         @endforeach
                                     </select>
@@ -119,6 +119,10 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label fw-light" for="address">Alamat Lengkap</label>
+                                    <div class="py-1"></div>
+                                    <input id="default-address" class="form-check-input" name="default-address" type="checkbox" value="{{ $client->address }}|{{ $client->phone_number }}">
+                                    <label class="form-check-label fw-light" for="default-address">Gunakan alamat default</label>
+                                    <div class="py-1"></div>
                                     <textarea id="cart-address" class="form-control fw-light" name="address" cols="30" rows="5"></textarea>
                                     @error ('address')
                                     <div id="address-alert">
@@ -168,6 +172,7 @@
                             </div>
                             <div class="py-3"></div>
                             <div class="card-text">
+                                <input id="hidden-estimasi" type="hidden" name="hidden_estimasi">
                                 <input class="btn btn-success w-25" type="submit" value="Beli ({{ $cart->getOnCartCount() }})">
                             </div>
                         </div>

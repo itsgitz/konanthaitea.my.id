@@ -89,6 +89,11 @@
                             <div class="fw-light">Rp. {{ number_format( 0, 2, ',', '.' ) }}</div>
                         </div>
                         @endif
+
+                        <div class="card-text py-2">
+                            <h5 class="card-title">Estimasi Pesanan Selesai</h5>
+                            <div class="fw-light">{{ isset($order->estimation_finish_at) ? date('H:i:s', strtotime($order->estimation_finish_at)) : '-' }}</div>
+                        </div>
                         <div class="card-text py-2">
                             <h5 class="card-title">Total Harga</h5>
                             <div class="fw-light">Rp. {{ number_format( $totalPrice, 2, ',', '.' ) }}</div>

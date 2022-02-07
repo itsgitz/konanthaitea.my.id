@@ -31,6 +31,11 @@ export function delivery() {
     let selectedValueKecamatanKelurahan = kecamatanKelurahanElement.options[kecamatanKelurahanElement.selectedIndex].value;
     let regionFee = selectedValueKecamatanKelurahan.split('|')[0];
     let regionName = selectedValueKecamatanKelurahan.split('|')[1];
+    let estimasi = selectedValueKecamatanKelurahan.split('|')[2];
+
+    let estimasiPickup = 10;
+
+    let hiddenEstimasi = document.querySelector('#hidden-estimasi');
 
     let hiddenRegionElement = document.querySelector('#regionName');
 
@@ -41,6 +46,10 @@ export function delivery() {
     let selectedPaymentMethod = paymentMethod.options[paymentMethod.selectedIndex].value;
     let norekBank = document.querySelector('#norek-bank');
     let norekVa = document.querySelector('#norek-va');
+
+    let defaultAddressElement = document.querySelector('#default-address');
+    let defaultAddress = defaultAddressElement.value.split('|')[0];
+    let defaultPhone = defaultAddressElement.value.split('|')[1];
 
     // Onload
     if (selectedValue == 'Delivery') {
@@ -61,6 +70,16 @@ export function delivery() {
         norekVa.classList.remove('d-none');
       }
 
+      if (defaultAddressElement.checked) {
+        cartAddressElement.value = defaultAddress;
+        cartPhoneElement.value = defaultPhone;
+      } else {
+        cartAddressElement.value = '';
+        cartPhoneElement.value = '';
+      }
+
+      hiddenEstimasi.value = estimasi || estimasiPickup;
+
     } else {
       cartAddressBoxElement.classList.add('d-none');
       cartAddressElement.disabled = true;
@@ -71,7 +90,22 @@ export function delivery() {
 
       norekBank.classList.add('d-none');
       norekVa.classList.add('d-none');
+
+      hiddenEstimasi.value = estimasiPickup;
     }
+
+    defaultAddressElement.addEventListener('change', function() {
+      let defaultAddress = this.value.split('|')[0];
+      let defaultPhone = this.value.split('|')[1];
+
+      if (this.checked) {
+        cartAddressElement.value = defaultAddress;
+        cartPhoneElement.value = defaultPhone;
+      } else {
+        cartAddressElement.value = '';
+        cartPhoneElement.value = '';
+      }
+    });
 
     // On change or selected
     cartDeliveryElement.addEventListener('change', function() {
@@ -99,10 +133,13 @@ export function delivery() {
 
     kecamatanKelurahanElement.addEventListener('change', function() {
       //let deliveryFeeNum = this.value.split('|')[0] || 0;
+      let estimasi = this.value.split('|')[2] || estimasiPickup;
 
       deliveryElement.innerHTML = `Rp. ${convertToMoney(deliveryFeeNum)},00`;
       totalPriceElement.innerHTML = `Rp. ${convertToMoney(hiddentTotalOrderElement.value, deliveryFeeNum)},00`
       hiddenTotalPriceElement.value = parseInt(hiddentTotalOrderElement.value) + parseInt(deliveryFeeNum);
+
+      hiddenEstimasi.value = estimasi;
     });
 
     paymentMethod.addEventListener('change', function() {

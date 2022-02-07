@@ -72,6 +72,12 @@
                     @enderror
                 </div>
                 <div class="mb-3">
+                    <input class="form-control" type="text" name="phone_number" placeholder="Nomor Telepon" required>
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" name="address" id="" cols="30" rows="10" placeholder="Alamat" required></textarea>
+                </div>
+                <div class="mb-3">
                     <input class="form-control btn btn-primary" type="submit" value="Daftar">
                 </div>
                 <div class="py-3">
