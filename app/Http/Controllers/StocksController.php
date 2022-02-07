@@ -38,6 +38,9 @@ class StocksController extends Controller
     //
     public function index(Request $r)
     {
+        $this->checkExpired();
+
+
         $stocks = DB::table('stocks')
             ->join('stock_units', 'stocks.stock_units_id', '=', 'stock_units.id')
             ->select(
@@ -55,6 +58,19 @@ class StocksController extends Controller
         return view('admin.stocks.index', [
             'stocks' => $stocks,
         ]);
+    }
+
+    private function checkExpired()
+    {
+        $stocks = Stock::all();
+
+        foreach ($stocks as $s) {
+            if (date('Y-m-d') == date('Y-m-d', strtotime($s->expired_at))) {
+                $newStock = Stock::find($s->id);
+                $newStock->status = 'Expired';
+                $newStock->save();
+            }
+        }
     }
 
     public function show($id)
@@ -199,6 +215,7 @@ class StocksController extends Controller
             //current quantity + add quantity
             $addedQuantity      = $stock->quantity + $req['processed_quantity'];
             $stock->quantity    = $addedQuantity;
+            $stock->expired_at  = $req['expired'];
 
             if ( $addedQuantity > 0 ) {
                 switch ($stock->stock_units_id) {
@@ -310,6 +327,7 @@ class StocksController extends Controller
                 'unit'              => ['required'],
                 'total_price'       => ['required', 'min:1', 'numeric'],
                 'upload_invoice'    => ['required', 'image'],
+                'expired'           => ['required', 'date']
             ],
             [
                 'name.required'             => 'Mohon untuk mengisi nama stock',
@@ -322,6 +340,7 @@ class StocksController extends Controller
                 'total_price.min'           => 'Total belanja tidak boleh nol atau kosong',
                 'upload_invoice.required'   => 'Mohon untuk melampirkan bukti pembelian',
                 'upload_invoice.image'      => 'File harus gambar',
+                'expired.required'          => 'Tanggal expired atau kadaluarsa harus diisi'
             ]
         );
 
@@ -330,6 +349,7 @@ class StocksController extends Controller
         $stock->stock_units_id  = $r->unit;
         $stock->name            = $r->name;
         $stock->quantity        = $r->quantity;
+        $stock->expired_at      = $r->expired;
 
         switch ($r->unit) {
         case self::STOCK_ID['Mililiter']:

@@ -16,8 +16,8 @@
                 <th scope="col">Nama</th>
                 <th scope="col">Jumlah Permohonan</th>
                 <th scope="col">Jumlah Diproses</th>
-                <th scope="col">Unit</th>
                 <th scope="col">Total Pembayaran (Rp.)</th>
+                <th scope="col">Tanggal Expired</th>
                 <th scope="col">Keterangan</th>
             </thead>
             @foreach ($requestStock as $rs)
@@ -31,10 +31,14 @@
                             <input class="form-control" type="number" name="request_stock[{{ $loop->index }}][processed_quantity]" min="1" required>
                         </div>
                     </td>
-                    <td>{{ $rs->unit_name }}</td>
                     <td>
                         <div class="mb-3 col-md-10">
                             <input class="form-control" type="number" name="request_stock[{{ $loop->index }}][price]" required>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="mb-3">
+                            <input class="form-control" type="date" name="request_stock[{{ $loop->index }}][expired]" required>
                         </div>
                     </td>
                     <td>

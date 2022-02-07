@@ -65,6 +65,15 @@
             </div>
             @enderror
         </div>
+        <div class="mb-3 col-md-4">
+            <label class="form-label" for="upload-invoice">Expired</label>
+            <input id="upload-invoice" class="form-control" name="expired" type="date" required>
+            @error ('expired')
+            <div>
+                <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+            </div>
+            @enderror
+        </div>
         <a class="btn btn-danger btn-sm" href="{{ route('admin_stocks_get') }}">Kembali</a>
         <input
             class="btn btn-primary btn-sm"
