@@ -370,7 +370,7 @@ class OrdersController extends Controller
 
         $order = new Order;
         $order->client_id       = Auth::id();
-        $order->total_amount    = $r->cart_total_amount + $totalOrders;
+        $order->total_amount    = $r->cart_total_amount + $totalOrders + 1;
         $order->payment_status  = self::PAYMENT_STATUS['unpaid'];
         $order->payment_method  = $r->cart_payment_method;
         $order->delivery_method   = $r->cart_delivery_method;
