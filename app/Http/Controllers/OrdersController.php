@@ -13,7 +13,7 @@ use App\Models\Order;
 use App\Models\Menu;
 use App\Models\Stock;
 use App\Models\MenuStock;
-
+use Carbon\Carbon;
 use PDF;
 
 
@@ -226,6 +226,9 @@ class OrdersController extends Controller
 
     public function adminIndexExportToPdf(Request $r)
     {
+        $from = Carbon::createFromFormat('Y-m-d', $r->from)->startOfDay();
+        $to = Carbon::createFromFormat('Y-m-d', $r->to)->endOfDay();
+
         $orders = DB::table('cart_orders')
             ->join('orders', 'cart_orders.order_id', '=', 'orders.id')
             ->join('carts', 'cart_orders.cart_id', '=', 'carts.id')
@@ -242,7 +245,8 @@ class OrdersController extends Controller
                 'orders.total_amount AS order_total_amount',
                 'orders.created_at AS order_created_at'
             )
-            ->whereBetween('orders.created_at', [$r->from, $r->to])
+            //->whereBetween('orders.created_at', [$r->from, $r->to])
+            ->whereBetween('orders.created_at', [$from, $to])
             ->distinct()
             ->orderBy('orders.created_at', 'DESC')
             ->get();
