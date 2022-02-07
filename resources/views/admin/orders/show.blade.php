@@ -91,8 +91,12 @@
                         @endif
 
                         <div class="card-text py-2">
+                            <h5 class="card-title">Dipesan tanggal</h5>
+                            <div class="fw-light">{{ $order->created_at }}</div>
+                        </div>
+                        <div class="card-text py-2">
                             <h5 class="card-title">Estimasi Pesanan Selesai</h5>
-                            <div class="fw-light">{{ isset($order->estimation_finish_at) ? date('H:i:s', strtotime($order->estimation_finish_at)) : '-' }}</div>
+                            <div class="fw-light">{{ isset($order->estimation_finish_at) ? $order->estimation_finish_at : '-' }}</div>
                         </div>
                         <div class="card-text py-2">
                             <h5 class="card-title">Total Harga</h5>
