@@ -155,9 +155,13 @@
                             </div>
                             <div class="py-2"></div>
                             <div id="total-order-box" class="card-text">
+                                @php
+                                    $discountPrice = ( 28 * $totalAmount ) / 100;
+                                    $discountPrice = $totalAmount - $discountPrice;
+                                @endphp
                                 <h5 class="card-title">Total Harga</h5>
                                 <span id="total-order" class="card-text fw-light"></span>
-                                <input id="hidden-total-order" type="hidden" value="{{ $totalAmount }}" disabled>
+                                <input id="hidden-total-order" type="hidden" value="{{ $discountPrice }}" disabled>
                             </div>
                             <div class="py-2"></div>
                             <div id="delivery-fee-box" class="card-text d-none">
@@ -167,7 +171,7 @@
                             <div class="py-2"></div>
                             <div class="card-text">
                                 <h5 class="card-title">Total Bayar</h5>
-                                <input id="hidden-total-price" type="hidden" name="cart_total_amount" value="{{ $totalAmount }}">
+                                <input id="hidden-total-price" type="hidden" name="cart_total_amount" value="{{ $discountPrice }}">
                                 <span id="total-price" class="card-text fw-bold"></span>
                             </div>
                             <div class="py-3"></div>

@@ -19,9 +19,22 @@
                 </div>
                 <div class="card-body">
                     <h4 class="card-title">{{ $m->name }}</h1>
-                    <p class="card-text">Rp. {{ number_format( $m->price, 2, ',', '.' ) }}</p>
-                    <p class="card-text">{{ $m->status }}</p>
-                    <p class="cart-text">Tersedia {{ $m->quantity }} unit</p>
+                    @php
+                        $discountPrice = (28 * $m->price) / 100;
+                        $discountPrice = $m->price - $discountPrice;
+                    @endphp
+                    <p class="card-text text-success">
+                        Diskon 28%
+                    </p>
+                    <p class="card-text">
+                        <div class="text-decoration-line-through text-secondary"><i>Rp. {{ number_format( $m->price, 2, ',', '.' ) }}</i></div>
+                        <div>Rp. {{ number_format( $discountPrice, 2, ',', '.' ) }}</div>
+                    </p>
+                    <p class="card-text">
+                        <div>{{ $m->status }}</div>
+                        <div>Tersedia {{ $m->quantity }} unit</div>
+                    </p>
+                    <p class="cart-text"></p>
                     <div id="menu-description-box">
                         <button
                             class="btn btn-outline-success rounded-pill px-4 fw-bold w-100"

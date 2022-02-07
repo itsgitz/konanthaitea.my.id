@@ -156,6 +156,7 @@ export function delivery() {
 
 function convertToMoney(num, fee = 0) {
   let rupiah = Intl.NumberFormat('id-ID')
+
   let totalWithFee = parseInt(num) + parseInt(fee);
   let totalPriceMoneyFormat = rupiah.format(totalWithFee);
 
