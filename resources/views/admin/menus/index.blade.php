@@ -49,9 +49,10 @@
                             data-menu-name="{{ $m->name }}"
                             data-menu-price="Rp. {{ number_format( $m->price, 2, ',', '.' ) }}"
                             data-menu-image="{{ $m->image }}"
+                            data-menu-description="{{ $m->description }}"
                             onclick="showImage(this)"
                         >
-                           <i class="fas fa-file-image"></i> Gambar
+                           <i class="fas fa-file-image"></i> Deskripsi
                         </button>
                     </td>
                     <td>
@@ -89,15 +90,18 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="show-image-label">Gambar Menu</h5>
+            <h5 class="modal-title" id="show-image-label">Deskripsi Menu</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="py-2">
-                Nama Menu: <span class="fw-bold" id="menu-name"></span>
+                Nama Menu: <span class="fw-light" id="menu-name"></span>
             </div>
             <div class="py-2">
-                Harga: <span class="fw-bold" id="menu-price"></span>
+                Harga: <span class="fw-light" id="menu-price"></span>
+            </div>
+            <div class="py-2">
+                Deskripsi: <span id="menu-description" class="fw-light"></span>
             </div>
             <div class="py-2 text-center">
                 <img class="img-fluid" id="menu-image" alt="">
@@ -137,13 +141,21 @@
             let menuNameEl = document.querySelector('#menu-name');
             let menuPriceEl = document.querySelector('#menu-price');
             let menuImageEl = document.querySelector('#menu-image');
+            let menuDescriptionEl = document.querySelector('#menu-description');
             let menuName = el.dataset.menuName;
             let menuPrice = el.dataset.menuPrice;
             let menuImage = el.dataset.menuImage;
+            let menuDescription = el.dataset.menuDescription;
 
             menuNameEl.innerHTML = menuName;
             menuPriceEl.innerHTML = menuPrice;
             menuImageEl.src = menuImage;
+
+            if (menuDescription) {
+                menuDescriptionEl.innerHTML = menuDescription;
+            } else {
+                menuDescriptionEl.innerHTML = 'Belum ada deskripsi untuk menu ini. Silahkan ditambahkan terlebih dahulu di menu edit.';
+            }
         }
 
         function removeMenu(el) {

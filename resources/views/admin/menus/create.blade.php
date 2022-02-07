@@ -53,6 +53,16 @@
                             </div>
                             @enderror
                         </div>
+
+                        <div class="mb-3 col-md-8">
+                            <label class="form-label" for="description">Deskripsi Menu</label>
+                            <textarea class="form-control" name="menu_description" id="description" cols="30" rows="10" required></textarea>
+                            @error ('menu_description')
+                            <div>
+                                <span class="text-danger fw-light"><small>{{ $message }}</small></span>
+                            </div>
+                            @enderror
+                        </div>
                     </div>
                 </div>
             </div>

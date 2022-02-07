@@ -103,6 +103,10 @@
             @enderror
         </div>
         <div class="mb-3 col-md-4">
+            <label class="form-label" for="description">Deskripsi</label>
+            <textarea class="form-control" name="description" id="description" cols="30" rows="10"></textarea>
+        </div>
+        <div class="mb-3 col-md-4">
             <label class="form-label" for="status">Status</label>
 
             @if ($outOfStock)

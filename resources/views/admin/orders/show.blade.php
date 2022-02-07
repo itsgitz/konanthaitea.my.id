@@ -8,6 +8,15 @@
     @include ('shared.message')
 
     <div id="process-order">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Nama Pelanggan</h5>
+                <div class="card-text fw-light">
+                    {{ $client->name }}
+                </div>
+            </div>
+        </div>
+        <div class="py-1"></div>
         <div id="carts-list">
             @foreach ($cartOrders as $cart)
             <ul class="list-group">

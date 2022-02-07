@@ -130,6 +130,7 @@ class MenusController extends Controller
                 ->with('admin_error_add_menu_message', self::STOCK_EMPTY_ERROR_MESSAGE);
         }
 
+
         $r->validate(
             [
                 'name'          => ['required', 'unique:App\Models\Menu,name', 'min:3'],
@@ -160,6 +161,9 @@ class MenusController extends Controller
         //Upload image
         $image          = $r->file('menu_image')->store('public/menus');
         $menu->image    = Storage::url($image);
+
+        // Add description
+        $menu->description = $r->menu_description;
         $menu->save();
 
         $menuId = $menu->id;
@@ -289,7 +293,13 @@ class MenusController extends Controller
 
         //Update new data
         $menu->name     = $r->name;
-        $menu->price    = $r->price;
+
+        // Set Product ID:
+        $menu->product_id   = $this->setProductId($menu->id, $r);
+        $menu->price        = $r->price;
+
+        // Description
+        $menu->description = $r->description;
 
         if ( isset($r->edit_add) ) {
             $menu->status   = 'Available';

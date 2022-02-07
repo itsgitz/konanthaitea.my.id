@@ -22,6 +22,19 @@
                     <p class="card-text">Rp. {{ number_format( $m->price, 2, ',', '.' ) }}</p>
                     <p class="card-text">{{ $m->status }}</p>
                     <p class="cart-text">Tersedia {{ $m->quantity }} unit</p>
+                    <div id="menu-description-box">
+                        <button
+                            class="btn btn-outline-success rounded-pill px-4 fw-bold w-100"
+                            data-bs-toggle="modal"
+                            data-bs-target="#description-modal"
+                            data-menu-name="{{ $m->name }}"
+                            data-menu-description="{{ $m->description }}"
+                            onclick="showDescription(this)"
+                        >
+                            Lihat Deskripsi
+                        </button>
+                    </div>
+                    <div class="py-1"></div>
                     <div class="order-link">
                         @if (Auth::check())
                         <form action="{{ route('client_cart_post') }}" method="post">
@@ -29,7 +42,7 @@
                             <input type="hidden" name="menu_id" value="{{ $m->id }}">
                             <input type="hidden" name="menu_price" value="{{ $m->price }}">
                             <input
-                                class="btn btn-outline-primary rounded-pill px-4 fw-bold"
+                                class="btn btn-outline-primary rounded-pill px-4 fw-bold w-100"
                                 type="submit"
                                 value="Tambah"
                                 @if ($m->status == 'Sold Out')
@@ -39,7 +52,7 @@
                         </form>
                         @else
                         <button
-                            class="btn btn-outline-primary rounded-pill px-4 fw-bold"
+                            class="btn btn-outline-primary rounded-pill px-4 fw-bold w-100"
                             data-bs-toggle="modal"
                             data-bs-target="#redirect-modal"
                             data-menu-id="{{ $m->id }}"
@@ -69,7 +82,7 @@
     </div>
     @endif
 
-    {{-- Modal --}}
+    {{-- Modal Redirect Login --}}
     <div id="redirect-modal" class="modal fade fw-light" tabindex="-1" aria-labelledby="redirect-modal-label">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -92,7 +105,26 @@
             </div>
         </div>
     </div>
-    {{-- Modal --}}
+    {{-- Modal Redirect Login --}}
+
+    {{-- Modal Description --}}
+    <div id="description-modal" class="modal fade fw-light" tabindex="-1" aria-labelledby="redirect-modal-label">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="remove-client-modal-label" class="modal-title">Deskripsi <span id="menu-name"></span></h5>
+                    <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="menu-description" class="fw-light"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger btn-sm" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Modal Description --}}
 
     {{-- Modal Script --}}
     <script>
@@ -104,6 +136,22 @@
 
             redirectForm.elements.namedItem('menu_id').value = menuId;
             redirectForm.elements.namedItem('menu_price').value = menuPrice;
+        }
+
+        function showDescription(el) {
+            let menuNameEl = document.querySelector('#menu-name');
+            let menuDescriptionEl = document.querySelector('#menu-description');
+            let menuName = el.dataset.menuName;
+            let menuDescription = el.dataset.menuDescription;
+
+            menuNameEl.innerHTML = menuName;
+
+            if (menuDescription) {
+                menuDescriptionEl.innerHTML = menuDescription;
+
+            } else {
+                menuDescriptionEl.innerHTML = 'Belum ada deskripsi untuk menu ini';
+            }
         }
     </script>
     {{-- Modal Script --}}

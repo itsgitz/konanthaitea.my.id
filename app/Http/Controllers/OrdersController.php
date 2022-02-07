@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Cart;
 use App\Models\CartOrder;
+use App\Models\Client;
 use App\Models\Order;
 use App\Models\Menu;
 use App\Models\Stock;
@@ -116,6 +117,7 @@ class OrdersController extends Controller
         $deliveryStatusOptions  = $this->setDeliveryStatusOptions($order);
         $paymentStatusOptions   = $this->setPaymentStatusOptions($order);
         $totalPrice             = $this->getTotalPriceFromSubtotalPrice($cartOrders);
+        $client                 = Client::find($order->client_id)->first();
 
         $outOfStock = false;
 
@@ -127,6 +129,7 @@ class OrdersController extends Controller
 
 
         return view('admin.orders.show', [
+            'client'            => $client,
             'order'             => $order,
             'cartOrders'        => $cartOrders,
             'deliveryStatus'    => $deliveryStatusOptions,
