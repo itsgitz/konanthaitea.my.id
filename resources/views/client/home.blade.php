@@ -9,6 +9,26 @@
     <div class="alert alert-primary fw-light" style="font-size: 1.2rem;">
         Promo gratis ongkir untuk wilayah Cimahi! <i class="far fa-money-bill-alt"></i>
     </div>
+
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Lihat deskripsi proses pemesanan
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+                        Login atau registrasi terlebih dahulu sebelum melakukan pemesanan. Tambahkan minuman yang anda inginkan dengan menekan tombol "Tambah".
+                        Setelah itu anda akan diarahkan ke halaman keranjang. Maka pilihlah methode pengiriman, yaitu Pickup atau Delivery, beserta metode pembayaranya, yaitu
+                        Bank transfer atau e-money. Jika anda memilih Delivery, maka isilah alamat dan nomor telepon anda. Setelah proses pemesanan selesai, maka anda akan diberika
+                        kontak kurir yang bisa dihubungi.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="py-2"></div>
     @if (!$menu->isEmpty())
     <div class="row gy-3">
         @foreach ($menu as $m)
