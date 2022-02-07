@@ -2,17 +2,51 @@
 @section ('title', 'Riwayat Isi Ulang Stock (Restock)')
 
 @section ('content')
-<div class="py-3">
+<div id="admin-restock-main" class="py-3">
     <h5>Riwayat Isi Ulang Stock (Restock)</h5>
 
     @include ('shared.message')
     <div class="py-2">
+        {{--
         <a
             class="btn btn-primary btn-sm @if (!isset($histories)) disabled @endif"
             href="{{ route('admin_export_pdf_restock_histories_get') }}"
         >
             <i class="fas fa-file-pdf"></i> Export ke PDF
         </a>
+        --}}
+
+        <button id="export-pdf-button" type="button" class="btn btn-primary btn-sm @if (!isset($histories)) disabled @endif">
+            <i class="fas fas fa-file-pdf"></i> Export ke PDF
+        </button>
+
+        {{-- Datepicker --}}
+        <form action="{{ route('admin_export_pdf_restock_histories_post') }}" method="post">
+            @csrf
+            <div class="py-2"></div>
+            <div id="datepicker-box" class="p-3 bg-light shadow rounded fw-light d-none">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <label class="col-form-label input-group-text fw-light" for="date-from">Dari Tanggal</label>
+                            <input id="date-from" name="from" class="form-control form-control-sm" type="text" required>
+                            <span class="input-group-text"><i class="far fa-calendar-alt d-inline"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <label class="col-form-label input-group-text fw-light" for="date-from">Sampai Tanggal</label>
+                            <input id="date-to" name="to" class="form-control form-control-sm" type="text" required>
+                            <span class="input-group-text"><i class="far fa-calendar-alt d-inline"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="py-2"></div>
+                <input class="btn btn-sm btn-secondary shadow" type="submit" value="Export">
+            </div>
+            <div class="py-2"></div>
+        </form>
+        {{-- Datepicker --}}
     </div>
     <div class="table-responsive">
         <table class="table table-hover fw-light">

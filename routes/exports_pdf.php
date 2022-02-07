@@ -14,6 +14,6 @@ Route::get('/admin/stocks/request_stocks/export/{id}', [\App\Http\Controllers\St
     ->name('admin_export_pdf_request_stock_get');
 
 // Export restock
-Route::get('/admin/stocks/restock_histories/export/pdf', [\App\Http\Controllers\RestockHistoriesController::class, 'export'])
+Route::post('/admin/stocks/restock_histories/export/pdf', [\App\Http\Controllers\RestockHistoriesController::class, 'export'])
     ->middleware('auth.admin')
-    ->name('admin_export_pdf_restock_histories_get');
+    ->name('admin_export_pdf_restock_histories_post');

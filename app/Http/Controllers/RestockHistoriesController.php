@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -20,10 +21,13 @@ class RestockHistoriesController extends Controller
         ]);
     }
 
-    public function export()
+    public function export(Request $r)
     {
+        $from = Carbon::createFromFormat('Y-m-d', $r->from)->startOfDay();
+        $to = Carbon::createFromFormat('Y-m-d', $r->to)->endOfDay();
+
         // route admin_export_pdf_restock_histories_get
-        $histories = $this->generateData();
+        $histories = $this->generateData($from, $to);
 
         $pdf = PDF::loadView('admin.exports.restock_histories_pdf', [
             'histories' => $histories
@@ -34,14 +38,26 @@ class RestockHistoriesController extends Controller
         return $pdf->download($fileName);
     }
 
-    private function generateData()
+    private function generateData($from = null, $to = null)
     {
-        $historiesPerRequest = DB::table('request_stocks')
-            //->whereNotNull('request_stocks.request_id')
-            ->where('status', '=', 'Finish')
-            ->groupBy('request_id')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $historiesPerRequest = null;
+
+        if ( isset($from) && isset($to) ) {
+            $historiesPerRequest = DB::table('request_stocks')
+                //->whereNotNull('request_stocks.request_id')
+                ->where('status', '=', 'Finish')
+                ->whereBetween('created_at', [$from, $to])
+                ->groupBy('request_id')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        } else {
+            $historiesPerRequest = DB::table('request_stocks')
+                //->whereNotNull('request_stocks.request_id')
+                ->where('status', '=', 'Finish')
+                ->groupBy('request_id')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
 
 
         $histories = [];

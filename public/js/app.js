@@ -10583,9 +10583,100 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "runStocks": () => (/* binding */ runStocks)
 /* harmony export */ });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./resources/js/stocks/index.js");
+/* harmony import */ var _restock__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./restock */ "./resources/js/stocks/restock.js");
+
 
 function runStocks() {
   (0,_index__WEBPACK_IMPORTED_MODULE_0__.setStockStatusClass)();
+  (0,_restock__WEBPACK_IMPORTED_MODULE_1__.myDatePicker)();
+}
+
+/***/ }),
+
+/***/ "./resources/js/stocks/restock.js":
+/*!****************************************!*\
+  !*** ./resources/js/stocks/restock.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "myDatePicker": () => (/* binding */ myDatePicker)
+/* harmony export */ });
+/* harmony import */ var js_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-datepicker */ "./node_modules/js-datepicker/dist/datepicker.min.js");
+/* harmony import */ var js_datepicker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_datepicker__WEBPACK_IMPORTED_MODULE_0__);
+
+function myDatePicker() {
+  var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+  var days = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+  var restockMain = document.querySelector('#admin-restock-main');
+
+  if (restockMain) {
+    var start = js_datepicker__WEBPACK_IMPORTED_MODULE_0___default()('#date-from', {
+      id: 1,
+      showAllDates: true,
+      customDays: days,
+      customMonths: months,
+      formatter: function formatter(input, date, instance) {
+        var year = date.getFullYear();
+        var customMonth = '';
+        var customDate = '';
+
+        if (date.getMonth() < 10) {
+          customMonth = '0' + parseInt(date.getMonth() + 1);
+        } else {
+          customMonth = parseInt(date.getMonth() + 1);
+        }
+
+        if (date.getDate() < 10) {
+          customDate = '0' + date.getDate();
+        } else {
+          customDate = date.getDate();
+        }
+
+        var value = "".concat(year, "-").concat(customMonth, "-").concat(customDate);
+        input.value = value;
+      }
+    });
+    start.calendarContainer.style.setProperty('width', '100%');
+    var end = js_datepicker__WEBPACK_IMPORTED_MODULE_0___default()('#date-to', {
+      id: 1,
+      showAllDates: true,
+      customDays: days,
+      customMonths: months,
+      formatter: function formatter(input, date, instance) {
+        var year = date.getFullYear();
+        var customMonth = '';
+        var customDate = '';
+
+        if (date.getMonth() < 10) {
+          customMonth = '0' + parseInt(date.getMonth() + 1);
+        } else {
+          customMonth = parseInt(date.getMonth() + 1);
+        }
+
+        if (date.getDate() < 10) {
+          customDate = '0' + date.getDate();
+        } else {
+          customDate = date.getDate();
+        }
+
+        var value = "".concat(year, "-").concat(customMonth, "-").concat(customDate);
+        input.value = value;
+      }
+    });
+    end.calendarContainer.style.setProperty('width', '100%');
+    var exportPdfButton = document.querySelector('#export-pdf-button');
+    var datePickerBox = document.querySelector('#datepicker-box');
+    exportPdfButton.addEventListener('click', function () {
+      if (datePickerBox.classList.contains('d-none')) {
+        datePickerBox.classList.remove('d-none');
+      } else {
+        datePickerBox.classList.add('d-none');
+      }
+    });
+  }
 }
 
 /***/ }),
