@@ -443,6 +443,7 @@ class StocksController extends Controller
         $stock->stock_units_id  = $r->unit;
         $stock->name            = $r->name;
         $stock->status          = $r->status;
+        $stock->expired_at      = $r->expired;
         $stock->save();
 
         $stockId = $stock->id;
