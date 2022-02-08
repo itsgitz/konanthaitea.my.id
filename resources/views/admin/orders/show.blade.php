@@ -114,7 +114,6 @@
                     <div class="card-body">
                         @switch($order->delivery_status)
                             @case("Finish")
-                            @case("Ready")
                                 @if ($order->payment_status == 'Paid')
                                 <div class="alert alert-success">
                                     Transaksi telah selesai untuk order ini <strong>(Order #{{ $order->id }})</strong>

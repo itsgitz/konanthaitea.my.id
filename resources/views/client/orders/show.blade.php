@@ -34,6 +34,15 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-text py-2">
+                        <h5 class="card-title">Kontak Kurir</h5>
+                        <div class="fw-light">Kurir Pengirim - 0838-2166-2133</div>
+                    </div>
+                </div>
+            </div>
+            <div class="py-1"></div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-text py-2">
                         <h5 class="card-title">Metode Pengiriman</h5>
                         <div class="fw-light">{{ $order->delivery_method }}</div>
                     </div>
