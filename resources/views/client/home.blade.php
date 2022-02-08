@@ -41,14 +41,14 @@
                     <h4 class="card-title">{{ $m->name }}</h1>
                     @php
                         $discountPrice = (28 * $m->price) / 100;
-                        $discountPrice = $m->price - $discountPrice;
+                        $discountPrice = $m->price + $discountPrice;
                     @endphp
                     <p class="card-text text-success">
                         Diskon 28%
                     </p>
                     <p class="card-text">
-                        <div class="text-decoration-line-through text-secondary"><i>Rp. {{ number_format( $m->price, 2, ',', '.' ) }}</i></div>
-                        <div>Rp. {{ number_format( $discountPrice, 2, ',', '.' ) }}</div>
+                        <div class="text-decoration-line-through text-secondary"><i>Rp. {{ number_format( $discountPrice, 2, ',', '.' ) }}</i></div>
+                        <div>Rp. {{ number_format( $m->price, 2, ',', '.' ) }}</div>
                     </p>
                     <p class="card-text">
                         <div>{{ $m->status }}</div>
