@@ -35,6 +35,10 @@
             </select>
         </div>
         <div class="mb-3 col-md-4">
+            <label class="form-label" for="expired">Expired</label>
+            <input id="expired" class="form-control" type="date" name="expired" value="{{ isset($stock->expired) ? date('Y-m-d', strtotime($stock->expired)) : null }}" required>
+        </div>
+        <div class="mb-3 col-md-4">
             <label class="form-label" for="status">Ubah Status</label>
             <select
                 id="status"
