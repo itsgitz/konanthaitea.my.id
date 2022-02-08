@@ -70,6 +70,16 @@ class StocksController extends Controller
                 $newStock = Stock::find($s->id);
                 $newStock->status = 'Expired';
                 $newStock->save();
+
+
+                $menuStocks = MenuStock::where('stock_id', $newStock->id)->get();
+
+                foreach ($menuStocks as $ms) {
+                    $menu = Menu::find($ms->menu_id);
+
+                    $menu->status = 'Sold Out';
+                    $menu->save();
+                }
             }
         }
     }
