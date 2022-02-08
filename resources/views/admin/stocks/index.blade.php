@@ -20,6 +20,7 @@
                 <th scope="col">Unit</th>
                 <th scope="col">Status</th>
                 <th scope="col">Ditambahkan Tanggal</th>
+                <th scope="col">Expired Tanggal</th>
                 <th scope="col" colspan="3">#</th>
             </thead>
 
@@ -42,6 +43,9 @@
                         </span>
                     </td>
                     <td class="fw-light">{{ date('d M Y H:i:s', strtotime( $s->stock_created_at )) }}</td>
+                    <td class="fw-light">
+                        {{  isset( $s->expired ) ? date('d M Y', strtotime( $s->expired )) : '-' }}
+                    </td>
                     <td>
                         <!--<a class="btn btn-success btn-sm" href="{{ route('admin_stocks_edit_add_quantity_get', ['id' => $s->stock_id]) }}">
                             <i class="fas fa-plus-circle"></i> Tambah

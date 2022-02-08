@@ -49,7 +49,8 @@ class StocksController extends Controller
                 'stocks.quantity AS stock_quantity',
                 'stocks.status AS stock_status',
                 'stock_units.name AS unit_name',
-                'stocks.created_at AS stock_created_at'
+                'stocks.created_at AS stock_created_at',
+                'stocks.expired_at AS expired'
             )
             ->orderBy('stocks.quantity', 'asc')
             ->get();
