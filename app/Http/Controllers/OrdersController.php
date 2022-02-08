@@ -117,7 +117,7 @@ class OrdersController extends Controller
         $deliveryStatusOptions  = $this->setDeliveryStatusOptions($order);
         $paymentStatusOptions   = $this->setPaymentStatusOptions($order);
         $totalPrice             = $this->getTotalPriceFromSubtotalPrice($cartOrders);
-        $client                 = Client::find($order->client_id)->first();
+        $client                 = Client::find($order->client_id);
 
         $outOfStock = false;
 
