@@ -21,5 +21,5 @@ RUN apt-get update; \
 
 # Install PHP extensions
     docker-php-ext-configure zip; \
-    docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip; \
+    docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip opcache; \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer;
